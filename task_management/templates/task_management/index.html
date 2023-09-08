@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Starting Page{% endblock title %}
+
+{% block css_file %}{% endblock css_file %}
+
+{% block content %}
+    <h1>Welcome!</h1>
+    <h2>Task Management</h2>
+    <h3> Collaborative Project Management for Remote Teams </h3>
+    <div>
+        <button><a href="/login">Log in</a></button>
+        <button><a href="/register">Sign up</a></button>
+    </div>
+{% endblock content %}

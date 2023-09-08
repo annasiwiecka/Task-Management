@@ -9,6 +9,9 @@ from .forms import NewUserForm
 
 # Create your views here.
 
+def index(request):
+    return render(request, "task_management/index.html")
+
 def register(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
@@ -44,3 +47,6 @@ def login(request):
     return render(request, "task_management/login.html", {
         "login_form" : form
     })
+
+def home(request):
+    return render(request, "task_management/home.html")

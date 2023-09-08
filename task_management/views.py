@@ -15,8 +15,9 @@ def register(request):
             login(request, user)
             messages.success(request, "Registration successful.")
             return HttpResponseRedirect("/home")
-        messages.error(request, "Unsuccessful registration.")
+        else:
+            messages.error(request, "Unsuccessful registration.")
     form = NewUserForm()
     return render(request, "task_management/register.html", {
-            "register_form": form
-        })
+                "register_form": form
+                })

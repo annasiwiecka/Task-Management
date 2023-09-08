@@ -10,6 +10,7 @@ class User(models.Model):
     profile_picture = models.CharField(max_length=200, null=True)
     role = models.CharField(max_length=20)
     status = models.CharField(max_length=15)
+    USERNAME_FIELD = "username"
 
 class Team(models.Model):
     name = models.CharField(max_length=30)

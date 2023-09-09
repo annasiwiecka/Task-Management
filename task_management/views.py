@@ -1,11 +1,11 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
-from .forms import NewUserForm
+from .forms import *
 
 # Create your views here.
 
@@ -13,16 +13,13 @@ def index(request):
     return render(request, "task_management/index.html")
 
 def register(request):
+    form = NewUserForm()
+    
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, "Registration successful.")
-            return HttpResponseRedirect("/login")
-        else:
-            messages.error(request, "Unsuccessful registration.")
-    form = NewUserForm()
+            form.save()
+            return redirect("login")
     return render(request, "task_management/register.html", {
                 "register_form": form
                 })

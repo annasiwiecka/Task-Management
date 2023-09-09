@@ -15,10 +15,11 @@
         <form method="POST">
             {% csrf_token %}
             {% for field in register_form %}
-            {{ field.label }}
-            {{ field }}
+            <div class="form-group">
+                <label class="custom-label">{{ field.label }}</label>
+                {{ field }}
+            </div>
             {% endfor %}
-            
             <button class="button" type="submit">Sing up</button>
         </form>
     </div>

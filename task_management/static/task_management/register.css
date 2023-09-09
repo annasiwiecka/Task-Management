@@ -17,7 +17,7 @@
   }
 
 .container {
-    width: 310px;
+    width: 400px;
     border: none;
     padding: 80px;
     margin: auto;
@@ -31,3 +31,14 @@
     text-align: center;
 }
 
+.form-group {
+    margin-bottom: 10px;
+    float: right;
+    margin-right: 60px;
+    
+}
+
+.custom-label {
+
+    text-align: center;
+}

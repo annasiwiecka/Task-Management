@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from .forms import *
@@ -12,6 +12,9 @@ from .forms import *
 def index(request):
     return render(request, "task_management/index.html")
 
+def home(request):
+    return render(request, "task_management/home.html")
+
 def register(request):
     form = NewUserForm()
     
@@ -19,36 +22,37 @@ def register(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, f"Successful registration {user}!")
+
             return redirect("login")
     return render(request, "task_management/register.html", {
                 "register_form": form
                 })
 
-def login(request):
+def loginPage(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(username, password)
+            user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
-                return HttpResponseRedirect("/home")
+                return redirect("home")
             else:
-                messages.error(request, "Invalid username or password.")
+                messages.info(request, "Invalid username or password") 
         else:
-            messages.error(request, "Invalid username or password.")
+            messages.info(request, "Invalid username or password")   
 
     form = AuthenticationForm()
     return render(request, "task_management/login.html", {
         "login_form" : form
     })
 
-def home(request):
-    return render(request, "task_management/home.html")
 
-def logout(request):
+
+def logoutPage(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
 	return HttpResponseRedirect("task_management/index.html")

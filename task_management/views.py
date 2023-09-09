@@ -4,17 +4,18 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 from .forms import *
+from .decorators import unauthenticated_user
 
 # Create your views here.
 
 def index(request):
     return render(request, "task_management/index.html")
 
-def home(request):
-    return render(request, "task_management/home.html")
 
+@unauthenticated_user
 def register(request):
     form = NewUserForm()
     
@@ -30,6 +31,7 @@ def register(request):
                 "register_form": form
                 })
 
+@unauthenticated_user
 def loginPage(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -55,4 +57,8 @@ def loginPage(request):
 def logoutPage(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
-	return HttpResponseRedirect("task_management/index.html")
+	return redirect("login")
+
+@login_required(login_url="login")
+def home(request):
+    return render(request, "task_management/home.html")

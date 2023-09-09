@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
@@ -50,3 +50,8 @@ def login(request):
 
 def home(request):
     return render(request, "task_management/home.html")
+
+def logout(request):
+	logout(request)
+	messages.info(request, "You have successfully logged out.") 
+	return HttpResponseRedirect("task_management/index.html")

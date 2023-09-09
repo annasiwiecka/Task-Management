@@ -3,14 +3,18 @@
 
 {% block title %}Starting Page{% endblock title %}
 
-{% block css_file %}{% endblock css_file %}
+{% block css_file %}
+<link rel="stylesheet" href="{% static 'task_management/index.css' %}">
+{% endblock css_file %}
 
 {% block content %}
-    <h1>Welcome!</h1>
-    <h2>Task Management</h2>
-    <h3> Collaborative Project Management for Remote Teams </h3>
-    <div>
-        <button><a href="/login">Log in</a></button>
-        <button><a href="/register">Sign up</a></button>
+        <div class="text">
+            <h1>Welcome!</h1>
+            <h2>Task Management</h2>
+            <h3> Collaborative Project Management for Remote Teams </h3>
+        </div>    
+    <div class="start">
+        <button class="button btn1"><a href="{% url 'login' %}">Log in</a></button>
+        <button class="button"><a href=" {% url 'register' %}">Sign up</a></button>
     </div>
 {% endblock content %}

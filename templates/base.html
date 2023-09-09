@@ -10,9 +10,11 @@
     {% block css_file %}{% endblock css_file %}
 </head>
 <body>
-<header>
-    <nav><button><a href="{% url "index" %}">Starting Page</a></button></nav>
-</header>
+    <div class="header">
+        <header id="main-navigation">
+            <nav><a href="{% url "index" %}">Starting Page</a></nav>
+        </header>
+    </div>
     {% block content %}{% endblock content %}
 </body>
 </html>

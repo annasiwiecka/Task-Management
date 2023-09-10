@@ -12,4 +12,17 @@ class NewUserForm(UserCreationForm):
 
 class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(max_length=100, required=True)
-    email = forms.CharField
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+class UpdateProfileForm(forms.ModelForm):
+    name = forms.CharField()
+    profile_picture = forms.ImageField()
+    role = forms.CharField()
+
+    class Meta:
+        model = UserTeam
+        fields = ['name', 'profile_picture', 'role']

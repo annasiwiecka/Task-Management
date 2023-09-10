@@ -6,11 +6,12 @@ Profile
 {% endblock title %}
 
 {% block css_file %}
-
+<link rel="stylesheet" href="{% static 'task_management/profile.css' %}">
 {% endblock css_file %}
 
 {% block content %}
-    <div>
+{% csrf_token %}
+    <div class="id">
         <h1>This is the profile page for {{user.username}}</h1>
 
     </div>

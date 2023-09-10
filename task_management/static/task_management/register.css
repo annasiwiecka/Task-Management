@@ -13,7 +13,7 @@
 }
 
 .button:hover, .button:active {
-    background-color: #4178c0;
+    background-color: #ae51b1;
 }
 
 .container {
@@ -22,15 +22,21 @@
     padding: 80px;
     margin: auto;
     border-radius: 12px;
-    background-color: #f1f1f1;
+    background-color: #ffffff;
     text-align: center;
     margin-top: 50px;
+    
 }
 
 .text {
     text-align: center;
+    color: #ffffff;
 }
-
+.text a {
+    color: #ffffff;
+    font: bold;
+    
+}
 .form-group {
     margin-bottom: 10px;
     float: right;
@@ -42,3 +48,8 @@
 
     text-align: center;
 }
+
+body {
+    background-color: #8528aa;
+}
+

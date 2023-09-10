@@ -9,9 +9,11 @@
 
 {% block content %}
     
-    {% for message in messages %}
-        <p>{{ message }}</p>
-    {% endfor %}    
+    <div>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}    
+    </div>
 
     <div class="log">
         <h1>Login</h1>

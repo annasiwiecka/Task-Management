@@ -1,16 +1,23 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 
-class User(models.Model):
-    username = models.CharField(max_length=30)
-    email = models.CharField(max_length=50)
-    password = models.CharField(max_length=30)
+class UserTeam(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30, null=True)
     profile_picture = models.CharField(max_length=200, null=True)
     role = models.CharField(max_length=20, null=True)
-    status = models.CharField(max_length=15, null=True)
-    USERNAME_FIELD = "username"
+    
+    
+    def __str__(self):
+        return self.name
+    
+    def __str__(self):
+        if self.name==None:
+            return str(self.user)
+        return self.name
 
 class Team(models.Model):
     name = models.CharField(max_length=30)

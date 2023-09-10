@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import *
 from .decorators import unauthenticated_user
+from .models import *
 
 # Create your views here.
 
@@ -22,9 +23,13 @@ def register(request):
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get('username')
-            messages.success(request, f"Successful registration {user}!")
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            UserTeam.objects.create(
+                user=user
+            )
+
+            messages.success(request, f"Successful registration {username}!")
 
             return redirect("login")
     return render(request, "task_management/register.html", {

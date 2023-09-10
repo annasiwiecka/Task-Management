@@ -14,7 +14,7 @@
 }
 
  .button:hover, .button:active {
-    background-color: #4178c0;
+    background-color: #ae51b1;
   }
 
 .log {
@@ -26,11 +26,10 @@
     background-color: #f1f1f1;
     text-align: center;
     margin-top: 50px;
+    
 }
 
-.text {
-    text-align: center;
-}
+
 
 .form-group {
     margin-bottom: 10px;
@@ -42,4 +41,17 @@
 .custom-label {
 
     text-align: center;
+}
+
+body {
+    background-color: #8528aa;
+}
+
+div p {
+    text-align: center;
+    color: #ffffff;
+}
+.text a {
+    color: #ffffff;
+    font: bold;
 }

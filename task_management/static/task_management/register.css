@@ -1,7 +1,7 @@
 
 .button {
     color: white;
-    background-color: #2d6ec4;
+    background-color: #8528aa;
     padding: 15px 40px;
     text-align: center;
     text-decoration: none;
@@ -10,11 +10,11 @@
     border: none;
     margin-top: 20px;
     font-size: 20px;
-  }
+}
 
 .button:hover, .button:active {
     background-color: #4178c0;
-  }
+}
 
 .container {
     width: 400px;

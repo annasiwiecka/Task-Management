@@ -4,17 +4,16 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     
-    path("register", views.register, name="register"),
-    path("login", views.loginPage, name="login"),
+    path("register/", views.register, name="register"),
+    path("login/", views.loginPage, name="login"),
     path("logout", views.logoutPage, name="logout"),
     
     path("home", views.home, name="home"),
     
-    path("Profile"),
-    path("Notification"),
-    path("Team"),
-    path("Project"),
-    path("My-Task"),
-    path("Settings"),
-
+   path("profile", views.profile, name="profile"),
+   path("notification", views.notification, name="notification"),
+   path("team", views.team, name="team"),
+   path("project", views.project, name="project"),
+   path("my-task", views.my_task, name="my-task"),
+   path("Settings", views.settingsPage, name="settings"),
 ]

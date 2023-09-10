@@ -16,7 +16,7 @@ def index(request):
     return render(request, "task_management/index.html")
 
 
-@unauthenticated_user
+#@unauthenticated_user
 def register(request):
     form = NewUserForm()
     
@@ -36,7 +36,7 @@ def register(request):
                 "register_form": form
                 })
 
-@unauthenticated_user
+#@unauthenticated_user
 def loginPage(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -64,6 +64,25 @@ def logoutPage(request):
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("login")
 
-@login_required(login_url="login")
+#@login_required(login_url="login")
 def home(request):
     return render(request, "task_management/home.html")
+
+def profile(request):
+    return render(request, "task_management/profile.html")
+
+def notification(request):
+    return render(request, "task_management/notification.html")
+
+def team(request):
+    return render(request, "task_management/team.html")
+
+def project(request):
+    return render(request, "task_management/project.html")
+
+def my_task(request):
+    return render(request, "task_management/my_task.html")
+
+def settingsPage(request):
+    return render(request, "task_management/settings.html")
+

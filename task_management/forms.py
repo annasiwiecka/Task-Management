@@ -11,4 +11,5 @@ class NewUserForm(UserCreationForm):
         fields = ("username", "email", "password1", "password2")
 
 class UpdateUserForm(forms.ModelForm):
-    username = forms.CharField(max_length=100)
+    username = forms.CharField(max_length=100, required=True)
+    email = forms.CharField

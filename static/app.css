@@ -14,7 +14,7 @@ nav a {
     display: inline-block;
     border-radius: 12px;
 
-  }
+}
 
  nav a:hover, nav a:active {
     background-color: #4178c0;

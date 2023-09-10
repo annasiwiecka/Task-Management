@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-
+Profile
 {% endblock title %}
 
 {% block css_file %}
@@ -10,5 +10,8 @@
 {% endblock css_file %}
 
 {% block content %}
+    <div>
+        <h1>This is the profile page for {{user.username}}</h1>
 
+    </div>
 {% endblock content %}

@@ -68,21 +68,28 @@ def logoutPage(request):
 def home(request):
     return render(request, "task_management/home.html")
 
+#@login_required(login_url="login")
 def profile(request):
+    
     return render(request, "task_management/profile.html")
 
+#@login_required(login_url="login")
 def notification(request):
     return render(request, "task_management/notification.html")
 
+#@login_required(login_url="login")
 def team(request):
     return render(request, "task_management/team.html")
 
+#@login_required(login_url="login")
 def project(request):
     return render(request, "task_management/project.html")
 
+#@login_required(login_url="login")
 def my_task(request):
     return render(request, "task_management/my_task.html")
 
+#@login_required(login_url="login")
 def settingsPage(request):
     return render(request, "task_management/settings.html")
 

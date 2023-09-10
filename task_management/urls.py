@@ -1,5 +1,7 @@
 from django.urls import path 
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -16,4 +18,6 @@ urlpatterns = [
    path("project", views.project, name="project"),
    path("my-task", views.my_task, name="my-task"),
    path("Settings", views.settingsPage, name="settings"),
-]
+] 
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

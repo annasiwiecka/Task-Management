@@ -24,5 +24,5 @@ class UpdateProfileForm(forms.ModelForm):
     role = forms.CharField()
 
     class Meta:
-        model = UserTeam
+        model = UserCreate
         fields = ['name', 'profile_picture', 'role']

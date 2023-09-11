@@ -13,6 +13,21 @@ Profile
 {% csrf_token %}
     <div class="id">
         <h1>This is the profile page for {{user.username}}</h1>
-
+    </div>
+    <div class="id1">
+        <form action="POST">
+            {% for field in user_form %}
+            <div class="form-group">
+                <label class="custom-label">{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+            {% for field in profile_form %}
+            <div class="form-group">
+                <label class="custom-label">{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+        </form>
     </div>
 {% endblock content %}

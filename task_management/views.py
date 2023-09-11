@@ -25,9 +25,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
-            UserTeam.objects.create(
-                user=user
-            )
+            
 
             messages.success(request, f"Successful registration {username}!")
 
@@ -89,6 +87,7 @@ def profile(request):
         "profile_form": profile_form
          })
 
+  
 #@login_required(login_url="login")
 def notification(request):
     return render(request, "task_management/notification.html")

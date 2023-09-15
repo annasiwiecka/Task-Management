@@ -15,6 +15,7 @@ Profile
         <h1>This is the profile page for {{user.username}}</h1>
     </div>
     <div class="id1">
+        <img class="rounded-circle article-img" src="profile_form.profile_picture">
         <form action="POST">
             {% for field in user_form %}
             <div class="form-group">
@@ -28,6 +29,7 @@ Profile
                 {{ field }}
             </div>
             {% endfor %}
+            <button type="submit">Update</button>
         </form>
     </div>
 {% endblock content %}

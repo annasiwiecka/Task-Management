@@ -6,3 +6,7 @@
     float: right;
     margin-right: 35%;
 }
+
+rounded-circle article-img {
+    border-radius: 50%;
+  }

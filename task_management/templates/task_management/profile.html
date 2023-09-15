@@ -6,16 +6,23 @@ Profile
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static 'task_management/profile.css' %}">
+<link rel="stylesheet" href="{% static 'task_management/profile1.css' %}">
 {% endblock css_file %}
 
 {% block content %}
 {% csrf_token %}
+
     <div class="id">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}    
+    </div>
+
+<div class="id">
         <h1>This is the profile page for {{user.username}}</h1>
     </div>
     <div class="id1">
-        <img class="rounded-circle article-img" src="profile_form.profile_picture">
+        <img class="img" src="media/profile_images">
         <form action="POST">
             {% for field in user_form %}
             <div class="form-group">
@@ -29,7 +36,10 @@ Profile
                 {{ field }}
             </div>
             {% endfor %}
+            
             <button type="submit">Update</button>
+            
         </form>
     </div>
+    
 {% endblock content %}

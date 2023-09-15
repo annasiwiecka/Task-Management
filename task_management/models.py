@@ -15,8 +15,9 @@ class UserCreate(models.Model):
     def __str__(self):
         return self.user.username
     
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super(UserCreate, self).save(*args, **kwargs)
+
 
         img = Image.open(self.profile_picture.path)
 

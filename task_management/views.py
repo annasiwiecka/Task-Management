@@ -16,25 +16,26 @@ def index(request):
     return render(request, "task_management/index.html")
 
 
-#@unauthenticated_user
+@unauthenticated_user
 def register(request):
     form = NewUserForm()
     
     if request.method == "POST":
         form = NewUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            form.save()
             username = form.cleaned_data.get('username')
-            
-
             messages.success(request, f"Successful registration {username}!")
-
             return redirect("login")
+
+    else:
+        form = NewUserForm()
+
     return render(request, "task_management/register.html", {
                 "register_form": form
                 })
 
-#@unauthenticated_user
+@unauthenticated_user
 def loginPage(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -62,21 +63,22 @@ def logoutPage(request):
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("login")
 
-#@login_required(login_url="login")
+@login_required(login_url="login")
 def home(request):
     return render(request, "task_management/home.html")
 
-#@login_required(login_url="login")
+@login_required(login_url="login")
 def profile(request):
-    if request.method == "POST":
-        user_form = UpdateProfileForm(request.POST, instance=request.user)
-        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
-
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST,
+                                   request.FILES,
+                                   instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            messages.success(request, 'Your profile is updated successfully')
-            return redirect("profile")
+            messages.success(request, f'Your account has been updated!')
+            return HttpResponse('profile/') 
 
     else:
         user_form = UpdateUserForm(instance=request.user)

@@ -10,7 +10,6 @@ Profile
 {% endblock css_file %}
 
 {% block content %}
-{% csrf_token %}
 
     <div class="id">
         {% for message in messages %}
@@ -23,23 +22,27 @@ Profile
     </div>
     <div class="id1">
         <img class="img" src="media/profile_images">
-        <form action="POST">
-            {% for field in user_form %}
-            <div class="form-group">
-                <label class="custom-label">{{ field.label }}</label>
-                {{ field }}
-            </div>
-            {% endfor %}
-            {% for field in profile_form %}
-            <div class="form-group">
-                <label class="custom-label">{{ field.label }}</label>
-                {{ field }}
-            </div>
-            {% endfor %}
-            
-            <button type="submit">Update</button>
-            
-        </form>
+        
+            <form action="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% for field in user_form %}
+                <div class="form-group">
+                    <label class="custom-label">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% endfor %}
+                {% for field in profile_form %}
+                <div class="form-group">
+                    <label class="custom-label">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% endfor %}
+                
+                <button class="btn btn-outline-info" type="suinputbmit">Update</button>
+                <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+                
+            </form>
     </div>
     
 {% endblock content %}

@@ -12,7 +12,7 @@ urlpatterns = [
     
     path("home", views.home, name="home"),
     
-   path("profile", views.profile, name="profile"),
+   path("profile/", views.profile, name="profile"),
    path("notification", views.notification, name="notification"),
    path("team", views.team, name="team"),
    path("project", views.project, name="project"),

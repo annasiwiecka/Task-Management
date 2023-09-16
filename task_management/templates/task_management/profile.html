@@ -6,16 +6,24 @@ Profile
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static 'task_management/profile4.css' %}">
+<link rel="stylesheet" href="{% static 'task_management/profile7.css' %}">
+
+
 {% endblock css_file %}
 
 {% block content %}
 
 {% load crispy_forms_tags %}
 <div class="id">
-       
+
     </div>
+    
     <div class="id1">
+        <div class="id2">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}    
+        </div>
         <div class="im"><img src="{{ user.profile.profile_picture.url }}" alt="img"></div>
 
 
@@ -43,10 +51,6 @@ Profile
                 <div> 
             </form>
     </div>
-    <div class="id2">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}    
-    </div>
+    
 
 {% endblock content %}

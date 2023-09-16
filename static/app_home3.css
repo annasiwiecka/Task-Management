@@ -16,44 +16,47 @@ html {
 }
 
 
-ul {
+.flex-column {
     list-style-type: none;
     margin: 0;
     padding: 0;
   }
 
-ul li {
+.nav-item {
     display: inline;
     list-style: none;
-   
+    
 
 }
 
-ul li a {
+.nav-link {
     color: white;
     background-color: #8528aa;
-    padding: 15px 50px;
-    width: 100px;
-    text-align: left;
     text-decoration: none;
-    display: block;
-    border: none;
     cursor: pointer;
     outline: none;
     transition: 0.2s all;
-
-}
-
-ul li a:hover, ul li a:active, u li a:focus  {
-    background-color: #ae51b1;
-    text-decoration: none;
-}
-
-
-
-.profile {
-    width: 27px;
-    height: 27px;
-    float: right;
+    margin-bottom: 10px;
     
 }
+
+.nav-link:hover, .nav-link:active {
+    background-color: #ae51b1;
+    text-decoration: none;
+    color: white;
+}
+
+.imgfull {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    float: right;
+    display: block;
+
+}
+
+
+
+
+

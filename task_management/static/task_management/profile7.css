@@ -1,15 +1,14 @@
 
 .id1 {
-    text-align: center;
+   
     margin: 1px;
     padding: 50px;
-    border: 1px solid black;
-    width: 300px;
+   
+    width: 500px;
     margin: auto;
     border-radius: 10px;
     
 }
-
 
 
 img {
@@ -46,11 +45,4 @@ img {
 
 .id2 {
     text-align: center;
-}
-
-label {
-    text-align: center;
-}
-body {
-    background-color: black;
 }

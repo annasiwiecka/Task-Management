@@ -4,7 +4,9 @@
 {% block title %}Login{% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "task_management/login.css" %}">
+<link rel="stylesheet" href="{% static "task_management/login1.css" %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
 {% endblock css_file %}
 
 {% block content %}
@@ -26,15 +28,15 @@
                 {{ field }}
             </div>
             {% endfor %}-->
+
             <button class="button" type="submit">Log in</button>
+            <p>Dont have an account? <a href="/register">Create an account</a>.</p>
+
         </form>
 
     </div>
 
 
-    <div class="text">
-        <p>Dont have an account? <a href="/register">Create an account</a>.</p>
-
-    </div>
+    
 {% endblock content %}
 

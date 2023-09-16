@@ -53,10 +53,13 @@ html {
     overflow: hidden;
     float: right;
     display: block;
-
+    border: 2px solid white;
 }
 
 
-
-
+.nav-item.active {
+    background-color: #ae51b1;
+    text-decoration: none;
+    color: white;
+}
 

@@ -11,19 +11,15 @@ Profile
 
 {% block content %}
 
-    <div class="id">
-        {% for message in messages %}
-            <p>{{ message }}</p>
-        {% endfor %}    
-    </div>
-
+    
 <div class="id">
         <h1>This is the profile page for {{user.username}}</h1>
     </div>
     <div class="id1">
-        <img class="img" src="media/profile_images">
+        <img src="{{ profile_form.profile_picture.url }}" alt="img">
+
         
-            <form action="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 {% for field in user_form %}
@@ -38,11 +34,16 @@ Profile
                     {{ field }}
                 </div>
                 {% endfor %}
-                
-                <button class="btn btn-outline-info" type="suinputbmit">Update</button>
-                <button type="reset" class="btn btn-dark btn-lg">Reset</button>
-                
+                <div>  
+                    <button class="btn btn-outline-info" type="submit">Update</button>
+                    <button type="reset" class="btn btn-dark btn-lg" >Reset</button>
+                <div> 
             </form>
     </div>
-    
+    <div class="id">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}    
+    </div>
+
 {% endblock content %}

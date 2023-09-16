@@ -78,7 +78,6 @@ def profile(request):
             user_form.save()
             profile_form.save()
             messages.success(request, f'Your account has been updated!')
-            return HttpResponse('profile/') 
 
     else:
         user_form = UpdateUserForm(instance=request.user)
@@ -87,7 +86,7 @@ def profile(request):
     return render(request, "task_management/profile.html", {
         "user_form": user_form,
         "profile_form": profile_form
-         })
+        })
 
   
 #@login_required(login_url="login")

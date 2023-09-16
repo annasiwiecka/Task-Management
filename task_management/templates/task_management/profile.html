@@ -6,7 +6,7 @@ Profile
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static 'task_management/profile3.css' %}">
+<link rel="stylesheet" href="{% static 'task_management/profile4.css' %}">
 {% endblock css_file %}
 
 {% block content %}
@@ -15,9 +15,9 @@ Profile
 <div class="id">
         <h1>Hello {{user.username}}</h1>
     </div>
-    <div class="im"><img src="{{ user.profile.profile_picture.url }}" alt="img"></div>
     <div class="id1">
-      
+        <div class="im"><img src="{{ user.profile.profile_picture.url }}" alt="img"></div>
+
 
         
             <form method="POST" enctype="multipart/form-data">

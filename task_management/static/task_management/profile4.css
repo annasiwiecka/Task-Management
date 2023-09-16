@@ -4,6 +4,12 @@
 }
 .id1 {
     text-align: center;
+    margin: 1px;
+    padding: 50px;
+    border: 1px solid black;
+    width: 300px;
+    margin: auto;
+    border-radius: 10px;
 }
 
 

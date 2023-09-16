@@ -14,7 +14,7 @@
     <div class="menu">
         
         <ul>
-            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'profile' %}">Profile<img src="{{ user.profile.profile_picture.url }}" alt="img"></a></li>
             <li><a href="{% url 'home' %}">Home</a></li>
             <li><a href="{% url 'notification' %}">Notification</a></li>
             <li><a href="{% url 'team' %}">Team</a></li>

@@ -1,0 +1,49 @@
+.id h1 {
+    
+    text-align: center;
+}
+.id1 {
+    text-align: center;
+}
+
+
+
+img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+}
+
+.form-group {
+    margin-top: 10px;
+}
+
+.button {
+    color: white;
+    background-color: #8528aa;
+    padding: 15px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    border: none;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.button:hover, .button:active {
+    background-color: #ae51b1;
+}
+
+.id2 {
+    text-align: center;
+}
+
+label {
+    text-align: center;
+}

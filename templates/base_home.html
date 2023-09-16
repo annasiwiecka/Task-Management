@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static 'app_home1.css' %}">
+    <link rel="stylesheet" href="{% static 'app_home2.css' %}">
     {% block css_file %}{% endblock css_file %}
 </head>
 <body>
@@ -14,8 +14,8 @@
     <div class="menu">
         
         <ul>
-            <li><a href="{% url 'profile' %}">Profile<img src="{{ user.profile.profile_picture.url }}" alt="img"></a></li>
-            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'profile' %}" role='button' aria-pressed="true">Profile</a></li>
+            <li><a href="{% url 'home' %}"role='button' >Home</a></li>
             <li><a href="{% url 'notification' %}">Notification</a></li>
             <li><a href="{% url 'team' %}">Team</a></li>
             <li><a href="{% url 'project' %}">Project</a></li>

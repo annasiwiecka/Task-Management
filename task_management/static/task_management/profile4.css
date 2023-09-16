@@ -1,7 +1,4 @@
-.id h1 {
-    
-    text-align: center;
-}
+
 .id1 {
     text-align: center;
     margin: 1px;
@@ -10,6 +7,7 @@
     width: 300px;
     margin: auto;
     border-radius: 10px;
+    
 }
 
 
@@ -52,4 +50,7 @@ img {
 
 label {
     text-align: center;
+}
+body {
+    background-color: black;
 }

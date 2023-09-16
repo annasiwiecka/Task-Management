@@ -9,7 +9,7 @@ html {
     margin: 0;
     padding: 0;
     width: 200px;
-    background-color: #875e97;
+    background-color: #8528aa;
     position: fixed;
     height: 100%;
     overflow: auto;
@@ -44,13 +44,16 @@ ul li a {
 
 }
 
-ul li a:hover, ul li a:active  {
+ul li a:hover, ul li a:active, u li a:focus  {
     background-color: #ae51b1;
     text-decoration: none;
 }
 
 
 
-img {
+.profile {
+    width: 27px;
+    height: 27px;
     float: right;
+    
 }

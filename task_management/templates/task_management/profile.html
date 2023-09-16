@@ -11,9 +11,9 @@ Profile
 
 {% block content %}
 
-    
+{% load crispy_forms_tags %}
 <div class="id">
-        <h1>Hello {{user.username}}</h1>
+       
     </div>
     <div class="id1">
         <div class="im"><img src="{{ user.profile.profile_picture.url }}" alt="img"></div>
@@ -23,7 +23,9 @@ Profile
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
-                {% for field in user_form %}
+                {{user_form|crispy}}
+                {{ profile_form|crispy }}
+                <!--{% for field in user_form %}
                 <div class="form-group">
                     <label class="custom-label">{{ field.label }}</label>
                     {{ field }}
@@ -34,7 +36,7 @@ Profile
                     <label class="custom-label">{{ field.label }}</label>
                     {{ field }}
                 </div>
-                {% endfor %}
+                {% endfor %}-->
                 <div>  
                     <button class="button" type="submit">Update</button>
                     <button type="reset" class="button" >Reset</button>

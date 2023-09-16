@@ -9,17 +9,18 @@
 {% endblock css_file %}
 
 {% block content %}
-    
+{% load crispy_forms_tags %}
     <div class="container">
         <h1>Registration</h1>
         <form method="POST">
             {% csrf_token %}
-            {% for field in register_form %}
+            {{ register_form|crispy }}
+            <!--{% for field in register_form %}
             <div class="form-group">
                 <label class="custom-label">{{ field.label }}</label>
                 {{ field }}
             </div>
-            {% endfor %}
+            {% endfor %}-->
             <button class="button" type="submit">Sing up</button>
             {{ register_form.errors }}
         </form>

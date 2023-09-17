@@ -2,17 +2,25 @@
 {% load static %}
 
 {% block title %}
-
+Team
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "task_management/team.css" %}">
+<link rel="stylesheet" href="{% static "task_management/team2.css" %}">
 {% endblock css_file %}
 
 {% block content %}
     <div>
-        {% for team in teams %}
-     {{ team.owner }}
-{% endfor %}
+        <h1>List of All Teams</h1>
+            {% for team in teams %}
+            <li>
+                <a href="{% url "team_id" team_id=team.id %}">Team</a>
+                <strong>{{ team.name }}</strong>
+               
+                <!-- Add other team details here -->
+                {{ team.owner }}
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock content %}

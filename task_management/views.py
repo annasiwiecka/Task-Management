@@ -115,6 +115,7 @@ def my_task(request):
 def settingsPage(request):
     return render(request, "task_management/settings.html")
 
+@login_required(login_url="login")
 def create_team(request):
     if request.method == 'POST':
         form = TeamForm(request.POST)
@@ -126,3 +127,7 @@ def create_team(request):
     else:
         form = TeamForm()
     return render(request, 'task_management/create_team.html', {'form': form})
+
+def list_all_teams(request):
+    teams = Team.objects.all()
+    return render(request, 'task_management/team.html', {"teams": teams})  

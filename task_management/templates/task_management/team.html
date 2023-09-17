@@ -6,16 +6,13 @@
 {% endblock title %}
 
 {% block css_file %}
-
+<link rel="stylesheet" href="{% static "task_management/team.css" %}">
 {% endblock css_file %}
 
 {% block content %}
-<div>{{ team.name }}</div>
-{% if team.id == 0 %}
-        <p>No teams available.</p>
-    {% else %}
-        <p><strong>Team Name:</strong> {{ team.name }}</p>
-        <p><strong>Description:</strong> {{ team.description }}</p>
-        <!-- Other team details -->
-    {% endif %}
+    <div>
+        {% for team in teams %}
+     {{ team.owner }}
+{% endfor %}
+    </div>
 {% endblock content %}

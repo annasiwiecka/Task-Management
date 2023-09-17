@@ -1,0 +1,43 @@
+{% extends 'base_home.html' %}
+
+{% load static %}
+
+{% block title %}
+Page
+{% endblock title %}
+
+{% block css_file %}
+
+{% endblock css_file %}
+
+{% block content %}
+<h1>Team Detail</h1>
+
+{% if team %}
+<h2>Team Information</h2>
+<ul>
+    <li><strong>Name:</strong> {{ team.name }}</li>
+    <li><strong>Description:</strong> {{ team.description }}</li>
+    <li><strong>Owner:</strong> {{ team.owner.username }}</li>
+    <!-- Add other team details here -->
+</ul>
+
+<h2>Team Members</h2>
+<ul>
+    {% for member in team.members.all %}
+        <li>{{ member.username }}</li>
+    {% empty %}
+        <li>No members in this team yet.</li>
+    {% endfor %}
+</ul>
+
+<h2>Tasks</h2>
+<ul>
+    <!-- Add task details here -->
+</ul>
+
+<!-- Add any other team-related information here -->
+{% else %}
+<p>Team not found.</p>
+{% endif %}
+{% endblock content %}

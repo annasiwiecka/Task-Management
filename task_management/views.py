@@ -93,14 +93,15 @@ def profile(request):
 def notification(request):
     return render(request, "task_management/notification.html")
 
-#@login_required(login_url="login")
+@login_required(login_url="login")
 def team(request, team_id=None):
     if team_id is None:
-        team = get_object_or_404(Team, id=0)  
+        return render(request, 'task_management/team.html') 
+
     else:
         team = get_object_or_404(Team, id=team_id)
     
-    return render(request, 'task_management/team', {'team': team})
+    return render(request, 'task_management/team_id.html', {'team': team})
 
 #@login_required(login_url="login")
 def project(request):
@@ -121,7 +122,7 @@ def create_team(request):
             team = form.save(commit=False)
             team.owner = request.user  # Set the owner to the current user
             team.save()
-            return redirect('team_with_id', team_id=team.id)
+            return redirect('team_id', team_id=team.id)
     else:
         form = TeamForm()
     return render(request, 'task_management/create_team.html', {'form': form})

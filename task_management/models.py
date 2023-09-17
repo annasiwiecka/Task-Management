@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from PIL import Image
 
 
@@ -28,11 +28,15 @@ class UserCreate(models.Model):
    
 
 class Team(models.Model):
-    name = models.CharField(max_length=30)
-    description = models.CharField(2400)
+    name = models.CharField(max_length=100, null=True)
+    description = models.CharField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="team_created")
-    member = models.ForeignKey(User, on_delete=models.PROTECT, related_name="team_member")
+    members = models.ManyToManyField(User, related_name="team_member")
     
+class CustomTeam(Group):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+
 
 class Project(models.Model):
     name = models.CharField(max_length=50)

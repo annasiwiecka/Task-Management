@@ -14,10 +14,13 @@ urlpatterns = [
     
    path("profile/", views.profile, name="profile"),
    path("notification", views.notification, name="notification"),
-   path("team", views.team, name="team"),
+   path("team/'", views.team, name="team"),
+   path('team/<int:team_id>/', views.team, name='team_with_id'),
    path("project", views.project, name="project"),
    path("my-task", views.my_task, name="my-task"),
    path("Settings", views.settingsPage, name="settings"),
+
+   path("create-team", views.create_team, name="create_team")
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

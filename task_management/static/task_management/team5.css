@@ -1,0 +1,22 @@
+.project {
+    width: 600px;
+    border: none;
+    padding: 40px;
+    margin: auto;
+    
+    
+    text-align: center;
+
+}
+
+.button {
+    font-size: 22px;
+}
+
+ul {
+    margin-bottom: 10px;
+}
+
+h1 {
+    text-align: center;
+}

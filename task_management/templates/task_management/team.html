@@ -6,20 +6,22 @@ Team
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "task_management/team2.css" %}">
+<link rel="stylesheet" href="{% static "task_management/team5.css" %}">
 {% endblock css_file %}
 
 {% block content %}
-    <div>
-        <h1>List of All Teams</h1>
+{% load crispy_forms_tags %}
+<h1>List of All Teams</h1>
+    <div class="project">
+        
             {% for team in teams %}
-            <li>
-                <a href="{% url "team_id" team_id=team.id %}">Team</a>
-                <strong>{{ team.name }}</strong>
-               
-                <!-- Add other team details here -->
-                {{ team.owner }}
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">
+                <a class ="button" href="{% url "team_id" team_id=team.id %}">{{ team.name }}</a>
             </li>
+            <li class="list-group-item"> {{ team.description }}</li>
+            <li class="list-group-item">Owner: {{ team.owner }}</li>
+            
             {% endfor %}
         </ul>
     </div>

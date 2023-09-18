@@ -9,7 +9,6 @@ class UserCreate(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name='profile')
     name = models.CharField(max_length=30, null=True)
     profile_picture = models.ImageField(default='default.jpg', upload_to='profile_images', blank=True)
-    role = models.CharField(max_length=20, null=True)
     
     
     def __str__(self):
@@ -33,6 +32,29 @@ class Team(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="team_created")
     members = models.ManyToManyField(User, related_name="team_member")
     
+    class Meta:
+        permissions = [
+            ("can_manage_team", "can manage team"),
+            ("can_manage_tasks", "can manage tasks")
+        ]
+
+    def __str__(self):
+        return self.name
+    
+
+class TeamMember(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    role = models.CharField(max_length=100)
+    responsibilities = models.TextField(blank=True)
+    is_manager = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.user.username
+    
+
+
 class CustomTeam(Group):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 

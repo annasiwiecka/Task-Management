@@ -25,7 +25,7 @@ class UpdateProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserCreate
-        fields = ['name', 'profile_picture', 'role']
+        fields = ['name', 'profile_picture']
 
 class TeamForm(forms.ModelForm):
     class Meta:

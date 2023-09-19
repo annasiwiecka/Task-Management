@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from PIL import Image
+from django.utils import timezone
+
 
 
 # Create your models here.
@@ -41,6 +43,14 @@ class Team(models.Model):
     def __str__(self):
         return self.name
     
+    def save(self, *args, **kwargs):
+        owner_team_member, created = TeamMember.objects.get_or_create(
+            user=self.owner,
+            team=self,
+            role="Owner"
+        )
+        owner_team_member.is_manager=True
+        super().save(*args, **kwargs)
 
 class TeamMember(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -49,6 +59,7 @@ class TeamMember(models.Model):
     responsibilities = models.TextField(blank=True)
     is_manager = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    user_profile = models.OneToOneField(UserCreate, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
@@ -118,7 +129,7 @@ class Task(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=2400)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
-    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey(TaskMember, on_delete=models.CASCADE)
     deadline = models.DateTimeField()
     priority = models.ForeignKey(Priority, on_delete=models.PROTECT)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Not Started')
@@ -128,21 +139,43 @@ class Task(models.Model):
     
 
 class Comment(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.CharField(max_length=500)
-    created_at = models.DateTimeField()
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(TeamMember, on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Comment by {self.user.username} on {self.timestamp}"
+
 
 class Attachment(models.Model):
-    file_name = models.CharField(max_length=40)
-    file = models.CharField(max_length=200)
-    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    upload = models.DateTimeField()
+    description = models.TextField(blank=True, null=True)
+    file = models.FileField(upload_to='attachments')
+    uploaded_by = models.ForeignKey(TeamMember, on_delete=models.SET_NULL)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+    upload = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.file.name
+    
 
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.CharField(max_length=50)
-    timestamp = models.DateTimeField()
-    is_read = models.CharField(max_length=10)
+    message = models.TextField
+    timestamp = models.DateTimeField(default=timezone.now)
+    is_read = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"Notification for {self.user.username}: {self.message}"
+
+class Message(models.Model):
+    sender = models.ForeignKey(TeamMember, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(TeamMember, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, blank=True, null=True)
+    content = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Message from {self.sender.user.username} to {self.receiver.user.username}: {self.content}"

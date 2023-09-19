@@ -21,7 +21,6 @@ class UpdateUserForm(forms.ModelForm):
 class UpdateProfileForm(forms.ModelForm):
     name = forms.CharField()
     profile_picture = forms.ImageField()
-    role = forms.CharField()
 
     class Meta:
         model = UserCreate
@@ -31,3 +30,18 @@ class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = ['name', 'description']
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = '__all__'
+
+class PriorityForm(forms.ModelForm):
+    class Meta:
+        model = Priority
+        fields = '__all__'

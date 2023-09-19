@@ -59,7 +59,8 @@ class TeamMember(models.Model):
     responsibilities = models.TextField(blank=True)
     is_manager = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    user_profile = models.OneToOneField(UserCreate, on_delete=models.CASCADE)
+
+    user_profile = models.OneToOneField(UserCreate, on_delete=models.CASCADE, null=True, default=None)
 
     def __str__(self):
         return self.user.username
@@ -129,7 +130,7 @@ class Task(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=2400)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
-    assigned_to = models.ForeignKey(TaskMember, on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey(TeamMember, on_delete=models.CASCADE)
     deadline = models.DateTimeField()
     priority = models.ForeignKey(Priority, on_delete=models.PROTECT)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Not Started')
@@ -152,7 +153,7 @@ class Comment(models.Model):
 class Attachment(models.Model):
     description = models.TextField(blank=True, null=True)
     file = models.FileField(upload_to='attachments')
-    uploaded_by = models.ForeignKey(TeamMember, on_delete=models.SET_NULL)
+    uploaded_by = models.ForeignKey(TeamMember, on_delete=models.SET_NULL, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     upload = models.DateTimeField(auto_now_add=True)
@@ -171,8 +172,8 @@ class Notification(models.Model):
         return f"Notification for {self.user.username}: {self.message}"
 
 class Message(models.Model):
-    sender = models.ForeignKey(TeamMember, on_delete=models.CASCADE)
-    receiver = models.ForeignKey(TeamMember, on_delete=models.CASCADE)
+    sender = models.ForeignKey(TeamMember, on_delete=models.CASCADE, related_name='sent_messages')
+    receiver = models.ForeignKey(TeamMember, on_delete=models.CASCADE, related_name='received_messages')
     team = models.ForeignKey(Team, on_delete=models.CASCADE, blank=True, null=True)
     content = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now)

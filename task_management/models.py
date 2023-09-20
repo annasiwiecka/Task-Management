@@ -44,12 +44,18 @@ class Team(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
+
+        if self.pk is None:
+            super().save(*args, **kwargs)
+
         owner_team_member, created = TeamMember.objects.get_or_create(
             user=self.owner,
             team=self,
             role="Owner"
         )
         owner_team_member.is_manager=True
+        owner_team_member.save()
+        
         super().save(*args, **kwargs)
 
 class TeamMember(models.Model):
@@ -65,6 +71,7 @@ class TeamMember(models.Model):
     def __str__(self):
         return self.user.username
 
+   
 class CustomTeam(Group):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
 

@@ -131,3 +131,24 @@ def create_team(request):
 def list_all_teams(request):
     teams = Team.objects.all()
     return render(request, 'task_management/team.html', {"teams": teams})  
+
+@login_required(login_url="login")
+def sent_invitation(request):
+    if request.method == 'POST':
+        form = TeamInvitationForm(request.POST)
+        if form.is_valid():
+            invitation = form.save(commit=False)
+            invitation.sender = request.user
+
+            current_team = Team.objects.filter(members=request.user).first()
+            if current_team:
+                invitation.team = current_team
+
+            invitation.save()
+            Notification.objects.create(user=invitation.recipient, team_invitation=invitation, message="You've received a team invitation.")
+
+            return redirect('invitation_sent')  # Redirect to a confirmation page
+    else:
+        form = TeamInvitationForm()
+
+    return render(request, 'send_invitation.html', {'form': form})

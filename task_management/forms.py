@@ -34,14 +34,27 @@ class TeamForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = ['name', 'description', 'start', 'end', 'status']
 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = '__all__'
+        fields = ['name', 'description', 'assigned_to', 'deadline', 'priority', 'status']
 
 class PriorityForm(forms.ModelForm):
     class Meta:
         model = Priority
         fields = '__all__'
+
+class CommentForm(forms.ModelForm):
+    model = Comment
+    fields = ['content']
+    
+class Notification(forms.ModelForm):
+    model = Notification
+    fields = ['message', 'is_read']
+
+class TeamInvitationForm(forms.ModelForm):
+    class Meta:
+        model = TeamInvitation
+        fields = ['receiver', 'message']

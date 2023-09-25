@@ -130,7 +130,11 @@ def create_team(request):
 
 def list_all_teams(request):
     teams = Team.objects.all()
-    return render(request, 'task_management/team.html', {"teams": teams})  
+    return render(request, 'task_management/team.html', {"teams": teams}) 
+
+def team_member(request, team_member_id):
+    team_member = get_object_or_404(TeamMember, id=team_member_id)
+    return render(request, 'team_member.html', {'team_member': team_member}) 
 
 @login_required(login_url="login")
 def sent_invitation(request):
@@ -152,3 +156,34 @@ def sent_invitation(request):
         form = TeamInvitationForm()
 
     return render(request, 'send_invitation.html', {'form': form})
+
+def notification(request):
+    
+    notifications = Notification.objects.filter(user=request.user, team_invitation__isnull=False)
+    notifications.update(is_read=True)
+
+    return render(request, 'notifications.html', {'notifications': notifications})
+
+def accept_invitation(request, invitation_id):
+    invitation = TeamInvitation.objects.get(pk=invitation_id)
+
+    if request.method == 'POST':
+        invitation.is_accepted = True
+        invitation.save()
+
+        team_member, created = TeamMember.objects.get_or_create(
+            user=request.user,
+            team=invitation.team,
+            defaults={'role': 'Member'}  # You can customize the role as needed
+        )
+
+        team_member.is_active = True
+        team_member.save()
+
+        Notification.objects.create(user=invitation.sender, message=f"{request.user.username} accepted your team invitation.")
+
+        # Redirect to the team's page or a confirmation page
+        messages.success(request, f"You've joined {invitation.team.name} team!")
+        return redirect('team_id', team_id=invitation.team.id)
+
+    return render(request, 'accept_invitation.html', {'invitation': invitation})

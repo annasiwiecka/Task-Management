@@ -174,6 +174,8 @@ class TeamInvitation(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     message = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now)
+    is_accepted = models.BooleanField(default=False)  # Add this field
+
 
     def __str__(self):
        return f"Team Invitation from {self.sender.username} to {self.receiver.username} for {self.team.name}"

@@ -58,3 +58,8 @@ class TeamInvitationForm(forms.ModelForm):
     class Meta:
         model = TeamInvitation
         fields = ['receiver', 'message']
+
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 4}),
+        initial="Hello, I invite you to join my team!"
+    )

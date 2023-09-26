@@ -15,6 +15,9 @@ def save_profile(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Team)
 def create_team_member(sender, instance, created, **kwargs):
-    if created:
-        if instance.is_accepted:
-            TeamMember.objects.create(user=instance.recipient, team=instance.team)
+    if created and isinstance(instance, TeamInvitation) and instance.is_accepted:
+        # Deactivate the existing TeamMember if it exists for the same user and team
+        TeamMember.objects.filter(user=instance.receiver, team=instance.team).update(is_active=False)
+        
+        # Create the new TeamMember
+        TeamMember.objects.create(user=instance.receiver, team=instance.team, is_active=True)

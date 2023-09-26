@@ -1,0 +1,25 @@
+{% extends 'base_home.html' %}
+{% load static %}
+
+{% block title %}
+Sent Invitation
+{% endblock title %}
+
+{% block css_file %}
+<link rel="stylesheet" href="{% static "task_management/sent_invitation.css" %}">
+
+{% endblock css_file %}
+
+{% block content %}
+<div class="id_in">
+    {% load crispy_forms_tags %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="button", type='submit'>Sent</button>
+    </form>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endblock content %}

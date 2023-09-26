@@ -130,7 +130,7 @@ def create_team(request):
 
 def list_all_teams(request):
     teams = Team.objects.all()
-    return render(request, 'task_management/team_id.html', {"teams": teams}) 
+    return render(request, 'task_management/team.html', {"teams": teams}) 
 
 def team_member(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
@@ -143,30 +143,32 @@ def sent_invitation(request):
         if form.is_valid():
             invitation = form.save(commit=False)
             invitation.sender = request.user
-
+            messages.success(request, "You've received a team invitation.")
+            
             current_team = Team.objects.filter(members=request.user).first()
             if current_team:
                 invitation.team = current_team
+                invitation.save()
+                receiver = invitation.receiver
 
-            invitation.save()
-            recipient = invitation.receiver
-            custom_message = f"You've received a team invitation from {invitation.sender.username} to join the team {invitation.team.name}. <a href='{invitation.get_absolute_url()}'>Click here</a> to view the invitation."
-            link_url = invitation.get_absolute_url()
-            Notification.objects.create(user=invitation.recipient, team_invitation=invitation, message="You've received a team invitation.")
-
-            return redirect('invitation_sent')  
+                
+                custom_message = f"You've received a team invitation from {invitation.sender.username} to join the team {invitation.team.name}. <a href='{invitation.get_absolute_url()}'>Click here</a> to view the invitation."
+                link_url = invitation.get_absolute_url()
+                Notification.objects.create(user=invitation.recipient, team_invitation=invitation, message="You've received a team invitation.")
+                
+                return redirect('send_invitation')  
     else:
         form = TeamInvitationForm()
 
-    return render(request, 'send_invitation.html', {'form': form})
+    return render(request, 'task_management/send_invitation.html', {'form': form})
 
-def invitation_detail(request, invitation_id):
+def invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
-    return render(request, 'invitation_detail.html', {'invitation': invitation})
+    return render(request, 'task_management/invitation_detail.html', {'invitation': invitation})
 
 def notification(request):
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    return render(request, 'notifications.html', {'notifications': notifications})
+    return render(request, 'task_management/notification.html', {'notification': notification})
 
 def accept_invitation(request, invitation_id):
     invitation = TeamInvitation.objects.get(pk=invitation_id)
@@ -205,6 +207,6 @@ def decline_invitation(request, invitation_id):
         Notification.objects.create(user=invitation.sender, message=decline_message)
 
         messages.info(request, "You've declined the team invitation.")
-        return redirect('notifications')
+        return redirect('notification')
 
     return render(request, 'invitation.html', {'invitation': invitation})

@@ -21,7 +21,11 @@ urlpatterns = [
    path("Settings", views.settingsPage, name="settings"),
    path("teams/", views.list_all_teams, name="list"),
 
-   path("create-team", views.create_team, name="create_team")
+   path("create-team", views.create_team, name="create_team"),
+   path("sent_invitation", views.sent_invitation, name="sent_invitation"),
+   path("invitation", views.invitation, name="invitation"),
+   path("accept_invitation", views.accept_invitation, name="accept_invitation"),
+   path("decline_invitation", views.decline_invitation, name="decline_invitation")
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

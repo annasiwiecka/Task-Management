@@ -6,9 +6,22 @@
 {% endblock title %}
 
 {% block css_file %}
-
+<link rel="stylesheet" href="{% static "task_management/notification.css" %}">
 {% endblock css_file %}
 
+
 {% block content %}
+{% load crispy_forms_tags %}
+<ul class="id_nav">
+    <p>Norification</p>
+    {% for notification in notifications %}
+      <li>
+        <strong>{{ notification.user.username }}</strong>
+        {% if notification.team_invitation %}
+          <a href="{% url 'invitation' invitation_id=notification.team_invitation.id %}">View Invitation</a>
+        {% endif %}
+      </li>
+    {% endfor %}
+ </ul>
 
 {% endblock content %}

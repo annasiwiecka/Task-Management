@@ -9,14 +9,14 @@ Sent Invitation
 <link rel="stylesheet" href="{% static "task_management/sent_invitation.css" %}">
 
 {% endblock css_file %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="id_in">
-    {% load crispy_forms_tags %}
+   
     <form method="POST">
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="button", type='submit'>Sent</button>
+        <button class="button" type='submit'>Sent</button>
     </form>
     {% for message in messages %}
         <p>{{ message }}</p>

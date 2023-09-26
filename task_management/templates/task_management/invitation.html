@@ -1,0 +1,24 @@
+{% extends 'base_home.html' %}
+{% load static %}
+
+{% csrf_token %}
+
+{% block title %}Home{% endblock title %}
+
+{% block css_file %}
+<link rel="stylesheet" href="{% static "task_management/invitation.css" %}">{% endblock css_file %}
+
+{% block content %}
+<div class="invit">
+<h1>Invitation Details</h1>
+<p><strong>Sender:</strong> {{ invitation.sender.username }}</p>
+<p><strong>Message:</strong> {{ invitation.message }}</p>
+<p>{{ invitation.team }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <a href="{% url "accept_invitation" invitation_id=invitation.id %}">Accept</a>
+    <a href="{% url "decline_invitation" invitation_id=invitation.id %}">Deecline</a>
+</form>
+</div>
+{% endblock content %}

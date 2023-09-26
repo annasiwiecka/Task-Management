@@ -137,7 +137,7 @@ def team_member(request, team_member_id):
     return render(request, 'team_member.html', {'team_member': team_member}) 
 
 @login_required(login_url="login")
-def sent_invitation(request):
+def send_invitation(request):
     if request.method == 'POST':
         form = TeamInvitationForm(request.POST)
         if form.is_valid():
@@ -151,24 +151,25 @@ def sent_invitation(request):
                 invitation.save()
                 receiver = invitation.receiver
 
-                
-                custom_message = f"You've received a team invitation from {invitation.sender.username} to join the team {invitation.team.name}. <a href='{invitation.get_absolute_url()}'>Click here</a> to view the invitation."
-                link_url = invitation.get_absolute_url()
-                Notification.objects.create(user=invitation.recipient, team_invitation=invitation, message="You've received a team invitation.")
-                
+              
+                Notification.objects.create(user=invitation.receiver, team_invitation=invitation)
                 return redirect('send_invitation')  
+                
     else:
         form = TeamInvitationForm()
 
     return render(request, 'task_management/send_invitation.html', {'form': form})
 
+@login_required(login_url="login")
 def invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
-    return render(request, 'task_management/invitation_detail.html', {'invitation': invitation})
+    return render(request, 'task_management/invitation.html', {'invitation': invitation})
 
+@login_required(login_url="login")
 def notification(request):
+    user = request.user 
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    return render(request, 'task_management/notification.html', {'notification': notification})
+    return render(request, 'task_management/notification.html', {'notifications': notifications})
 
 def accept_invitation(request, invitation_id):
     invitation = TeamInvitation.objects.get(pk=invitation_id)
@@ -186,19 +187,19 @@ def accept_invitation(request, invitation_id):
         team_member.is_active = True
         team_member.save()
 
-        custom_message = f"{request.user.username} accepted your team invitation to join the team {invitation.team.name}. <a href='{invitation.get_absolute_url()}'>Click here</a> to view the invitation."
-        link_url = invitation.get_absolute_url()
-        Notification.objects.create(user=invitation.sender, custom_message=custom_message, link_url=link_url)
+        
+        Notification.objects.create(user=invitation.sender, custom_message=custom_message)
 
 
         # Redirect to the team's page or a confirmation page
         messages.success(request, f"You've joined {invitation.team.name} team!")
-        return redirect('team_id', team_id=invitation.team.id)
+    return redirect('team_id', team_id=invitation.team.id)
 
-    return render(request, 'accept_invitation.html', {'invitation': invitation})
+   
 
 def decline_invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
+
 
     if request.method == 'POST':
         invitation.delete()
@@ -207,6 +208,6 @@ def decline_invitation(request, invitation_id):
         Notification.objects.create(user=invitation.sender, message=decline_message)
 
         messages.info(request, "You've declined the team invitation.")
-        return redirect('notification')
+    return redirect('notification')
 
-    return render(request, 'invitation.html', {'invitation': invitation})
+  

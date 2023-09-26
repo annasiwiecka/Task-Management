@@ -180,8 +180,7 @@ class TeamInvitation(models.Model):
     def __str__(self):
        return f"Team Invitation from {self.sender.username} to {self.receiver.username} for {self.team.name}"
 
-    def get_absolute_url(self):
-        return reverse('invitation_detail', args=[str(self.id)])
+  
 
 
 class Notification(models.Model):

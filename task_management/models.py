@@ -168,6 +168,19 @@ class Attachment(models.Model):
     def __str__(self):
         return self.file.name
     
+class TeamInvitation(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invitations')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invitations')
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+       return f"Team Invitation from {self.sender.username} to {self.receiver.username} for {self.team.name}"
+
+    def get_absolute_url(self):
+        return reverse('invitation_detail', args=[str(self.id)])
+
 
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -190,13 +203,3 @@ class Message(models.Model):
     def __str__(self):
         return f"Message from {self.sender.user.username} to {self.receiver.user.username}: {self.content}"
 
-class TeamInvitation(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_invitations')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_invitations')
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    message = models.TextField()
-    timestamp = models.DateTimeField(default=timezone.now)
-    is_accepted = models.BooleanField(default=False)
-
-    def __str__(self):
-       return f"Team Invitation from {self.sender.username} to {self.receiver.username} for {self.team.name}"

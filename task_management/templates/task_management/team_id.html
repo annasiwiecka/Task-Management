@@ -22,18 +22,14 @@ Page
         <!-- Add other team details here -->
     </ul>
 
-    <h2>Team Members</h2>
+    <p>Team ID: {{ team.id }}</p>
+    <p>Team Name: {{ team.name }}</p>
+    <p>Number of Members: {{ team.members.count }}</p>
+    
     <ul>
         {% for member in team.members.all %}
             <li>{{ member.username }}</li>
-        {% empty %}
-            <li>No members in this team yet.</li>
         {% endfor %}
-    </ul>
-    <h2>Projects</h2>
-    <h2>Tasks</h2>
-    <ul>
-        <!-- Add task details here -->
     </ul>
 
     <!-- Add any other team-related information here -->

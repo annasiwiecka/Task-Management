@@ -27,12 +27,25 @@ class UserCreate(models.Model):
             img.thumbnail(output_size)
             img.save(self.profile_picture.path)
    
+class TeamMember(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    team = models.ForeignKey('Team', on_delete=models.CASCADE)
+    role = models.CharField(max_length=100)
+    responsibilities = models.TextField(blank=True)
+    is_manager = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    user_profile = models.OneToOneField(UserCreate, on_delete=models.CASCADE, null=True, default=None)
+
+    def __str__(self):
+        return self.user.username
+
 
 class Team(models.Model):
     name = models.CharField(max_length=100, null=True)
     description = models.CharField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="team_created")
-    members = models.ManyToManyField(User, related_name="team_member")
+    members = models.ManyToManyField(TeamMember, related_name="team_member")
     
     class Meta:
         permissions = [
@@ -58,18 +71,6 @@ class Team(models.Model):
         
         super().save(*args, **kwargs)
 
-class TeamMember(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    role = models.CharField(max_length=100)
-    responsibilities = models.TextField(blank=True)
-    is_manager = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-
-    user_profile = models.OneToOneField(UserCreate, on_delete=models.CASCADE, null=True, default=None)
-
-    def __str__(self):
-        return self.user.username
 
    
 class CustomTeam(Group):
@@ -174,8 +175,7 @@ class TeamInvitation(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     message = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now)
-    is_accepted = models.BooleanField(default=False)  # Add this field
-
+    is_accepted = models.BooleanField(default=False)  
 
     def __str__(self):
        return f"Team Invitation from {self.sender.username} to {self.receiver.username} for {self.team.name}"

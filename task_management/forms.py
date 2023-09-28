@@ -63,3 +63,7 @@ class TeamInvitationForm(forms.ModelForm):
         widget=forms.Textarea(attrs={'rows': 4}),
         initial="Hello, I invite you to join my team!"
     )
+
+class TeamMemberForm(forms.ModelForm):
+    model = TeamMember
+    fields = '__all__'

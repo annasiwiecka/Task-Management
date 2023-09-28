@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib import messages
@@ -94,13 +94,10 @@ def notification(request):
     return render(request, "task_management/notifications.html")
 
 @login_required(login_url="login")
-def team(request, team_id=None):
-    if team_id is None:
-        return render(request, 'task_management/team.html') 
-
-    else:
-        team = get_object_or_404(Team, id=team_id)
+def team(request, team_id):
     
+    team = get_object_or_404(Team, id=team_id)
+    print(team.members.all())
     return render(request, 'task_management/team_id.html', {'team': team})
 
 #@login_required(login_url="login")
@@ -138,27 +135,34 @@ def team_member(request, team_member_id):
 
 @login_required(login_url="login")
 def send_invitation(request):
-    if request.method == 'POST':
-        form = TeamInvitationForm(request.POST)
-        if form.is_valid():
-            invitation = form.save(commit=False)
-            invitation.sender = request.user
-            messages.success(request, "You've received a team invitation.")
+    current_team = Team.objects.filter(owner=request.user).first()
+    if current_team:
+
+        if request.method == 'POST':
+            form = TeamInvitationForm(request.POST)
+            if form.is_valid():
+                 
+                invitation = form.save(commit=False)
+                invitation.sender = request.user
+                invitation.receiver = form.cleaned_data['receiver']
+
+                if request.user == current_team.owner:
+                    invitation.team = current_team
+                    invitation.save()
+                    messages.success(request, "You've sent a team invitation.")
+
+                    Notification.objects.create(user=invitation.receiver, team_invitation=invitation)
+                    return redirect('send_invitation')
+                else:
+                    return HttpResponseForbidden("You are not the owner and cannot send invitations.")
             
-            current_team = Team.objects.filter(members=request.user).first()
-            if current_team:
-                invitation.team = current_team
-                invitation.save()
-                receiver = invitation.receiver
+                form = TeamInvitationForm()
+        else:
+            form = TeamInvitationForm()
 
-              
-                Notification.objects.create(user=invitation.receiver, team_invitation=invitation)
-                return redirect('send_invitation')  
-                
-    else:
-        form = TeamInvitationForm()
-
-    return render(request, 'task_management/send_invitation.html', {'form': form})
+    return render(request, 'task_management/send_invitation.html', {
+        'form': form
+        })
 
 @login_required(login_url="login")
 def invitation(request, invitation_id):
@@ -171,31 +175,64 @@ def notification(request):
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     return render(request, 'task_management/notification.html', {'notifications': notifications})
 
+'''def accept_invitation(request, invitation_id):
+
+    invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
+
+    if request.method == 'POST':
+        print("Accept Invitation view is executed")  # Add this line for debugging
+
+        invitation.is_accepted = True
+        invitation.save()
+       
+
+        team_member, created = TeamMember.objects.get_or_create(
+            user=request.user,
+            team=invitation.team,
+            defaults={'role': 'Member'} 
+        )
+      
+        team_member.is_active = True
+        team_member.save()
+        
+        if not created:
+            team_member.is_active = True
+            team_member.save()
+        
+        Notification.objects.create(user=invitation.sender)
+        
+        messages.success(request, f"You've joined {invitation.team.name} team!")
+        
+
+    return redirect('team_id', team_id=invitation.team.id)'''
+
 def accept_invitation(request, invitation_id):
-    invitation = TeamInvitation.objects.get(pk=invitation_id)
+    invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
 
     if request.method == 'POST':
         invitation.is_accepted = True
         invitation.save()
 
+        # Check if the user is already a team member or is inactive
         team_member, created = TeamMember.objects.get_or_create(
             user=request.user,
             team=invitation.team,
-            defaults={'role': 'Member'}  # You can customize the role as needed
+            defaults={'role': 'Member'}
         )
+      
+        TeamMember.objects.filter(user=request.user, team=invitation.team).update(is_active=False)
 
         team_member.is_active = True
         team_member.save()
-
         
-        Notification.objects.create(user=invitation.sender, custom_message=custom_message)
+        invitation.delete()
 
 
-        # Redirect to the team's page or a confirmation page
         messages.success(request, f"You've joined {invitation.team.name} team!")
+
     return redirect('team_id', team_id=invitation.team.id)
 
-   
+ 
 
 def decline_invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)

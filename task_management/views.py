@@ -98,7 +98,9 @@ def team(request, team_id):
     
     team = get_object_or_404(Team, id=team_id)
     print(team.members.all())
-    return render(request, 'task_management/team_id.html', {'team': team})
+    return render(request, 'task_management/team_id.html', {
+        'team': team
+        })
 
 #@login_required(login_url="login")
 def project(request):
@@ -123,15 +125,48 @@ def create_team(request):
             return redirect('team_id', team_id=team.id)
     else:
         form = TeamForm()
-    return render(request, 'task_management/create_team.html', {'form': form})
+    return render(request, 'task_management/create_team.html', {
+        'form': form
+        })
 
 def list_all_teams(request):
     teams = Team.objects.all()
-    return render(request, 'task_management/team.html', {"teams": teams}) 
+    return render(request, 'task_management/team.html', {
+        "teams": teams
+        }) 
+
+'''def team_member_list(request, team_member_id):
+    team_member = get_object_or_404(TeamMember, id=team_member_id)
+    return render(request, 'team_member.html', {'team_member': team_member}) '''
 
 def team_member(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
-    return render(request, 'team_member.html', {'team_member': team_member}) 
+    return render(request, 'task_management/team_member.html', {
+        'team_member': team_member
+        })
+    
+
+def team_member_edit(request, team_member_id):
+    team_member = get_object_or_404(TeamMember, id=team_member_id)
+
+    has_permission = (
+        request.user.has_perm('task_management.can_manage_team')
+    )
+
+    if not has_permission:
+        return redirect('team_member_profile', team_member_id=team_member_id)
+
+    if request.method == 'POST':
+        form = TeamMemberForm(request.POST, instance=team_member)
+        if form.is_valid():
+            form.save()
+            return redirect('team_member', team_member_id=team_member_id)
+        else:
+            form = TeamMemberForm(instance=team_member)
+    return render(request, 'task_management/team_profile_edit', {
+        'team_member': team_member,
+        'form': form
+    })
 
 @login_required(login_url="login")
 def send_invitation(request):
@@ -167,13 +202,17 @@ def send_invitation(request):
 @login_required(login_url="login")
 def invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
-    return render(request, 'task_management/invitation.html', {'invitation': invitation})
+    return render(request, 'task_management/invitation.html', {
+        'invitation': invitation
+        })
 
 @login_required(login_url="login")
 def notification(request):
     user = request.user 
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    return render(request, 'task_management/notification.html', {'notifications': notifications})
+    return render(request, 'task_management/notification.html', {
+        'notifications': notifications
+        })
 
 '''def accept_invitation(request, invitation_id):
 
@@ -213,7 +252,7 @@ def accept_invitation(request, invitation_id):
         invitation.is_accepted = True
         invitation.save()
 
-        # Check if the user is already a team member or is inactive
+       
         team_member, created = TeamMember.objects.get_or_create(
             user=request.user,
             team=invitation.team,

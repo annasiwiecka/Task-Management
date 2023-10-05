@@ -25,7 +25,10 @@ urlpatterns = [
    path("send_invitation", views.send_invitation, name="send_invitation"),
    path("invitation/<int:invitation_id>/", views.invitation, name="invitation"),
    path("accept_invitation/<int:invitation_id>/", views.accept_invitation, name="accept_invitation"),
-   path("decline_invitation/<int:invitation_id>/", views.decline_invitation, name="decline_invitation")
+   path("decline_invitation/<int:invitation_id>/", views.decline_invitation, name="decline_invitation"),
+
+    path('team_member/<int:team_member.id>/', views.team_member, name="team_member"),
+    path('team_member/<int:team_member.id>/edit/', views.team_member_edit, name="team_member_edit"),
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

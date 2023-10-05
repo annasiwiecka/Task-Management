@@ -89,7 +89,7 @@ def profile(request):
         })
 
   
-#@login_required(login_url="login")
+@login_required(login_url="login")
 def notification(request):
     return render(request, "task_management/notifications.html")
 
@@ -104,15 +104,15 @@ def team(request, team_id):
         'team_members': team_members
         })
 
-#@login_required(login_url="login")
+@login_required(login_url="login")
 def project(request):
     return render(request, "task_management/project.html")
 
-#@login_required(login_url="login")
+@login_required(login_url="login")
 def my_task(request):
     return render(request, "task_management/my_task.html")
 
-#@login_required(login_url="login")
+@login_required(login_url="login")
 def settingsPage(request):
     return render(request, "task_management/settings.html")
 
@@ -131,6 +131,7 @@ def create_team(request):
         'form': form
         })
 
+@login_required(login_url="login")
 def list_all_teams(request):
     teams = Team.objects.all()
     return render(request, 'task_management/team.html', {
@@ -141,6 +142,7 @@ def list_all_teams(request):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
     return render(request, 'team_member.html', {'team_member': team_member}) '''
 
+@login_required(login_url="login")
 def team_member(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
     is_owner = request.user == team_member.user
@@ -150,12 +152,13 @@ def team_member(request, team_member_id):
         or request.user.has_perm('task_management.can_manage_team')  # Check the can_manage_team permission
     )
     
+    
     return render(request, 'task_management/team_member.html', {
         'team_member': team_member,
         'can_edit_profile': can_edit_profile
         })
     
-
+@login_required(login_url="login")
 def team_member_edit(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
 
@@ -181,6 +184,29 @@ def team_member_edit(request, team_member_id):
         'team_member': team_member,
         'form': form,
         'can_edit_profile': can_edit_profile
+    })
+
+def team_member_delete(request, team_member_id):
+    team_member = get_object_or_404(TeamMember, id=team_member_id)
+
+    is_owner = request.user == team_member.user
+
+    can_delete = (
+        is_owner
+        or request.user.has_perm('task_management.can_manage_team')
+    )
+
+    if not can_delete:
+        return redirect('team_member', team_member_id=team_member_id)
+
+    if request.method == 'POST':
+        # Delete the team member upon confirmation
+        team_member.delete()
+        return redirect('team_member')
+
+    return render(request, 'task_management/team_member_delete.html', {
+        'team_member': team_member,
+        'can_delete': can_delete
     })
 
 @login_required(login_url="login")
@@ -229,7 +255,7 @@ def notification(request):
         'notifications': notifications
         })
 
-
+@login_required(login_url="login")
 def accept_invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
 
@@ -257,7 +283,7 @@ def accept_invitation(request, invitation_id):
     return redirect('team_id', team_id=invitation.team.id)
 
  
-
+@login_required(login_url="login")
 def decline_invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
 

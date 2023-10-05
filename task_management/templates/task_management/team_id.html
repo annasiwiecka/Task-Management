@@ -28,7 +28,7 @@ Page
     
     <ul>
         {% for team_member in team_members %}
-            <a href="{% url 'team_member' team_member_id=team_member.id %}">{{ team_member.user.username }}</a>
+            <a href="{% url 'team_member' team_member_id=team_member.id %}">{{ team_member.user.username }} {{ team_member.role }}</a>
         {% endfor %}
     </ul>
 

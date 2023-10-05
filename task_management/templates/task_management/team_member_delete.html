@@ -1,0 +1,27 @@
+{% extends 'base_home.html' %}
+{% load static %}
+
+{% csrf_token %}
+
+{% block title %}
+{% endblock title %}
+
+{% block css_file %}
+<link rel="stylesheet" href="{% static "task_management/team_member_delete.css" %}">
+{% endblock css_file %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class='delete'>
+    <h1>Delete Team Member</h1>
+    <p>Are you sure you want to delete the team member {{ team_member.user.username }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type='submit'>Delete</button>
+    </form>
+    <p><a href="{% url 'team_member' team_member.id %}">Cancel</a></p>
+</div>
+    
+
+{% endblock content %}

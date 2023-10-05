@@ -6,7 +6,7 @@ Team Member
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "task_management/team_member_edit1.css" %}">
+<link rel="stylesheet" href="{% static "task_management/team_member_edit2.css" %}">
 
 {% endblock css_file %}
 
@@ -19,6 +19,7 @@ Team Member
         {{ form|crispy }}
        
         <button class="button" type="submit">Update</button>
+        <a href="{% url "team_member_delete" team_member_id=team_member.id %}">Delete</a>
 
     </form>
 </div>

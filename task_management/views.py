@@ -145,7 +145,8 @@ def list_all_teams(request):
 @login_required(login_url="login")
 def team_member(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
-    is_owner = request.user == team_member.user
+    is_owner = Team.objects.filter(owner=request.user, id=team_member.team.id).exists()
+    
 
     can_edit_profile = (
         is_owner
@@ -163,7 +164,7 @@ def team_member_edit(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
 
 
-    is_owner = request.user == team_member.user
+    is_owner = Team.objects.filter(owner=request.user, id=team_member.team.id).exists()
 
     can_edit_profile = (
         is_owner
@@ -197,12 +198,12 @@ def team_member_delete(request, team_member_id):
     )
 
     if not can_delete:
-        return redirect('team_member', team_member_id=team_member_id)
+        return redirect('team_id', team_member_id=team_member_id)
 
     if request.method == 'POST':
         # Delete the team member upon confirmation
         team_member.delete()
-        return redirect('team_member')
+        return redirect('team_id', team_member_id=team_member_id)
 
     return render(request, 'task_management/team_member_delete.html', {
         'team_member': team_member,

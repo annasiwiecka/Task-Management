@@ -98,8 +98,10 @@ def team(request, team_id):
     
     team = get_object_or_404(Team, id=team_id)
     print(team.members.all())
+    team_members = TeamMember.objects.filter(team=team)
     return render(request, 'task_management/team_id.html', {
-        'team': team
+        'team': team,
+        'team_members': team_members
         })
 
 #@login_required(login_url="login")
@@ -141,31 +143,44 @@ def list_all_teams(request):
 
 def team_member(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
+    is_owner = request.user == team_member.user
+
+    can_edit_profile = (
+        is_owner
+        or request.user.has_perm('task_management.can_manage_team')  # Check the can_manage_team permission
+    )
+    
     return render(request, 'task_management/team_member.html', {
-        'team_member': team_member
+        'team_member': team_member,
+        'can_edit_profile': can_edit_profile
         })
     
 
 def team_member_edit(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
 
-    has_permission = (
-        request.user.has_perm('task_management.can_manage_team')
+
+    is_owner = request.user == team_member.user
+
+    can_edit_profile = (
+        is_owner
+        or request.user.has_perm('task_management.can_manage_team')
     )
 
-    if not has_permission:
-        return redirect('team_member_profile', team_member_id=team_member_id)
+    if not can_edit_profile:
+        return redirect('team_member', team_member_id=team_member_id)
 
     if request.method == 'POST':
         form = TeamMemberForm(request.POST, instance=team_member)
         if form.is_valid():
             form.save()
             return redirect('team_member', team_member_id=team_member_id)
-        else:
-            form = TeamMemberForm(instance=team_member)
-    return render(request, 'task_management/team_profile_edit', {
+    else:
+        form = TeamMemberForm(instance=team_member)
+    return render(request, 'task_management/team_member_edit.html', {
         'team_member': team_member,
-        'form': form
+        'form': form,
+        'can_edit_profile': can_edit_profile
     })
 
 @login_required(login_url="login")
@@ -214,36 +229,6 @@ def notification(request):
         'notifications': notifications
         })
 
-'''def accept_invitation(request, invitation_id):
-
-    invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
-
-    if request.method == 'POST':
-        print("Accept Invitation view is executed")  # Add this line for debugging
-
-        invitation.is_accepted = True
-        invitation.save()
-       
-
-        team_member, created = TeamMember.objects.get_or_create(
-            user=request.user,
-            team=invitation.team,
-            defaults={'role': 'Member'} 
-        )
-      
-        team_member.is_active = True
-        team_member.save()
-        
-        if not created:
-            team_member.is_active = True
-            team_member.save()
-        
-        Notification.objects.create(user=invitation.sender)
-        
-        messages.success(request, f"You've joined {invitation.team.name} team!")
-        
-
-    return redirect('team_id', team_id=invitation.team.id)'''
 
 def accept_invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)

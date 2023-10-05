@@ -1,0 +1,25 @@
+{% extends 'base_home.html' %}
+{% load static %}
+
+{% block title %}
+Team Member 
+{% endblock title %}
+
+{% block css_file %}
+<link rel="stylesheet" href="{% static "task_management/team_member_edit1.css" %}">
+
+{% endblock css_file %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="team">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+       
+        <button class="button" type="submit">Update</button>
+
+    </form>
+</div>
+{% endblock content %}

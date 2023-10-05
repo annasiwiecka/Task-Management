@@ -27,12 +27,11 @@ Page
     <p>Number of Members: {{ team.members.count }}</p>
     
     <ul>
-        {% for member in team.members.all %}
-            <li>{{ member.username }}</li>
+        {% for team_member in team_members %}
+            <a href="{% url 'team_member' team_member_id=team_member.id %}">{{ team_member.user.username }}</a>
         {% endfor %}
     </ul>
 
-    <!-- Add any other team-related information here -->
     {% else %}
     <p>Team not found.</p>
     {% endif %}

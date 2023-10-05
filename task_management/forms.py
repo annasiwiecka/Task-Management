@@ -65,5 +65,6 @@ class TeamInvitationForm(forms.ModelForm):
     )
 
 class TeamMemberForm(forms.ModelForm):
-    model = TeamMember
-    fields = '__all__'
+    class Meta:
+        model = TeamMember
+        fields = ['role', 'responsibilities', 'is_manager']

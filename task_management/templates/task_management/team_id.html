@@ -22,14 +22,14 @@ Page
                         <div class="panel-body">
                             
                           <ul class="basic-list image-list">
-                            
+                            <li class="nav-item">
                                 {% for team_member in team_members %}
                                     
                                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="img" class="img"><a href="{% url 'team_member' team_member_id=team_member.id %}">{{ team_member.user.username }}<span class="desc">{{ team_member.role }}</span></a>
-                            
+                                
                                 
                                 {% endfor %}
-                      
+                            </li>
                           </ul>
                         </div>
                     </div>  

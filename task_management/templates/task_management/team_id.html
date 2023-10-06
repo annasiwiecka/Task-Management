@@ -7,36 +7,39 @@ Page
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "task_management/team_id1.css" %}">
+<link rel="stylesheet" href="{% static "task_management/team_id23.css" %}">
 {% endblock css_file %}
 
 {% block content %}
-
-<div class="team">
-    {% if team %}
-    <h2>Team Information</h2>
-    <ul>
-        <li><strong>Name:</strong> {{ team.name }}</li>
-        <li><strong>Description:</strong> {{ team.description }}</li>
-        <li><strong>Owner:</strong> {{ team.owner.username }}</li>
-        <!-- Add other team details here -->
-    </ul>
-
-    <p>Team ID: {{ team.id }}</p>
-    <p>Team Name: {{ team.name }}</p>
-    <p>Number of Members: {{ team.members.count }}</p>
     
-    <ul>
-        {% for team_member in team_members %}
-            <a href="{% url 'team_member' team_member_id=team_member.id %}">{{ team_member.user.username }} {{ team_member.role }}</a>
-        {% endfor %}
-    </ul>
-
+    {% if team %}
+    <div class='con1'>
+        <div class="container">
+                    <div class="panel panel-info panel-widget">
+                        <div class="panel-title text-center">
+                          Team Members
+                        </div>
+                        <div class="panel-body">
+                            
+                          <ul class="basic-list image-list">
+                            
+                                {% for team_member in team_members %}
+                                    
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="img" class="img"><a href="{% url 'team_member' team_member_id=team_member.id %}">{{ team_member.user.username }}<span class="desc">{{ team_member.role }}</span></a>
+                            
+                                
+                                {% endfor %}
+                      
+                          </ul>
+                        </div>
+                    </div>  
+        </div>
+    
     {% else %}
     <p>Team not found.</p>
     {% endif %}
-    <a href="{% url "send_invitation" %}">Sent invitation</a>
-
+<div class='team'>
+         <a href="{% url "send_invitation" %}">Sent invitation</a>
 </div>
 
 {% endblock content %}

@@ -7,12 +7,15 @@ Page
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "task_management/team_id23.css" %}">
+<link rel="stylesheet" href="{% static "task_management/team_id34.css" %}">
 {% endblock css_file %}
 
 {% block content %}
     
     {% if team %}
+<div class='team'>
+        <a href="{% url "send_invitation" %}">Sent invitation</a>
+</div>
     <div class='con1'>
         <div class="container">
                     <div class="panel panel-info panel-widget">
@@ -25,9 +28,8 @@ Page
                             <li class="nav-item">
                                 {% for team_member in team_members %}
                                     
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="img" class="img"><a href="{% url 'team_member' team_member_id=team_member.id %}">{{ team_member.user.username }}<span class="desc">{{ team_member.role }}</span></a>
-                                
-                                
+                                    <img class="img" src="{{ team_member.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="Profile Picture" class="img"><a class='nav-link' href="{% url 'team_member' team_member_id=team_member.id %}">{{ team_member.user_profile.name|default:team_member.user.username }}<span class="desc">{{ team_member.role }}</span></a>
+                                    
                                 {% endfor %}
                             </li>
                           </ul>
@@ -38,8 +40,6 @@ Page
     {% else %}
     <p>Team not found.</p>
     {% endif %}
-<div class='team'>
-         <a href="{% url "send_invitation" %}">Sent invitation</a>
-</div>
+
 
 {% endblock content %}

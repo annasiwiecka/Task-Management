@@ -1,5 +1,6 @@
 .team {
   text-align: center;
+  
 }
 
 
@@ -36,6 +37,7 @@
 .panel-widget {
     overflow: hidden;
     border: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     
 }
 
@@ -99,8 +101,8 @@ ul, ol {
   padding-left: 50px;
 }
 .image-list .img {
-  width: 40px;
-  height: 40px;
+  width: 57px;
+  height: 57px;
   position: absolute;
   left: 0;
   border-radius: 0px;

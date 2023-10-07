@@ -14,7 +14,8 @@ class UserCreate(models.Model):
     
     
     def __str__(self):
-        return self.user.username
+        return self.name if self.name else self.user.username
+
     
     def save(self, *args, **kwargs):
         super(UserCreate, self).save(*args, **kwargs)
@@ -74,7 +75,17 @@ class TeamMember(models.Model):
     user_profile = models.OneToOneField(UserCreate, on_delete=models.CASCADE, null=True, default=None)
 
     def __str__(self):
-        return self.user.username
+        if self.user_profile:
+            return self.user_profile.name
+        else:
+            return self.user.username
+
+    @property
+    def profile_picture(self):
+        if self.user_profile:
+            return self.user_profile.profile_picture
+        else:
+            return 'default.jpg'
 
 
 class Project(models.Model):

@@ -298,4 +298,15 @@ def decline_invitation(request, invitation_id):
         messages.info(request, "You've declined the team invitation.")
     return redirect('notification')
 
-  
+def create_project(request):
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.save()
+            return redirect('team_id', team_member_id=team_member_id)
+    else:
+        form = ProjectForm()
+    return render(request, 'task_management/create_project.html', {
+        'form': form
+    })

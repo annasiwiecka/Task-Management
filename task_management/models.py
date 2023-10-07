@@ -87,6 +87,16 @@ class TeamMember(models.Model):
         else:
             return 'default.jpg'
 
+    def save(self, *args, **kwargs):
+        
+        if not self.user_profile:
+            try:
+                self.user_profile = UserCreate.objects.get(user=self.user)
+            except UserCreate.DoesNotExist:
+                pass  
+
+        super().save(*args, **kwargs)
+
 
 class Project(models.Model):
     STATUS_CHOICES = [

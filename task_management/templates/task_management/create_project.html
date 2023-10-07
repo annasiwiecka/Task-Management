@@ -1,0 +1,26 @@
+{% extends 'base_home.html' %}
+{% load static %}
+
+{% csrf_token %}
+
+{% block title %}{% endblock title %}
+
+{% block css_file %}
+<link rel="stylesheet" href="{% static "task_management/create_project.css" %}">
+{% endblock css_file %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="table">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div>  
+            <button class="button" type="submit">Create</button>
+        <div> 
+    </form>
+</div>
+
+{% endblock content %}

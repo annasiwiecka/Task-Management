@@ -7,7 +7,7 @@ Page
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "task_management/team_id34.css" %}">
+<link rel="stylesheet" href="{% static "task_management/team_id5.css" %}">
 {% endblock css_file %}
 
 {% block content %}
@@ -15,6 +15,7 @@ Page
     {% if team %}
     <div class='team'>
          <a href="{% url "send_invitation" %}">Sent invitation</a>
+         <a href="{% url "create_project" %}">Create Project</a>
 </div>
     <div class='con1'>
         <div class="container">

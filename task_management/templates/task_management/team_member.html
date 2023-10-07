@@ -16,6 +16,7 @@
     <p>Role: {{ team_member.role }}</p>
     <p>Responsibilities: {{ team_member.responsibilities }}</p>
     <p>Is Manager: {{ team_member.is_manager }}</p>
+    <p>email: {{ team_member.user.email }}</p>
 
     {% if can_edit_profile %}
         <a href="{% url 'team_member_edit' team_member.id %}">Edit Profile</a>

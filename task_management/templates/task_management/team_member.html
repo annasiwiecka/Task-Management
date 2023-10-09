@@ -12,6 +12,7 @@
 {% block content %}
 <div class='team'>
     <h1>Team Member Profile</h1>
+    <img class="img" src="{{ team_member.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="Profile Picture" class="img">
     <p>Username: {{ team_member.user.username }}</p>
     <p>Role: {{ team_member.role }}</p>
     <p>Responsibilities: {{ team_member.responsibilities }}</p>

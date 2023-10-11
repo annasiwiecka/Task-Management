@@ -6,12 +6,12 @@ html {
 
 .button {
   color: white;
-  background-color: #8528aa;
+  background-color: #2b2b2b;
   padding: 20px 50px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  border-radius: 10px;
+
   border: none;
   
 
@@ -20,7 +20,7 @@ html {
   margin-bottom: 70px;
 }
 .button:hover, .button:active {
-  background-color: #ae51b1;
+  background-color: #161616;
 }
 
 .start a {
@@ -32,7 +32,7 @@ html {
   width: 300px;
   
   padding: 50px;
-  border-radius: 12px;
+  
   background-color: rgb(255, 255, 255);
   text-align: center;
   float: right;

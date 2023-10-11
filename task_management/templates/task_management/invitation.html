@@ -6,7 +6,8 @@
 {% block title %}Home{% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "task_management/invitation.css" %}">{% endblock css_file %}
+<link rel="stylesheet" href="{% static "task_management/invitation.css" %}">
+{% endblock css_file %}
 
 {% block content %}
 <div class="invit">
@@ -15,10 +16,11 @@
 <p><strong>Message:</strong> {{ invitation.message }}</p>
 <p>{{ invitation.team }}</p>
 
-<form method="POST" action="{% url 'accept_invitation' invitation_id=invitation.id %}">
+<form method="POST">
     {% csrf_token %}
-    <!-- Add any form fields here if necessary -->
-    <button type="submit">Accept</button>
+    <a href="{% url 'accept_invitation' invitation_id=invitation.id %}">Accept</a>
+    <a href="{% url "decline_invitation" invitation_id=invitation.id %}">Decline</a>
 </form>
+
 </div>
 {% endblock content %}

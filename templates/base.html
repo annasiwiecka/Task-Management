@@ -6,15 +6,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock title %}</title>
-    <link rel="stylesheet" href="{% static "app1.css" %}">
+    <link rel="stylesheet" href="{% static "app5.css" %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
     {% block css_file %}{% endblock css_file %}
 </head>
 <body>
-    <div class="header">
-        <header id="main-navigation">
-            <nav><a href="{% url "index" %}">Starting Page</a></nav>
-        </header>
+    <div class="menu">
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'register'  %}">Register</a></li>
+        </ul>
     </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Get the current URL path
+        var currentPath = window.location.pathname;
+
+        // Loop through each menu item and compare the href attribute
+        $(".nav-link").each(function() {
+            var linkPath = $(this).attr("href");
+            
+            if (currentPath === linkPath) {
+                $(this).closest(".nav-link").addClass("active");
+            }
+        });
+    });
+</script>
     {% block content %}{% endblock content %}
 </body>
 </html>

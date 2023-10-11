@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&family=Raleway:wght@200&family=Roboto&family=Rubik&display=swap');
+
+html {
+    font-family: 'Open Sans', sans-serif;
+    
+}
+
+nav a {
+    color: white;
+    background-color: #2b2b2b;
+    padding: 15px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    font-size: 20px;
+   
+}
+
+
+ nav a:hover, nav a:active {
+    background-color: #161616;
+}
+
+/* Style the header with a grey background and some padding */
+.header {
+    background-color: #ffffff;
+    padding: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+body {
+    background-color: #ffffff;
+}
+
+.menu {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #2b2b2b;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+
+.flex-column {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+.nav-item {
+    display: inline;
+    list-style: none;
+    
+
+}
+
+.nav-link {
+    color: white;
+    background-color: #2b2b2b;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    transition: 0.2s all;
+    margin-bottom: 10px;
+    
+    
+}
+
+.nav-link:hover, .nav-link:active, .nav-link.active {
+    background-color: #161616;
+    text-decoration: none;
+    color: white;
+    border-left: 4px solid #8528aa;
+    
+}
+

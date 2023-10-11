@@ -4,16 +4,9 @@
 {% block title %}Starting Page{% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static 'task_management/index.css' %}">
+<link rel="stylesheet" href="{% static 'task_management/index1.css' %}">
 {% endblock css_file %}
 
 {% block content %}
-        <div class="text">
-            <h1>Welcome Page!</h1>
-           
-        </div>    
-    <div class="start">
-        <button class="button btn1"><a href="{% url 'login' %}">Log in</a></button>
-        <button class="button"><a href=" {% url 'register' %}">Sign up</a></button>
-    </div>
+{% load crispy_forms_tags %}
 {% endblock content %}

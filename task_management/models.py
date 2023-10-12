@@ -7,32 +7,11 @@ from django.utils import timezone
 
 # Create your models here.
 
-class UserCreate(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name='profile')
-    name = models.CharField(max_length=30, null=True)
-    profile_picture = models.ImageField(default='default.jpg', upload_to='profile_images', blank=True)
-    
-    
-    def __str__(self):
-        return self.name if self.name else self.user.username
-
-    
-    def save(self, *args, **kwargs):
-        super(UserCreate, self).save(*args, **kwargs)
-
-
-        img = Image.open(self.profile_picture.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.profile_picture.path)
-   
 
 
 
 class Team(models.Model):
-    name = models.CharField(max_length=100, null=True)
+    name = models.CharField(max_length=100)
     description = models.CharField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="team_created")
     members = models.ManyToManyField(User, through='TeamMember', related_name="team_member")
@@ -63,7 +42,29 @@ class Team(models.Model):
 
 class CustomTeam(Group):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+class UserCreate(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name='profile')
+    name = models.CharField(max_length=30, null=True)
+    profile_picture = models.ImageField(default='default.jpg', upload_to='profile_images', blank=True)
+    current_team = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL)
+    
+    
+    def __str__(self):
+        return self.name if self.name else self.user.username
 
+    
+    def save(self, *args, **kwargs):
+        super(UserCreate, self).save(*args, **kwargs)
+
+
+        img = Image.open(self.profile_picture.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.profile_picture.path)
+   
+    
 class TeamMember(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True)
@@ -97,6 +98,9 @@ class TeamMember(models.Model):
 
         super().save(*args, **kwargs)
 
+        if self.team and self.user_profile:
+            self.user_profile.current_team = self.team
+            self.user_profile.save()
 
 class Project(models.Model):
     STATUS_CHOICES = [
@@ -110,6 +114,7 @@ class Project(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Planning')
+    team = models.ManyToManyField(Team, related_name='project')
 
     def __str__(self):
         return self.name

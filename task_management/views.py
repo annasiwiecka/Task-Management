@@ -95,13 +95,20 @@ def notification(request):
 
 @login_required(login_url="login")
 def team(request, team_id):
-    
+    print("View reached")
     team = get_object_or_404(Team, id=team_id)
-    print(team.members.all())
     team_members = TeamMember.objects.filter(team=team)
+    
+    current_team = None
+    user_profile = UserCreate.objects.filter(user=request.user).first()
+    
+    if user_profile:
+        current_team = user_profile.current_team
+    
     return render(request, 'task_management/team_id.html', {
         'team': team,
-        'team_members': team_members
+        'team_members': team_members,
+        'current_team': current_team
         })
 
 @login_required(login_url="login")
@@ -138,9 +145,6 @@ def list_all_teams(request):
         "teams": teams
         }) 
 
-'''def team_member_list(request, team_member_id):
-    team_member = get_object_or_404(TeamMember, id=team_member_id)
-    return render(request, 'team_member.html', {'team_member': team_member}) '''
 
 @login_required(login_url="login")
 def team_member(request, team_member_id):
@@ -198,12 +202,12 @@ def team_member_delete(request, team_member_id):
     )
 
     if not can_delete:
-        return redirect('team_id', team_member_id=team_member_id)
+        return redirect('team_id', team_id=team.id)
 
     if request.method == 'POST':
         # Delete the team member upon confirmation
         team_member.delete()
-        return redirect('team_id', team_member_id=team_member_id)
+        return redirect('team_id', team_id=team.id)
 
     return render(request, 'task_management/team_member_delete.html', {
         'team_member': team_member,
@@ -308,6 +312,8 @@ def create_project(request):
             return redirect('team_id', team_member_id=team_member_id)
     else:
         form = ProjectForm()
+
+        
     return render(request, 'task_management/create_project.html', {
         'form': form
     })

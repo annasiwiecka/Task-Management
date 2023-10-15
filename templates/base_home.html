@@ -20,13 +20,9 @@
         <ul class="nav flex-column">
             <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile <img class="imgfull" src="{{ user.profile.profile_picture.url }}" alt="img"> </a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-            <li class="nav-item"><a class="nav-link"  href="{% url 'notification' %}" class="notification" >Notification<span class="badge" id="notification-count" >{{ num_notifications }}</span></a></li>
-            
-            <!-- <li class="nav-item"><a class="nav-link" href="{% if current_team %}{% url 'team_id' team_id=current_team.id %} {% endif %}">Team</a></li>-->
+            <li class="nav-item"><a class="nav-link"  href="{% url 'notification' %}" class="notification" >Notification <span class="badge" id="notification-count" >{{ num_notifications }}</span></a></li>
             <li class="nav-item"><a class="nav-link" href="{% url "team_id" team_id=user.profile.current_team.id %}">Team</a></li>
-
             <li class="nav-item"><a class="nav-link" href="{% url 'project' %}">Projects</a></li>
-    
             <li class="nav-item"><a class="nav-link" href="{% url 'my-task' %}">My Tasks</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'settings' %}">Settings</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url "logout" %}">Logout</a>

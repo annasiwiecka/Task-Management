@@ -56,8 +56,16 @@ html {
     overflow: hidden;
     float: right;
     display: block;
-    border: 2px solid white;
+
 }
 
 
-
+.nav-link .badge {
+    position: absolute;
+    float: right;
+    padding: 5px 8px;
+    border-radius: 30%;
+    background: rgb(199, 4, 4);
+    color: white;
+    margin-left: 20px;
+  }

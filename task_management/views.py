@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib import messages
@@ -91,6 +91,7 @@ def profile(request):
   
 @login_required(login_url="login")
 def notification(request):
+    
     return render(request, "task_management/notifications.html")
 
 @login_required(login_url="login")
@@ -254,11 +255,19 @@ def invitation(request, invitation_id):
 
 @login_required(login_url="login")
 def notification(request):
+    num_notifications = Notification.objects.count()
     user = request.user 
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     return render(request, 'task_management/notification.html', {
-        'notifications': notifications
+        'notifications': notifications,
+        'num_notifications': num_notifications
         })
+
+def get_notification_count(request):
+    count = Notification.objects.count()
+    data = {'count': count}
+    return JsonResponse(data)
+
 
 @login_required(login_url="login")
 def accept_invitation(request, invitation_id):

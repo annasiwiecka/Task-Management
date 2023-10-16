@@ -30,33 +30,29 @@
     </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <script>
     $(document).ready(function() {
-        // Get the current URL path
         var currentPath = window.location.pathname;
-
-        // Loop through each menu item and compare the href attribute
-        $(".nav-link").each(function() {
+        $(".nav.flex-column a").each(function() {
             var linkPath = $(this).attr("href");
-            
-            if (currentPath === linkPath) {
-                $(this).closest(".nav-link").addClass("active");
+            if (currentPath.startsWith(linkPath)) {
+                $(this).addClass("active");
             }
         });
     });
 </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Fetch the notification count and update it
         $.get('/get_notification_count/', function(data) {
             $('#notification-count').text(data.count);
         });
     });
 </script>
 
-
     {% block content %}{% endblock content %}
+
 </body>
 </html>

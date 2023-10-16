@@ -312,13 +312,14 @@ def decline_invitation(request, invitation_id):
     return redirect('notification')
 
 
-def create_project(request):
+def create_project(request, team_id):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
             project.save()
-            return redirect('team_id', team_member_id=team_member_id)
+            team_id = request.user.profile.current_team.id
+            return redirect('team_id', team_id)
     else:
         form = ProjectForm()
 

@@ -1,16 +1,16 @@
-{% extends 'base_home.html' %}
+{% extends 'base_team.html' %}
 {% load static %}
 
 {% csrf_token %}
 
 {% block title %}{% endblock title %}
 
-{% block css_file %}
+{% block extra_css_file %}
 <link rel="stylesheet" href="{% static "task_management/create_project1.css" %}">
 
-{% endblock css_file %}
+{% endblock extra_css_file %}
 
-{% block content %}
+{% block extra_content %}
 
 {% load crispy_forms_tags %}
 
@@ -24,4 +24,4 @@
     </form>
 </div>
 
-{% endblock content %}
+{% endblock extra_content %}

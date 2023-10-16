@@ -29,7 +29,7 @@ urlpatterns = [
     path('team_member/<int:team_member_id>/', views.team_member, name="team_member"),
     path('team_member/<int:team_member_id>/edit/', views.team_member_edit, name="team_member_edit"),
     path('team_member/<int:team_member_id>/delete', views.team_member_delete, name="team_member_delete"),
-    path('create_project', views.create_project, name="create_project"),
+    path('team/<int:team_id>/create_project', views.create_project, name="create_project"),
     path('get_notification_count/', views.get_notification_count, name='get_notification_count'),
 
     #path('create_task', views.)

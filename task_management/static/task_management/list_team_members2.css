@@ -1,0 +1,17 @@
+
+.img-thumbnail {
+    
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    max-width: 100%;
+    width: 100px;
+    height: 100px;
+    
+}
+
+.member {
+    background-color: rgb(231, 230, 230);
+    text-align: center;
+   
+}

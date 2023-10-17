@@ -6,12 +6,22 @@ Page
 {% endblock title %}
 
 {% block extra_css_file %}
-
+<link rel="stylesheet" href="{% static "task_management/list_team_members2.css" %}">
 {% endblock extra_css_file %}
 
 {% block extra_content %}
 {% for team_member in team_members %}
 <p>Username: {{ team_member.user.username }}</p>
 <p>Role: {{ team_member.role }}</p>
+<div class="col-xl-3 col-sm-6 mb-5">
+    <div class="member">
+    <div class="bg rounded shadow-sm py-5 px-4"><img src="{{ team_member.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+      <h5 class="mb-0">{{team_member.user_profile.name|default:team_member.user.username}}</h5><span class="small text-uppercase text-muted">{{ team_member.role }}</span>
+      <span class="small text-uppercase text-muted">{{ team_member.responsibilities }}</span>
+      <p class="small text-uppercase text-muted">{{ team_member.is_manager }}</p>
+    </div>
+    </div>
+  </div>
 {% endfor %}
+
 {% endblock extra_content %}

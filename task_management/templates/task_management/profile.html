@@ -6,7 +6,7 @@ Profile
 {% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static 'task_management/profile9.css' %}">
+<link rel="stylesheet" href="{% static 'task_management/profile2.css' %}">
 
 
 {% endblock css_file %}
@@ -33,21 +33,10 @@ Profile
 
                 {{user_form|crispy}}
                 {{ profile_form|crispy }}
-                <!--{% for field in user_form %}
-                <div class="form-group">
-                    <label class="custom-label">{{ field.label }}</label>
-                    {{ field }}
-                </div>
-                {% endfor %}
-                {% for field in profile_form %}
-                <div class="form-group">
-                    <label class="custom-label">{{ field.label }}</label>
-                    {{ field }}
-                </div>
-                {% endfor %}-->
+                
                 <div>  
                     <button class="button" type="submit">Update</button>
-                    <button type="reset" class="button" >Reset</button>
+                  
                 <div> 
             </form>
     </div>

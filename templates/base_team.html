@@ -4,7 +4,7 @@
 
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "app_team4.css" %}">
+<link rel="stylesheet" href="{% static "app_team5.css" %}">
 {% block extra_css_file %}{% endblock extra_css_file %}
 {% endblock css_file %}
 
@@ -13,18 +13,10 @@
 
 <div class='id'>
 <ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" href="{% url "list_of_members" team_id=user.profile.current_team.id %}">Team Members</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'create_project' team_id=user.profile.current_team.id %}">Project Board</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Task Board</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Settings</a>
-  </li>
+  <li class="nav-item"><a class="nav-link" href="{% url "list_of_members" team_id=user.profile.current_team.id %}">Team Members</a></li>
+  <li class="nav-item"><a class="nav-link" href="{% url 'create_project' team_id=user.profile.current_team.id %}">Project Board</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Task Board</a></li>
+  <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
 </ul>
 
  {% block extra_content %}{% endblock extra_content %}

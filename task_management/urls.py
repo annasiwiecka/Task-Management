@@ -18,7 +18,6 @@ urlpatterns = [
    path("project", views.project, name="project"),
    path("my-task", views.my_task, name="my-task"),
    path("Settings", views.settingsPage, name="settings"),
-   path("teams/", views.list_all_teams, name="list"),
 
    path("create-team", views.create_team, name="create_team"),
    path("send_invitation", views.send_invitation, name="send_invitation"),

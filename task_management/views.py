@@ -139,12 +139,6 @@ def create_team(request):
         'form': form
         })
 
-@login_required(login_url="login")
-def list_all_teams(request):
-    teams = Team.objects.all()
-    return render(request, 'task_management/team.html', {
-        "teams": teams
-        }) 
 
 @login_required(login_url="login")
 def list_members(request, team_id):
@@ -239,6 +233,7 @@ def send_invitation(request):
                     invitation.team = current_team
                     invitation.save()
                     messages.success(request, "You've sent a team invitation.")
+                    
 
                     Notification.objects.create(user=invitation.receiver, team_invitation=invitation)
                     return redirect('send_invitation')
@@ -354,8 +349,6 @@ def list_projects(request):
 def list_tasks(request):
     pass
 
-def project(request, project_id):
-    pass
 
 def task(request, task_id):
     pass

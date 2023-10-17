@@ -28,19 +28,22 @@ img {
 
 .button {
     color: white;
-    background-color: #8528aa;
+    background-color: #2b2b2b;
     padding: 15px 40px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    border-radius: 10px;
+    transition: 0.2s all;
     border: none;
     margin-top: 20px;
     font-size: 20px;
 }
 
 .button:hover, .button:active {
-    background-color: #ae51b1;
+    background-color: #161616;
+    text-decoration: none;
+    color: white;
+    border-left: 4px solid #8528aa;
 }
 
 .id2 {

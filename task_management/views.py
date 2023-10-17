@@ -146,6 +146,13 @@ def list_all_teams(request):
         "teams": teams
         }) 
 
+@login_required(login_url="login")
+def list_members(request, team_id):
+    team_members = TeamMember.objects.all()
+    
+    return render(request, 'task_management/list_team_members.html', {
+        'team_members': team_members
+        })
 
 @login_required(login_url="login")
 def team_member(request, team_member_id):

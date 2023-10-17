@@ -1,0 +1,17 @@
+{% extends "base_team.html" %}
+{% load static %}
+
+{% block title %}
+Page
+{% endblock title %}
+
+{% block extra_css_file %}
+
+{% endblock extra_css_file %}
+
+{% block extra_content %}
+{% for team_member in team_members %}
+<p>Username: {{ team_member.user.username }}</p>
+<p>Role: {{ team_member.role }}</p>
+{% endfor %}
+{% endblock extra_content %}

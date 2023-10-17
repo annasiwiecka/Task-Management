@@ -4,7 +4,7 @@
 
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "app_team2.css" %}">
+<link rel="stylesheet" href="{% static "app_team4.css" %}">
 {% block extra_css_file %}{% endblock extra_css_file %}
 {% endblock css_file %}
 
@@ -14,16 +14,16 @@
 <div class='id'>
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'create_project' team_id=user.profile.current_team.id %}">Active</a>
+    <a class="nav-link" href="{% url "list_of_members" team_id=user.profile.current_team.id %}">Team Members</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" href="{% url 'create_project' team_id=user.profile.current_team.id %}">Project Board</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" href="#">Task Board</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Disabled</a>
+    <a class="nav-link" href="#">Settings</a>
   </li>
 </ul>
 
@@ -31,10 +31,8 @@
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script>
      $(document).ready(function() {
-         // Get the current URL path
          var currentPath = window.location.pathname;
  
-         // Loop through each menu item and compare the href attribute
          $(".nav-link").each(function() {
              var linkPath = $(this).attr("href");
              

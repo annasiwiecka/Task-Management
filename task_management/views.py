@@ -169,7 +169,6 @@ def team_member(request, team_member_id):
 def team_member_edit(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
 
-
     is_owner = Team.objects.filter(owner=request.user, id=team_member.team.id).exists()
 
     can_edit_profile = (
@@ -183,6 +182,12 @@ def team_member_edit(request, team_member_id):
     if request.method == 'POST':
         form = TeamMemberForm(request.POST, instance=team_member)
         if form.is_valid():
+            
+            if is_owner and form.cleaned_data.get('is_manager'):
+                form.instance.role = 'Manager'
+            elif is_owner:
+                form.instance.role = 'Member'
+            
             form.save()
             return redirect('team_member', team_member_id=team_member_id)
     else:

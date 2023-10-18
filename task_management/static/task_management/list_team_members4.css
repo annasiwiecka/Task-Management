@@ -11,10 +11,11 @@
 }
 
 .member {
-    background-color: #e0e0e0;
+    background-color: #ffffff;
     text-align: center;
     transition: 0.2s all;
     text-decoration: none !important;
+    border: 1px solid rgb(214, 214, 214);
 }
 
 .button {

@@ -16,10 +16,9 @@
 <p><strong>Message:</strong> {{ invitation.message }}</p>
 <p>{{ invitation.team }}</p>
 
-<form method="POST">
+<form method="POST" action="{% url 'accept_invitation' invitation_id=invitation.id %}">
     {% csrf_token %}
-    <a href="{% url 'accept_invitation' invitation_id=invitation.id %}">Accept</a>
-    <a href="{% url "decline_invitation" invitation_id=invitation.id %}">Decline</a>
+    <button type="submit">Accept</button>
 </form>
 
 </div>

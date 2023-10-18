@@ -1,0 +1,29 @@
+
+.img-thumbnail {
+    
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    max-width: 100%;
+    width: 100px;
+    height: 100px;
+    
+}
+
+.member {
+    background-color: #e0e0e0;
+    text-align: center;
+    transition: 0.2s all;
+    text-decoration: none !important;
+}
+
+.button {
+    text-decoration: none !important;
+   
+}
+
+.member:hover, .member:active {
+    transform: scale(1.05);
+    text-decoration: none !important;
+
+}

@@ -278,8 +278,7 @@ def accept_invitation(request, invitation_id):
     if request.method == 'POST':
         invitation.is_accepted = True
         invitation.save()
-
-       
+        print("savedfswerewrwfds")
         team_member, created = TeamMember.objects.get_or_create(
             user=request.user,
             team=invitation.team,
@@ -290,9 +289,9 @@ def accept_invitation(request, invitation_id):
 
         team_member.is_active = True
         team_member.save()
+        print("savedfsfds")
         
         invitation.delete()
-
 
         messages.success(request, f"You've joined {invitation.team.name} team!")
 

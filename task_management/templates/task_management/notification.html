@@ -26,6 +26,7 @@
       {% if notification.team_invitation %}
          <div class="alert alert-info">
           <a href="{% url 'invitation' invitation_id=notification.team_invitation.id %}"><strong class="default"><i class="fa fa-user"></i> {{ notification.team_invitation.sender.username }}</strong> sent you Team Invitation.</a>
+          
          </div>
      </div>
      {% endif %}

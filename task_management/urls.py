@@ -15,7 +15,7 @@ urlpatterns = [
    path("profile/", views.profile, name="profile"),
    path("notification/", views.notification, name="notification"),
    path("team/<int:team_id>/", views.team, name="team_id"),
-   path("project", views.project, name="project"),
+   
    path("my-task", views.my_task, name="my-task"),
    path("Settings", views.settingsPage, name="settings"),
 
@@ -30,9 +30,9 @@ urlpatterns = [
     path('team_member/<int:team_member_id>/delete', views.team_member_delete, name="team_member_delete"),
     path('team/<int:team_id>/create_project', views.create_project, name="create_project"),
     path('get_notification_count/', views.get_notification_count, name='get_notification_count'),
-    path('team/<int:team_id>/list_of_team_members', views.list_members, name="list_of_members"),
-
-    #path('create_task', views.)
+    path('team/<int:team_id>/team_members', views.list_members, name="list_of_members"),
+    path('team/<int:team_id>/project_board', views.project_board, name='project_board'),
+    path("project", views.project, name="project"),
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

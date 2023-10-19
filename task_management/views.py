@@ -142,7 +142,8 @@ def create_team(request):
 
 @login_required(login_url="login")
 def list_members(request, team_id):
-    team_members = TeamMember.objects.all()
+    team = get_object_or_404(Team, id=team_id)
+    team_members = TeamMember.objects.filter(team=team)
     
     return render(request, 'task_management/list_team_members.html', {
         'team_members': team_members
@@ -283,7 +284,6 @@ def accept_invitation(request, invitation_id):
     if request.method == 'POST':
         invitation.is_accepted = True
         invitation.save()
-        print("savedfswerewrwfds")
         team_member, created = TeamMember.objects.get_or_create(
             user=request.user,
             team=invitation.team,
@@ -294,7 +294,6 @@ def accept_invitation(request, invitation_id):
 
         team_member.is_active = True
         team_member.save()
-        print("savedfsfds")
         
         invitation.delete()
 
@@ -319,19 +318,23 @@ def decline_invitation(request, invitation_id):
 
 
 def create_project(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
             project.save()
-            team_id = request.user.profile.current_team.id
+            
+            team.projects.add(project)
+            
             return redirect('team_id', team_id)
     else:
         form = ProjectForm()
 
-        
     return render(request, 'task_management/create_project.html', {
-        'form': form
+        'form': form,
+        'team': team
     })
 
 def create_task(request):
@@ -347,8 +350,13 @@ def create_task(request):
         'form': form
     })
 
-def list_projects(request):
-    pass
+def project_board(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+    projects = Project.objects.filter(teams=team)  #'teams' because in models i have in related name 'teams'
+                                                    # in my model 'Team' in 'projects'
+    return render(request, 'task_management/project_board.html', {
+        'projects': projects
+    })
 
 def list_tasks(request):
     pass

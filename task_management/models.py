@@ -15,6 +15,7 @@ class Team(models.Model):
     description = models.CharField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="team_created")
     members = models.ManyToManyField(User, through='TeamMember', related_name="team_member")
+    projects = models.ManyToManyField('Project', related_name='teams')
     
     class Meta:
         permissions = [
@@ -110,7 +111,12 @@ class Project(models.Model):
         ]
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=2400)
-    team_members = models.ManyToManyField(User, related_name='projects')
+    leader = models.ForeignKey(TeamMember,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='leading_projects', 
+        limit_choices_to={'is_manager': True}
+    )
     start = models.DateTimeField()
     end = models.DateTimeField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Planning')

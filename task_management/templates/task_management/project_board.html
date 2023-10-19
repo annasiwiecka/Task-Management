@@ -1,0 +1,130 @@
+{% extends "base_team.html" %}
+{% load static %}
+
+{% block title %}
+Page
+{% endblock title %}
+
+{% block extra_css_file %}
+<link rel="stylesheet" href="{% static "task_management/project_board.css" %}">
+{% endblock extra_css_file %}
+
+{% block extra_content %}
+   
+{% for project in projects %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-pattern">
+                    <div class="card-body">
+                        
+                        <h5 class="font-size-20 mt-0 pt-1">24</h5>
+                        <p class="text-muted mb-0">Total Projects</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-pattern">
+                    <div class="card-body">
+                        
+                        <h5 class="font-size-20 mt-0 pt-1">18</h5>
+                        <p class="text-muted mb-0">Completed Projects</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-pattern">
+                    <div class="card-body">
+                        
+                        <h5 class="font-size-20 mt-0 pt-1">06</h5>
+                        <p class="text-muted mb-0">Pending Projects</p>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-xl-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group mb-0">
+                                <label>Search</label>
+                                <div class="input-group mb-0">
+                                    <input type="text" class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-danger" type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card bg-pattern">
+                    <div class="card-body">
+                        
+                        
+                        <a href="{% url "create_project" team_id=user.profile.current_team.id %}">Create Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+    
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive project-list">
+                            <table class="table project-table table-centered table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Projects</th>
+                                        <th scope="col">Start Date</th>
+                                        <th scope="col">End Date</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Leader</th>
+                                        <th scope="col">Progress</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>{{ project.name }}</td>
+                                        <td>{{ project.start }}</td>
+                                        <td>{{ project.end }}</td>
+                                        <td>
+                                            <span class="text-success font-12">{{ project.status }}</span>
+                                        </td>
+                                        <td>
+                                            <div class="Leader">
+                                                <img src="{{ project.leader.user_profile.profile_picture.url }}" class="rounded-circle avatar-xs">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0">Progress<span class="float-right">100%</span></p>
+    
+                                            <div class="progress mt-2" style="height: 5px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+    
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>          
+    {% endfor %}   
+    
+
+{% endblock extra_content %}

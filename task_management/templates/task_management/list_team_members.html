@@ -6,7 +6,7 @@ Page
 {% endblock title %}
 
 {% block extra_css_file %}
-<link rel="stylesheet" href="{% static "task_management/list_team_members4.css" %}">
+<link rel="stylesheet" href="{% static "task_management/list_team_members5.css" %}">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 {% endblock extra_css_file %}
@@ -22,9 +22,10 @@ Page
         <a class ="button" href="{% url 'team_member' team_member_id=team_member.id %}">
         <div class="member">
             <div class="bg rounded shadow-sm py-5 px-4"><img src="{{ team_member.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                <h5 class="mb-0">{{team_member.user_profile.name|default:team_member.user.username}}</h5><span class="small text-uppercase text-muted">{{ team_member.role }}</span>
-                <span class="small text-uppercase text-muted">{{ team_member.responsibilities }}</span>
-                <p class="small text-uppercase text-muted">{{ team_member.is_manager }}</p>
+                <h5 class="mb-0">{{team_member.user_profile.name|default:team_member.user.username}}</h5>
+                <span class="small text-uppercase text-muted">{{ team_member.role }}</span>
+                <span class="small text-muted">{{ team_member.responsibilities }}</span>
+                
             </div>
         </div></a>
     </div>

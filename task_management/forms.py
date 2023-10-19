@@ -34,7 +34,7 @@ class TeamForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['name', 'description', 'start', 'end', 'status']
+        fields = ['name', 'description', 'start', 'end', 'status', 'leader']
         widgets = {
             'start': forms.DateInput(attrs={'type': 'date'}),
             'end': forms.DateInput(attrs={'type': 'date'}),

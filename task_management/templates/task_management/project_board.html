@@ -19,7 +19,7 @@ Page
                 <div class="card bg-pattern">
                     <div class="card-body">
                         
-                        <h5 class="font-size-20 mt-0 pt-1">24</h5>
+                        <h5 class="font-size-20 mt-0 pt-1" id="total-projects-count">{{ num_total_projects }}</h5>
                         <p class="text-muted mb-0">Total Projects</p>
                     </div>
                 </div>
@@ -28,7 +28,7 @@ Page
                 <div class="card bg-pattern">
                     <div class="card-body">
                         
-                        <h5 class="font-size-20 mt-0 pt-1">18</h5>
+                        <h5 class="font-size-20 mt-0 pt-1" id="completed-projects-count">{{ num_complete_projects }}</h5>
                         <p class="text-muted mb-0">Completed Projects</p>
                     </div>
                 </div>
@@ -37,7 +37,7 @@ Page
                 <div class="card bg-pattern">
                     <div class="card-body">
                         
-                        <h5 class="font-size-20 mt-0 pt-1">06</h5>
+                        <h5 class="font-size-20 mt-0 pt-1" id="pending-projects-count">{{num_pending_project}}</h5>
                         <p class="text-muted mb-0">Pending Projects</p>
                     </div>
                 </div>
@@ -60,6 +60,7 @@ Page
                     </div>
                 </div>
             </div>
+            {% if can_create_project %}
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-pattern">
                     <div class="card-body">
@@ -69,6 +70,7 @@ Page
                     </div>
                 </div>
             </div>
+            {% endif %} 
         </div>
 
  
@@ -145,6 +147,20 @@ Page
                     });
                 });
             });
+        </script><script>
+            // Function to fetch the pending projects count and update the placeholder
+            function updatePendingProjectsCount() {
+                fetch("{% url 'get_pending_project' team_id=team.id %}")
+                    .then(response => response.json())
+                    .then(data => {
+                        const pendingProjectsCountElement = document.getElementById('pending-projects-count');
+                        pendingProjectsCountElement.textContent = data.count;
+                    })
+                    .catch(error => console.error(error));
+            }
+        
+            // Call the function to update the pending projects count
+            updatePendingProjectsCount();
         </script>
-
+    
 {% endblock extra_content %}

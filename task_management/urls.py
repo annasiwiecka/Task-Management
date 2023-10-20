@@ -29,10 +29,13 @@ urlpatterns = [
     path('team_member/<int:team_member_id>/edit/', views.team_member_edit, name="team_member_edit"),
     path('team_member/<int:team_member_id>/delete', views.team_member_delete, name="team_member_delete"),
     path('team/<int:team_id>/create_project', views.create_project, name="create_project"),
-    path('get_notification_count/', views.get_notification_count, name='get_notification_count'),
+    path('get_notification_count/<int:team_member_id>', views.get_notification_count, name='get_notification_count'),
     path('team/<int:team_id>/team_members', views.list_members, name="list_of_members"),
     path('team/<int:team_id>/project_board', views.project_board, name='project_board'),
     path("project/<int:project_id>/", views.project, name="project"),
+    path('get_pending_project/<int:team_id>', views.get_pending_project, name='get_pending_project'),
+    path('get_total_projects/<int:team_id>', views.get_total_projects, name='get_total_projects'),
+    path('get_complete_projects/<int:team_id>', views.get_complete_projects, name='get_complete_projects'),
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

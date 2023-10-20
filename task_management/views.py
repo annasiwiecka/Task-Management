@@ -96,7 +96,7 @@ def notification(request):
 
 @login_required(login_url="login")
 def team(request, team_id):
-    print("View reached")
+    
     team = get_object_or_404(Team, id=team_id)
     team_members = TeamMember.objects.filter(team=team)
     
@@ -106,6 +106,7 @@ def team(request, team_id):
     if user_profile:
         current_team = user_profile.current_team
     
+
     return render(request, 'task_management/team_id.html', {
         'team': team,
         'team_members': team_members,
@@ -277,11 +278,37 @@ def notification(request):
         'num_notifications': num_notifications
         })
 
-def get_notification_count(request):
+def get_notification_count(request, team_member_id):
+    team_member = get_object_or_404(TeamMember, id=team_member_id)
+
     count = Notification.objects.count()
     data = {'count': count}
     return JsonResponse(data)
 
+def get_pending_project(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+
+    count_in_progress = Project.objects.filter(teams=team, status='In Progress').count()
+    count_planning = Project.objects.filter(teams=team, status='Planning').count()
+    
+    total_pending = count_planning + count_in_progress
+
+    data = {'count': total_pending}
+    return JsonResponse(data)
+
+def get_total_projects(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+
+    count = Project.objects.filter(teams=team).count()
+    data = {'count': count}
+    return JsonResponse(data)
+
+def get_complete_projects(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+
+    count = Project.objects.filter(teams=team, status='Completed')
+    data = {'count': count}
+    return JsonResponse(data)
 
 @login_required(login_url="login")
 def accept_invitation(request, invitation_id):
@@ -323,10 +350,10 @@ def decline_invitation(request, invitation_id):
     return redirect('notification')
 
 
-def create_project(request, team_id):
-    print(Priority.objects.all()) 
+def create_project(request, team_id): 
     team = get_object_or_404(Team, id=team_id)
-
+    
+    
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
@@ -363,8 +390,23 @@ def project_board(request, team_id):
     projects = Project.objects.filter(teams=team)  #'teams' because in models i have in related name 'teams'
                                                     # in my model 'Team' in 'projects'
     
+    is_owner = Team.objects.filter(owner=request.user, id=team_member.team.id).exists()
+    
+
+    can_create_project = (
+        is_owner
+        or request.user.has_perm('task_management.can_manage_team')  # Check the can_manage_team permission
+    )
+    num_pending_project = Project.objects.filter(status='In Progress').count()
+    num_complete_projects =  Project.objects.filter(status='Completed').count()
+    num_total_projects = Project.objects.count()
     return render(request, 'task_management/project_board.html', {
-        'projects': projects
+        'projects': projects,
+        'team': team,
+        'num_total_projects': num_total_projects,
+        'num_complete_projects': num_complete_projects,
+        'num_pending_project': num_pending_project,
+        'can_create_project': can_create_project,
     })
 
 def list_tasks(request):

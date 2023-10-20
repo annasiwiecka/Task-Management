@@ -6,12 +6,12 @@ Page
 {% endblock title %}
 
 {% block extra_css_file %}
-<link rel="stylesheet" href="{% static "task_management/project_board.css" %}">
+<link rel="stylesheet" href="{% static "task_management/project_board1.css" %}">
 {% endblock extra_css_file %}
 
 {% block extra_content %}
    
-{% for project in projects %}
+
 
     <div class="container">
         <div class="row">
@@ -70,8 +70,8 @@ Page
                 </div>
             </div>
         </div>
-  
-    
+
+ 
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -86,13 +86,20 @@ Page
                                         <th scope="col">End Date</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Leader</th>
-                                        <th scope="col">Progress</th>
-                                        <th scope="col">Action</th>
+                                        <!--<th scope="col">Progress</th>-->
+                                        <th scope="col">Priority</th>
                                     </tr>
                                 </thead>
+                           
                                 <tbody>
-                                    <tr>
+ 
+
+                                    {% for project in projects %}  
+                                    <a href="{% url "project" project_id=project.id %}">
+                                    <tr class="project-row" data-url="{% url 'project' project_id=project.id %}">
+                                       
                                         <th scope="row">1</th>
+                                        
                                         <td>{{ project.name }}</td>
                                         <td>{{ project.start }}</td>
                                         <td>{{ project.end }}</td>
@@ -104,19 +111,20 @@ Page
                                                 <img src="{{ project.leader.user_profile.profile_picture.url }}" class="rounded-circle avatar-xs">
                                             </div>
                                         </td>
-                                        <td>
+                                       <!-- <td>
                                             <p class="mb-0">Progress<span class="float-right">100%</span></p>
     
                                             <div class="progress mt-2" style="height: 5px;">
                                                 <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
-                                        </td>
-    
+                                        </td>-->
+                                        <td><div style="width: 20px; height: 20px; margin: auto; background-color: {{ project.priority.color }}; border-radius: 50%;"></div></td>
+
                                         <td>
                                             
-                                        </td>
-                                    </tr>
-    
+                                        </td></a>
+                                    </tr></a>
+                                    {% endfor %}  
                                 </tbody>
                             </table>
                         </div>
@@ -124,7 +132,19 @@ Page
                 </div>
             </div> 
         </div>          
-    {% endfor %}   
-    
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const projectRows = document.querySelectorAll(".project-row");
+                projectRows.forEach(row => {
+                    row.addEventListener("click", function() {
+                        const projectUrl = this.getAttribute("data-url");
+                        if (projectUrl) {
+                            window.location.href = projectUrl;
+                        }
+                    });
+                });
+            });
+        </script>
 
 {% endblock extra_content %}

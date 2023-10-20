@@ -113,8 +113,14 @@ def team(request, team_id):
         })
 
 @login_required(login_url="login")
-def project(request):
-    return render(request, "task_management/project.html")
+def project(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    
+    return render(request, "task_management/project.html", {
+          'project': project
+    })
+    
 
 @login_required(login_url="login")
 def my_task(request):
@@ -318,12 +324,14 @@ def decline_invitation(request, invitation_id):
 
 
 def create_project(request, team_id):
+    print(Priority.objects.all()) 
     team = get_object_or_404(Team, id=team_id)
 
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
             project = form.save(commit=False)
+            
             project.save()
             
             team.projects.add(project)
@@ -354,6 +362,7 @@ def project_board(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     projects = Project.objects.filter(teams=team)  #'teams' because in models i have in related name 'teams'
                                                     # in my model 'Team' in 'projects'
+    
     return render(request, 'task_management/project_board.html', {
         'projects': projects
     })

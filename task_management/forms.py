@@ -31,10 +31,19 @@ class TeamForm(forms.ModelForm):
         model = Team
         fields = ['name', 'description']
 
+class PriorityForm(forms.ModelForm):
+    class Meta:
+        model = Priority
+        fields = ['name', 'color']
+
 class ProjectForm(forms.ModelForm):
+    priority = forms.ModelChoiceField(
+        queryset=Priority.objects.all(),
+    )
+    
     class Meta:
         model = Project
-        fields = ['name', 'description', 'start', 'end', 'status', 'leader']
+        fields = ['name', 'description', 'start', 'end', 'status', 'leader', 'priority']
         widgets = {
             'start': forms.DateInput(attrs={'type': 'date'}),
             'end': forms.DateInput(attrs={'type': 'date'}),
@@ -45,10 +54,6 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['name', 'description', 'assigned_to', 'deadline', 'priority', 'status']
 
-class PriorityForm(forms.ModelForm):
-    class Meta:
-        model = Priority
-        fields = '__all__'
 
 class CommentForm(forms.ModelForm):
     model = Comment

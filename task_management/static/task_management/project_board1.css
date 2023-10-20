@@ -10,3 +10,11 @@
     height: 2.3rem;
     width: 2.3rem;
 }
+
+.project-row {
+    cursor: pointer;
+    transition: 0.2s all;
+}
+.project-row:hover {
+    transform: scale(1.05);
+}

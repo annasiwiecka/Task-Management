@@ -32,7 +32,7 @@ urlpatterns = [
     path('get_notification_count/', views.get_notification_count, name='get_notification_count'),
     path('team/<int:team_id>/team_members', views.list_members, name="list_of_members"),
     path('team/<int:team_id>/project_board', views.project_board, name='project_board'),
-    path("project", views.project, name="project"),
+    path("project/<int:project_id>/", views.project, name="project"),
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

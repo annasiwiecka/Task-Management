@@ -103,28 +103,6 @@ class TeamMember(models.Model):
             self.user_profile.current_team = self.team
             self.user_profile.save()
 
-class Project(models.Model):
-    STATUS_CHOICES = [
-        ('Planning', 'Planning'),
-        ('In Progress', 'In Progress'),
-        ('Completed', 'Completed'),
-        ]
-    name = models.CharField(max_length=50)
-    description = models.CharField(max_length=2400)
-    leader = models.ForeignKey(TeamMember,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name='leading_projects', 
-        limit_choices_to={'is_manager': True}
-    )
-    start = models.DateTimeField()
-    end = models.DateTimeField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Planning')
-    team = models.ManyToManyField(Team, related_name='project')
-
-    def __str__(self):
-        return self.name
-    
 class Priority(models.Model):
     HIGH = "High"
     MEDIUM = 'Medium'
@@ -160,6 +138,32 @@ class Priority(models.Model):
     
     class Meta:
         verbose_name_plural = "Priorities"
+
+class Project(models.Model):
+    STATUS_CHOICES = [
+        ('Planning', 'Planning'),
+        ('In Progress', 'In Progress'),
+        ('Completed', 'Completed'),
+        ]
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=2400)
+    leader = models.ForeignKey(TeamMember,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='leading_projects', 
+        limit_choices_to={'is_manager': True}
+    )
+    start = models.DateTimeField()
+    end = models.DateTimeField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Planning')
+    team = models.ManyToManyField(Team, related_name='project')
+    priority = models.ForeignKey(Priority, on_delete=models.SET_NULL, null=True)
+
+
+    def __str__(self):
+        return self.name
+    
+
 
 class Task(models.Model):
     STATUS_CHOICES = [

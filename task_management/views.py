@@ -116,10 +116,12 @@ def team(request, team_id):
 @login_required(login_url="login")
 def project(request, project_id):
     project = get_object_or_404(Project, id=project_id)
+    tasks = Task.objects.filter(project=project)
 
     
     return render(request, "task_management/project.html", {
-          'project': project
+        'project': project,
+        'tasks': tasks
     })
     
 
@@ -370,22 +372,30 @@ def create_project(request, team_id):
         'team': team
     })
 
-def create_task(request):
+def create_task(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+    team = project.team.all().first()
     if request.method == 'POST':
-        form = TaskForm(request.POST)
+        form = TaskForm(request.POST, team=team)
         if form.is_valid():
             task = form.save(commit=False)
+            task.project = project
+            task.start = project.start 
             task.save()
-            return redirect('team_id', team_member_id=team_member_id)
+            
+            return redirect('project', project_id)
     else:
-        form = TaskForm()
+        form = TaskForm(team=team)
     return render(request, 'task_management/create_task.html', {
-        'form': form
+        'form': form,
+        'project': project
     })
 
 def project_board(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     projects = Project.objects.filter(team=team)  
+       
+
     
     is_owner = team.owner == request.user
     
@@ -399,6 +409,7 @@ def project_board(request, team_id):
     return render(request, 'task_management/project_board.html', {
         'projects': projects,
         'team': team,
+  
         'num_total_projects': num_total_projects,
         'num_complete_projects': num_complete_projects,
         'num_pending_project': num_pending_project,
@@ -410,4 +421,8 @@ def list_tasks(request):
 
 
 def task(request, task_id):
-    pass
+    task = get_object_or_404(Task, id=task_id)
+
+    return render(request, 'task_management/task.html', {
+        'task': task
+    })

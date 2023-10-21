@@ -1,0 +1,27 @@
+{% extends 'base_team.html' %}
+{% load static %}
+
+{% csrf_token %}
+
+{% block title %}{% endblock title %}
+
+{% block extra_css_file %}
+
+
+{% endblock extra_css_file %}
+
+{% block extra_content %}
+
+{% load crispy_forms_tags %}
+
+<div class="table">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div>  
+            <button class="button" type="submit">Create</button>
+        <div> 
+    </form>
+</div>
+
+{% endblock extra_content %}

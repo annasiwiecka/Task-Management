@@ -127,9 +127,3 @@ p {
     margin: 3px 1px;
     border-radius: 3px;
 }
-
-.project-details {
-    display: flex;
-    align-items: center; 
-    
-  }

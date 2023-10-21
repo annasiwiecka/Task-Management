@@ -58,9 +58,19 @@ class ProjectForm(forms.ModelForm):
     
 
 class TaskForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        team = kwargs.pop('team', None)
+        super(TaskForm, self).__init__(*args, **kwargs)
+
+        if team:
+            self.fields['assigned_to'].queryset = TeamMember.objects.filter(team=team)
+
     class Meta:
         model = Task
         fields = ['name', 'description', 'assigned_to', 'deadline', 'priority', 'status']
+        widgets = {
+                'deadline': forms.DateInput(attrs={'type': 'date', 'format': '%Y-%m-%d'})
+                }
 
 
 class CommentForm(forms.ModelForm):

@@ -173,9 +173,11 @@ class Task(models.Model):
     ]
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=2400)
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(TeamMember, on_delete=models.CASCADE)
     deadline = models.DateTimeField()
+    start = models.DateTimeField() 
+    team = models.ManyToManyField(Team, related_name='task')
     priority = models.ForeignKey(Priority, on_delete=models.PROTECT)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Not Started')
 

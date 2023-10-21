@@ -6,9 +6,50 @@ project
 {% endblock title %}
 
 {% block extra_css_file %}
- <link rel="stylesheet" href="">
+ <link rel="stylesheet" href="{% static "task_management/project.css" %}">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 {% endblock extra_css_file %}
 
 {% block extra_content %}
-{{ project.name }}
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card-box task-detail">
+                    
+                    <div class="project-details">
+                        <h4 class="m-b-20">{{ project.name }}</h4>
+                        <div class="fas fa-flag fa-lg" style="margin-left: 10px; color: {{ project.priority.color }};"></div></div>                     </div>
+                      <p class=>{{ project.description }}</p>
+                      
+                    <h5>Leader</h5>
+                    <div class="media mt-0 m-b-30"><img class="d-flex mr-3 rounded-circle" alt="64x64" src="{{ project.leader.user_profile.profile_picture.url }}" style="width: 48px; height: 48px;">
+                        <div class="media-body">
+                            <h5 class="media-heading mb-0 mt-0">{{ project.leader.user_profile.name }}</h5>
+                            <span> {{ project.leader.role }} </span>
+                        </div>
+                    </div>
+                    <ul class="list-inline task-dates m-b-0 mt-5">
+                        <li>
+                            <h5 class="m-b-5">Start Date</h5>
+                            <p>{{ project.start }}</p>
+                        </li>
+                        <li>
+                            <h5 class="m-b-5">End Date</h5>
+                            <p>{{ project.end }}</p>
+                        </li>
+                    </ul>
+                   
+                    <div class="assign-team mt-4">
+                        <h5 class="m-b-5">Tasks</h5>
+                        <div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>   
+</div> 
+
 {% endblock extra_content %}

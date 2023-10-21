@@ -1,13 +1,12 @@
-
 .img-thumbnail {
-    
+
     background-color: #fff;
     border: 1px solid #dee2e6;
     border-radius: .25rem;
     max-width: 100%;
     width: 100px;
     height: 100px;
-    
+
 }
 
 .member {
@@ -18,17 +17,23 @@
     border: 1px solid rgb(214, 214, 214);
 }
 
-.button {
-    text-decoration: none !important;
-   
+.member span {
+    word-wrap: break-word;
 }
 
-.member:hover, .member:active {
+.button {
+    text-decoration: none !important;
+
+}
+
+.member:hover,
+.member:active {
     transform: scale(1.05);
     text-decoration: none !important;
 
 }
+
 h5 {
     color: black;
-    
+
 }

@@ -38,12 +38,10 @@ class PriorityForm(forms.ModelForm):
 
 class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        # Receive the 'team' parameter from the view
         team = kwargs.pop('team', None)
         super(ProjectForm, self).__init__(*args, **kwargs)
 
         if team:
-            # Filter the leader queryset to show only managers from the team
             self.fields['leader'].queryset = TeamMember.objects.filter(team=team, is_manager=True)
 
     priority = forms.ModelChoiceField(

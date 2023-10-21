@@ -106,7 +106,7 @@ Page
                                         <td>{{ project.start }}</td>
                                         <td>{{ project.end }}</td>
                                         <td>
-                                            <span class="text-success font-12">{{ project.status }}</span>
+                                            {{ project.status }}
                                         </td>
                                         <td>
                                             <div class="Leader">
@@ -147,8 +147,9 @@ Page
                     });
                 });
             });
-        </script><script>
-            // Function to fetch the pending projects count and update the placeholder
+        </script>
+        <script>
+
             function updatePendingProjectsCount() {
                 fetch("{% url 'get_pending_project' team_id=team.id %}")
                     .then(response => response.json())
@@ -159,7 +160,6 @@ Page
                     .catch(error => console.error(error));
             }
         
-            // Call the function to update the pending projects count
             updatePendingProjectsCount();
         </script>
     

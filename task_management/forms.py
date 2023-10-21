@@ -37,6 +37,15 @@ class PriorityForm(forms.ModelForm):
         fields = ['name', 'color']
 
 class ProjectForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        # Receive the 'team' parameter from the view
+        team = kwargs.pop('team', None)
+        super(ProjectForm, self).__init__(*args, **kwargs)
+
+        if team:
+            # Filter the leader queryset to show only managers from the team
+            self.fields['leader'].queryset = TeamMember.objects.filter(team=team, is_manager=True)
+
     priority = forms.ModelChoiceField(
         queryset=Priority.objects.all(),
     )
@@ -45,9 +54,10 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = ['name', 'description', 'start', 'end', 'status', 'leader', 'priority']
         widgets = {
-            'start': forms.DateInput(attrs={'type': 'date'}),
-            'end': forms.DateInput(attrs={'type': 'date'}),
+            'start': forms.DateInput(attrs={'type': 'date', 'format': '%Y-%m-%d'}),
+            'end': forms.DateInput(attrs={'type': 'date',  'format': '%Y-%m-%d'}),
         }
+    
 
 class TaskForm(forms.ModelForm):
     class Meta:

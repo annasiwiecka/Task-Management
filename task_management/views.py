@@ -57,7 +57,7 @@ def loginPage(request):
     })
 
 
-
+@login_required(login_url="login")
 def logoutPage(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
@@ -372,9 +372,12 @@ def create_project(request, team_id):
         'team': team
     })
 
-def create_task(request, project_id):
+def create_task(request, team_id, project_id):
+ 
+
     project = get_object_or_404(Project, id=project_id)
-    team = project.team.all().first()
+    team = get_object_or_404(Team, id=team_id)
+
     if request.method == 'POST':
         form = TaskForm(request.POST, team=team)
         if form.is_valid():
@@ -382,13 +385,14 @@ def create_task(request, project_id):
             task.project = project
             task.start = project.start 
             task.save()
-            
+            task.team.add(team)
             return redirect('project', project_id)
     else:
         form = TaskForm(team=team)
     return render(request, 'task_management/create_task.html', {
         'form': form,
-        'project': project
+        'project': project,
+        'team': team
     })
 
 def project_board(request, team_id):
@@ -416,8 +420,15 @@ def project_board(request, team_id):
         'can_create_project': can_create_project,
     })
 
-def list_tasks(request):
-    pass
+def task_board(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+    
+    tasks = Task.objects.filter(team=team)  
+
+    return render(request, 'task_management/task_board.html', {
+        'team': team,
+        'tasks': tasks
+    })
 
 
 def task(request, task_id):
@@ -427,8 +438,4 @@ def task(request, task_id):
         'task': task
     })
 
-def messages(request):
-    messages = Message.objects.all()
-    return render(request, 'task_management/messages.html', {
-        'messages': messages
-        })
+

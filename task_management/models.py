@@ -242,3 +242,10 @@ class Message(models.Model):
     def __str__(self):
         return f"Message from {self.sender.user.username} to {self.receiver.user.username}: {self.content}"
 
+class Activity(models.Model):
+    timestamp = models.DateTimeField(auto_now_add=True)
+    project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    team_member = models.ForeignKey('TeamMember', on_delete=models.CASCADE)
+    description = models.TextField()
+
+

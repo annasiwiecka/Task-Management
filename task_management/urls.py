@@ -37,7 +37,8 @@ urlpatterns = [
     path('get_total_projects/<int:team_id>', views.get_total_projects, name='get_total_projects'),
     path('get_complete_projects/<int:team_id>', views.get_complete_projects, name='get_complete_projects'),
     path('create_task/<int:project_id>/', views.create_task, name='create_task'),
-    path('task/<int:task_id>/', views.task, name="task")
+    path('task/<int:task_id>/', views.task, name="task"),
+    path('messages', views.messages, name='messages')
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

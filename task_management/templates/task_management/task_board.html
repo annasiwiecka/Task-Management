@@ -1,0 +1,18 @@
+{% extends 'base_team.html' %}
+{% load static %}
+
+{% csrf_token %}
+
+{% block title %}{% endblock title %}
+
+{% block extra_css_file %}
+<link rel="stylesheet" href="{% static "task_management/task_board.css" %}">
+
+{% endblock extra_css_file %}
+
+{% block extra_content %}
+
+{% load crispy_forms_tags %}
+
+
+{% endblock extra_content %}

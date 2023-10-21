@@ -426,3 +426,9 @@ def task(request, task_id):
     return render(request, 'task_management/task.html', {
         'task': task
     })
+
+def messages(request):
+    messages = Message.objects.all()
+    return render(request, 'task_management/messages.html', {
+        'messages': messages
+        })

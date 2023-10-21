@@ -42,11 +42,31 @@ project
                     </ul>
                    
                     <div class="assign-team mt-4">
-                        <h5 class="m-b-5">Tasks</h5>
                         <a href="{% url "create_task" project_id=project.id %}">Create Task</a>
+                        <h5 class="m-b-5">Team</h5>
+                        
                         {% for task in tasks %}
-                        <a href="{% url "task" task_id=task.id %}">{{ task.name }}</a>
+                        <a href="{% url "task" task_id=task.id %}">
+                            <div>
+                            <img src="{{ task.assigned_to.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" style="width: 48px; height: 48px;" class="d-flex mr-3 rounded-circle">
+                          
+                           
+                          
+                        </div></a>
                         {% endfor %}
+                        <div class="project-section activity">
+                            <h1>Activity List</h1>
+                            <ul>
+                                {% for activity in activities %}
+                                    <li>
+                                        <strong>{{ activity.timestamp }}</strong>: {{ activity.description }}
+                                    </li>
+                                {% empty %}
+                                    <li>No activities found.</li>
+                                {% endfor %}
+                            </ul>
+                        </body>
+                        </div>
                         <div>
                     </div>
                     
@@ -55,125 +75,5 @@ project
         </div>
     </div>   
 </div> 
-<div class="project-section activity">
-    <h3>Activity</h3>
-    <ul class="list-unstyled project-activity-list">
-        <li>
-            <div class="media activity-item">
-                <i class="fa fa-checkmark-circled pull-left text-success"></i>
-                <div class="media-body">
-                    <p class="activity-title">All project tasks are on schedule</p>
-                    <small class="text-muted">2m ago</small>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="media activity-item">
-                <a href="#" class="pull-left">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Avatar" class="media-object avatar">
-                </a>
-                <div class="media-body">
-                    <p class="activity-title"><a href="#">Michael</a> has achieved 80% of his completed tasks</p>
-                    <small class="text-muted">36m ago</small>
-                </div>
-                <div class="btn-group pull-right activity-actions">
-                    <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-ios-arrow-down"></i>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><a href="#">Message Michael</a></li>
-                        <li><a href="#">Assign Task</a></li>
-                    </ul>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="media activity-item">
-                <i class="fa fa-unlocked pull-left text-danger"></i>
-                <div class="media-body">
-                    <p class="activity-title">You have unsecure file permission on this project. Go to <a href="">File Manager</a> to fix it</p>
-                    <small class="text-muted">1h ago</small>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="media activity-item">
-                <a href="#" class="pull-left">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Avatar" class="media-object avatar">
-                </a>
-                <div class="media-body">
-                    <p class="activity-title"><a href="#">Jason</a> has been added to the team</p>
-                    <small class="text-muted">2h ago</small>
-                </div>
-                <div class="btn-group pull-right activity-actions">
-                    <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-ios-arrow-down"></i>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><a href="#">Message Jason</a></li>
-                        <li><a href="#">Assign Task</a></li>
-                    </ul>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="media activity-item">
-                <i class="fa fa-file-word-o pull-left"></i>
-                <div class="media-body">
-                    <p class="activity-title">New file <a href="#">Project Proposalv2.docx</a> has been uploaded by <a href="#">Antonius</a></p>
-                    <small class="text-muted">3h ago</small>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="media activity-item">
-                <i class="fa fa-printer pull-left text-warning"></i>
-                <div class="media-body">
-                    <p class="activity-title">You have <a href="#">pending documents</a> on the printer server</p>
-                    <small class="text-muted">23h ago</small>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="media activity-item">
-                <i class="fa fa-flag pull-left text-success"></i>
-                <div class="media-body">
-                    <p class="activity-title">Project: <a href="#">Phase 1</a> has been flagged as completed by <a href="#">Antonius</a></p>
-                    <small class="text-muted">Yesterday</small>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="media activity-item">
-                <a href="#" class="pull-left">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="Avatar" class="media-object avatar">
-                </a>
-                <div class="media-body">
-                    <p class="activity-title"><a href="#">Jane Doe</a> has updated file <a href="#">Marketing Campaign.docx</a></p>
-                    <small class="text-muted">Yesterday</small>
-                    <div class="activity-attachment">
-                        <div class="well well-sm">
-                            <strong>Revision Note:</strong>
-                            <p>Professionally evolve corporate services without ethical leadership. Proactively re-engineer client-focused infrastructures before alternative potentialities. Competently predominate just in time e-tailers for leveraged solutions.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="btn-group pull-right activity-actions">
-                    <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-ios-arrow-down"></i>
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><a href="#">Message Jane Doe</a></li>
-                        <li><a href="#">Assign Task</a></li>
-                    </ul>
-                </div>
-            </div>
-        </li>
-    </ul>
-    <button type="button" class="btn btn-default center-block"><i class="fa fa-ios-refresh"></i> Load more</button>
-</div>
-</div>
+
 {% endblock extra_content %}

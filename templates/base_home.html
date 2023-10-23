@@ -31,29 +31,10 @@
         </ul>
     </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
-<script>
-    $(document).ready(function() {
-        var currentPath = window.location.pathname;
-        $(".nav.flex-column a").each(function() {
-            var linkPath = $(this).attr("href");
-            if (currentPath.startsWith(linkPath)) {
-                $(this).addClass("active");
-            }
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        $.get('/get_notification_count/', function(data) {
-            $('#notification-count').text(data.count);
-        });
-    });
-</script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'app_home.js' %}"></script>
+    
     {% block content %}{% endblock content %}
 
 </body>

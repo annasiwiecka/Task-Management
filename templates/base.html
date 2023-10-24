@@ -20,21 +20,8 @@
         </ul>
     </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-       
-        var currentPath = window.location.pathname;
+<script src="{% static 'app.js' %}"></script>
 
-      
-        $(".nav-link").each(function() {
-            var linkPath = $(this).attr("href");
-            
-            if (currentPath === linkPath) {
-                $(this).closest(".nav-link").addClass("active");
-            }
-        });
-    });
-</script>
     {% block content %}{% endblock content %}
 </body>
 </html>

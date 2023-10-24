@@ -245,7 +245,8 @@ class Message(models.Model):
 class Activity(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
-    team_member = models.ForeignKey('TeamMember', on_delete=models.CASCADE)
+    task = models.ForeignKey('Task', on_delete=models.CASCADE, null=True, blank=True)
+    team_member = models.ForeignKey(TeamMember, on_delete=models.CASCADE)
     description = models.TextField()
 
 

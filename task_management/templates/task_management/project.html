@@ -19,8 +19,9 @@ project
                 <div class="card-box task-detail">
                     
                     <div class="project-details">
-                        <h4 class="m-b-20">{{ project.name }}</h4>
-                        <div class="fas fa-flag fa-lg" style="margin-left: 10px; color: {{ project.priority.color }};"></div></div>                     </div>
+                        
+                        <h4 class="m-b-20">{{ project.name }}<div class="fas fa-flag fa-lg" style="margin-left: 10px; color: {{ project.priority.color }};"></div></h4>
+                                  </div>
                       <p class='text-muted'>{{ project.description }}</p>
                       
                     <h5>Leader</h5>
@@ -59,7 +60,7 @@ project
                             <ul>
                                 {% for activity in activities %}
                                     <li>
-                                        <strong>{{ activity.timestamp }}</strong>: {{ activity.description }}
+                                        <div class="fas fa-flag fa-lg" style="margin-left: 10px; color: {{ activity.project.priority.color }};"></div> {{ activity.timestamp }} - {{ activity.team_member }} : {{ activity.description }}
                                     </li>
                                 {% empty %}
                                     <li>No activities found.</li>

@@ -117,11 +117,14 @@ def team(request, team_id):
 def project(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     tasks = Task.objects.filter(project=project)
+    activities = Activity.objects.filter(project=project) 
+
 
     
     return render(request, "task_management/project.html", {
         'project': project,
-        'tasks': tasks
+        'tasks': tasks,
+        'activities': activities
     })
     
 
@@ -374,9 +377,9 @@ def create_project(request, team_id):
 
 def create_task(request, team_id, project_id):
  
-
     project = get_object_or_404(Project, id=project_id)
     team = get_object_or_404(Team, id=team_id)
+    
 
     if request.method == 'POST':
         form = TaskForm(request.POST, team=team)
@@ -385,7 +388,18 @@ def create_task(request, team_id, project_id):
             task.project = project
             task.start = project.start 
             task.save()
+            
             task.team.add(team)
+            
+            team_member = TeamMember.objects.get(user=request.user)
+
+            Activity.objects.create(
+                project=project,
+                task=task,
+                team_member=team_member, 
+                description=f'Task "{task.name}" was created in project "{project.name}"'
+            )
+            
             return redirect('project', project_id)
     else:
         form = TaskForm(team=team)

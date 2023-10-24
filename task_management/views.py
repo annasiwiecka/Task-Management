@@ -45,6 +45,10 @@ def loginPage(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
+                
+                user.user_profile.is_online = True
+                user.user_profile.save()
+
                 return redirect("home")
             else:
                 messages.info(request, "Invalid username or password") 
@@ -59,9 +63,15 @@ def loginPage(request):
 
 @login_required(login_url="login")
 def logoutPage(request):
-	logout(request)
-	messages.info(request, "You have successfully logged out.") 
-	return redirect("login")
+    
+    user.user_profile.is_online = False
+    user.user_profile.save()
+
+    logout(request)
+    
+    messages.info(request, "You have successfully logged out.") 
+	
+    return redirect("login")
 
 @login_required(login_url="login")
 def home(request):

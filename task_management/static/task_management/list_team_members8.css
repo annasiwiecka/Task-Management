@@ -38,3 +38,21 @@ h5 {
 
 }
 
+.online-circle {
+    background-color: green;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+   
+}
+
+.offline-circle {
+    background-color: red;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+}

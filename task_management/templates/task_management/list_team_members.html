@@ -6,7 +6,7 @@ Page
 {% endblock title %}
 
 {% block extra_css_file %}
-<link rel="stylesheet" href="{% static "task_management/list_team_members7.css" %}">
+<link rel="stylesheet" href="{% static "task_management/list_team_members8.css" %}">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
 {% endblock extra_css_file %}
@@ -23,10 +23,9 @@ Page
         <div class="member">
             <div class="bg rounded shadow-sm py-5 px-4"><img src="{{ team_member.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                 <h5 class="mb-0">{{team_member.user_profile.name|default:team_member.user.username}}</h5>
+                  <div class="{% if team_member.user_profile.is_online %}online-circle{% else %}offline-circle{% endif %}"></div>
                 <span class="small text-uppercase text-muted">{{ team_member.role }}</span>
                 <span class="small text-muted">{{ team_member.responsibilities }}</span>
-                
-             
             
             </div>
         </div></a>

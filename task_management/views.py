@@ -283,11 +283,12 @@ def notification(request):
         'num_notifications': num_notifications
         })
 
-def get_notification_count(request, team_member_id):
-    team_member = get_object_or_404(TeamMember, id=team_member_id)
-
-    count = Notification.objects.count()
-    data = {'count': count}
+def get_notification_count(request):
+    if request.user.is_authenticated:
+        num_notifications = Notification.objects.filter(user=request.user).count()
+    else:
+        num_notifications = 0
+    data = {'count': num_notifications}
     return JsonResponse(data)
 
 def get_pending_project(request, team_id):

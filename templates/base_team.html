@@ -20,7 +20,20 @@
 </ul>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'app_team.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        var currentPath = window.location.pathname;
+    
+        $(".nav-link").each(function() {
+            var linkPath = $(this).attr("href");
+            
+            if (currentPath === linkPath) {
+                $(this).closest(".nav-link").addClass("active");
+                $(this).attr("aria-current", "page");
+            }
+        });
+    });
+</script>
  
 
 {% block extra_content %}{% endblock extra_content %}

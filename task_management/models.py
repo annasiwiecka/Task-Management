@@ -13,8 +13,8 @@ from django.utils import timezone
 class Team(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField()
+    members = models.ManyToManyField(User, through='TeamMember', related_name="teams")
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="team_created")
-    members = models.ManyToManyField(User, through='TeamMember', related_name="team_member")
     projects = models.ManyToManyField('Project', related_name='teams')
     
     class Meta:

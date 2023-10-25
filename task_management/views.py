@@ -46,8 +46,8 @@ def loginPage(request):
             if user is not None:
                 login(request, user)
                 
-                user.user_profile.is_online = True
-                user.user_profile.save()
+                user.profile.is_online = True
+                user.profile.save()
 
                 return redirect("home")
             else:
@@ -64,13 +64,13 @@ def loginPage(request):
 @login_required(login_url="login")
 def logoutPage(request):
     
-    user.user_profile.is_online = False
-    user.user_profile.save()
+    user = request.user
+    
+    user.profile.is_online = False
+    user.profile.save()
 
     logout(request)
-    
     messages.info(request, "You have successfully logged out.") 
-	
     return redirect("login")
 
 @login_required(login_url="login")

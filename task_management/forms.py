@@ -46,6 +46,7 @@ class ProjectForm(forms.ModelForm):
 
     priority = forms.ModelChoiceField(
         queryset=Priority.objects.all(),
+        
     )
     
     class Meta:

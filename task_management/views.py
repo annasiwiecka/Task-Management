@@ -116,11 +116,13 @@ def team(request, team_id):
     if user_profile:
         current_team = user_profile.current_team
     
+    priorities = Priority.objects.all()
 
     return render(request, 'task_management/team_id.html', {
         'team': team,
         'team_members': team_members,
-        'current_team': current_team
+        'current_team': current_team,
+        'priorities': priorities
         })
 
 @login_required(login_url="login")
@@ -140,7 +142,33 @@ def project(request, project_id):
 
 @login_required(login_url="login")
 def my_task(request):
-    return render(request, "task_management/my_task.html")
+    current_user = request.user
+    team_member = TeamMember.objects.get(user=current_user)
+
+    assigned_tasks = Task.objects.filter(assigned_to=team_member)
+    return render(request, "task_management/my_task.html", {
+        'assigned_tasks': assigned_tasks
+        })
+
+def my_project(request):
+    current_user = request.user
+    team_member = TeamMember.objects.get(user=current_user)
+    
+    leader_projects = Project.objects.filter(leader=team_member)
+    tasks = Task.objects.filter(project__in=leader_projects)  # Filter tasks in leader projects
+    activities = Activity.objects.filter(project__in=leader_projects)  # Filter activities in leader projects
+
+    projects_with_user_tasks = Project.objects.filter(
+        team=team_member.team,  # Filter projects within the same team
+        task__assigned_to=team_member  # Filter projects with tasks assigned to the user
+    ).distinct()
+    
+    return render(request, "task_management/my_project.html", {
+        'leader_projects': leader_projects,
+        'projects_with_user_tasks': projects_with_user_tasks,
+        'tasks': tasks,
+        'activities': activities
+        })
 
 @login_required(login_url="login")
 def settingsPage(request):
@@ -152,7 +180,7 @@ def create_team(request):
         form = TeamForm(request.POST)
         if form.is_valid():
             team = form.save(commit=False)
-            team.owner = request.user  # Set the owner to the current user
+            team.owner = request.user  
             team.save()
             return redirect('team_id', team_id=team.id)
     else:
@@ -167,8 +195,16 @@ def list_members(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     team_members = TeamMember.objects.filter(team=team)
     
+    is_owner = team.owner == request.user
+    
+    can_send_invitation = (
+        is_owner
+        or request.user.has_perm('task_management.can_manage_team')  # Check the can_manage_team permission
+    )
+    
     return render(request, 'task_management/list_team_members.html', {
-        'team_members': team_members
+        'team_members': team_members,
+        'can_send_invitation': can_send_invitation
         })
 
 @login_required(login_url="login")
@@ -179,7 +215,7 @@ def team_member(request, team_member_id):
 
     can_edit_profile = (
         is_owner
-        or request.user.has_perm('task_management.can_manage_team')  # Check the can_manage_team permission
+        or request.user.has_perm('task_management.can_manage_team')  
     )
     
     
@@ -235,7 +271,6 @@ def team_member_delete(request, team_member_id):
         return redirect('team_id', team_id=team.id)
 
     if request.method == 'POST':
-        # Delete the team member upon confirmation
         team_member.delete()
         return redirect('team_id', team_id=team.id)
 
@@ -410,7 +445,12 @@ def create_task(request, team_id, project_id):
                 team_member=team_member, 
                 description=f'Task "{task.name}" was created in project "{project.name}"'
             )
+
+            team_member = TeamMember.objects.get(user=request.user)
+            user = team_member.user
             
+            Notification.objects.create(user=user, message=f'You have been assigned a task: {task.name}')
+
             return redirect('project', project_id)
     else:
         form = TaskForm(team=team)

@@ -16,7 +16,8 @@ urlpatterns = [
    path("notification/", views.notification, name="notification"),
    path("team/<int:team_id>/", views.team, name="team_id"),
    
-   path("my-task", views.my_task, name="my-task"),
+   path("my_task", views.my_task, name="my-task"),
+   path('my_project', views.my_project, name='my_project'),
    path("Settings", views.settingsPage, name="settings"),
 
    path("create-team", views.create_team, name="create_team"),
@@ -39,6 +40,7 @@ urlpatterns = [
     path('team/<int:team_id>/create_task/<int:project_id>/', views.create_task, name='create_task'),
     path('task/<int:task_id>/', views.task, name="task"),
     path('team/<int:team_id>/task_board', views.task_board, name='task_board'),
+
 
 ] 
 

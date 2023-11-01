@@ -80,11 +80,11 @@ Page
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive project-list">
-                            <table class="table project-table table-centered table-nowrap">
+                        
+                            <table class="table project-table table-centered table-nowrap" >
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
+                                        
                                         <th scope="col">Projects</th>
                                         <th scope="col">Start Date</th>
                                         <th scope="col">End Date</th>
@@ -102,7 +102,6 @@ Page
                                     <a href="{% url "project" project_id=project.id %}">
                                     <tr class="project-row" data-url="{% url 'project' project_id=project.id %}">
                                        
-                                        <th scope="row">1</th>
                                         
                                         <td>{{ project.name }}</td>
                                         <td>{{ project.start }}</td>
@@ -138,7 +137,8 @@ Page
                     </div>
                 </div>
             </div> 
-        </div>          
+        </div>    
+    </div>      
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
                     

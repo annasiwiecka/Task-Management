@@ -225,7 +225,7 @@ class TeamInvitation(models.Model):
 
 class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.TextField
+    message = models.TextField(null=True)
     timestamp = models.DateTimeField(default=timezone.now)
     is_read = models.BooleanField(default=False)
     team_invitation = models.ForeignKey(TeamInvitation, on_delete=models.CASCADE, null=True, blank=True)
@@ -234,15 +234,7 @@ class Notification(models.Model):
     def __str__(self):
         return f"Notification for {self.user.username}: {self.message}"
 
-class Message(models.Model):
-    sender = models.ForeignKey(TeamMember, on_delete=models.CASCADE, related_name='sent_messages')
-    receiver = models.ForeignKey(TeamMember, on_delete=models.CASCADE, related_name='received_messages')
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, blank=True, null=True)
-    content = models.TextField()
-    timestamp = models.DateTimeField(default=timezone.now)
 
-    def __str__(self):
-        return f"Message from {self.sender.user.username} to {self.receiver.user.username}: {self.content}"
 
 class Activity(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)

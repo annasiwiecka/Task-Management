@@ -7,16 +7,26 @@ Page
 
 {% block extra_css_file %}
 <link rel="stylesheet" href="{% static "task_management/team_id5.css" %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 {% endblock extra_css_file %}
 
 {% block extra_content %}
    
     <div class='team'>
-        <a href="{% url "send_invitation" %}">Sent invitation</a>
-     
-    </div>
-                                  
-    <h1>jdkhfikdsjhfjkdsfgnkldsg;jfdkl;s</h1>
 
-    
+     
+                         
+    {% for priority in priorities %}
+    <ul>
+        
+            <div class="fas fa-flag fa-lg" style="color: {{ priority.color }};"></div>
+        
+        {{ priority.name }}
+        
+    </ul>
+    {% endfor %}
+    <h5>Contact email</h5>
+</div>
+             
 {% endblock extra_content %}

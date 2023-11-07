@@ -30,15 +30,12 @@
                     </div>
                     <h4 class="m-b-20">{{ task.name }}</h4>
                     <p class="text-muted">{{ task.description }}</p>
-                    
+                    <h5>{{ task.status }}</h5>
                     <ul class="list-inline task-dates m-b-0 mt-5">
-                        <li>
-                            <h5 class="m-b-5">Start Date</h5>
-                            <p>01 December 2017 <small class="text-muted">1:00 PM</small></p>
-                        </li>
+                        
                         <li>
                             <h5 class="m-b-5">Due Date</h5>
-                            <p>17 February 2018 <small class="text-muted">12:00 PM</small></p>
+                            <p>{{ task.deadline }}</p>
                         </li>
                     </ul>
                     <div class="clearfix"></div>
@@ -53,12 +50,22 @@
                     <div class="attached-files mt-4">
                         <h5 class="">Attached Files</h5>
                         <div class="files-list">
-                           
-                            <div class="file-box">
-                                <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="img-responsive img-thumbnail" alt="attached-img"></a>
-                                <p class="font-13 mb-1 text-muted"><small>Dribbble shot</small></p>
-                            </div>
+                            {% for attachment in attachments %}
+                            <li>
+                                <p>{{ attachment.description }}</p>
+                              <a href="{{ attachment.file.url }}" target="_blank">{{ attachment.file.name }}</a>
+                              (Uploaded by: {{ attachment.uploaded_by }}, {{ attachment.upload }})
+                            </li>
+                          {% endfor %}
+                          {% if can_manage_attachments %}
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ attachments_form|crispy }}
+                                <button type="submit">Upload Attachments</button>
+                            </form>
+                            {% endif %}
                         </div>
+                        
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="text-right mt-4">
@@ -70,59 +77,27 @@
                 </div>
             </div>
             <!-- end col -->
+           
             <div class="col-lg-4">
                 <div class="card-box">
-                    <h4 class="header-title m-b-30">Comments (5)</h4>
+                    <h4 class="header-title m-b-30">Comments</h4>
+                    {% for comment in comments %}
                     <div>
                         <div class="media m-b-20">
                             <div class="d-flex mr-3">
-                                <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a>
-                            </div>
+                                <img class="media-object rounded-circle thumb-sm" src="{{ comment.user.user_profile.profile_picture.url|default:'media/default.jpg' }}"></div>
                             <div class="media-body">
-                                <h5 class="mt-0">Maxine Kennedy</h5>
-                                <p class="font-13 text-muted mb-0"><a href="" class="text-dark">@Michael</a> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p><a href="" class="text-success font-13">Reply</a></div>
+                                <h5 class="mt-0">{{ comment.user.user_profile.name }}</h5>
+                                <p class="font-13 mb-0">{{ comment.content }}</div>
                         </div>
-                        <div class="media m-b-20">
-                            <div class="d-flex mr-3">
-                                <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar2.png"></a>
-                            </div>
+                        {% endfor %}
                             <div class="media-body">
-                                <h5 class="mt-0">Doyle Bell</h5>
-                                <p class="font-13 text-muted mb-0"><a href="" class="text-dark">@Michael</a> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p><a href="" class="text-success font-13">Reply</a>
-                                <div class="media m-t-20 m-b-20">
-                                    <div class="d-flex mr-3">
-                                        <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar3.png"></a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Elena Vancamp</h5>
-                                        <p class="font-13 text-muted mb-0"><a href="" class="text-dark">@Doyle</a> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p><a href="" class="text-success font-13">Reply</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="media m-b-20">
-                            <div class="d-flex mr-3">
-                                <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a>
-                            </div>
-                            <div class="media-body">
-                                <h5 class="mt-0">Maxine Kennedy</h5>
-                                <p class="font-13 text-muted mb-0">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p><a href="" class="text-success font-13">Reply</a></div>
-                        </div>
-                        <div class="media m-b-20">
-                            <div class="d-flex mr-3">
-                                <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar5.png"></a>
-                            </div>
-                            <div class="media-body">
-                                <h5 class="mt-0">Erick Loper</h5>
-                                <p class="font-13 text-muted mb-0"><a href="" class="text-dark">@Maxine</a> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio.</p><a href="" class="text-success font-13">Reply</a></div>
-                        </div>
-                        <div class="media m-b-20">
-                            <div class="d-flex mr-3">
-                                <a href="#"><img class="media-object rounded-circle thumb-sm" alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar1.png"></a>
-                            </div>
-                            <div class="media-body">
-                                <input type="text" class="form-control input-sm" placeholder="Some text value...">
-                                <div class="mt-2 text-right">
-                                    <button type="submit" class="btn btn-sm btn-custom waves-effect waves-light">Send</button>
+                                
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        {{ form.content }}
+                                        <button type="submit" class="btn btn-sm btn-custom waves-effect waves-light">Send</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

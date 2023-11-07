@@ -165,7 +165,25 @@ class Project(models.Model):
     def __str__(self):
         return self.name
     
+    def update_status_to_in_progress(self):
+        if self.status != 'In Progress':
+            self.status = 'In Progress'
+            self.save()
 
+    def calculate_overall_progress(self):
+        total_tasks = self.task_set.count()
+        total_progress = 0
+
+        for task in self.task_set.all():
+            if task.status == 'Completed':
+                total_progress += 100
+            elif task.status == 'In Progress':
+                total_progress += 50
+
+        if total_tasks == 0:
+            return 0
+        else:
+            return round((total_progress / (total_tasks * 100)) * 100)
 
 class Task(models.Model):
     STATUS_CHOICES = [
@@ -182,17 +200,25 @@ class Task(models.Model):
     team = models.ManyToManyField(Team, related_name='task')
     priority = models.ForeignKey(Priority, on_delete=models.PROTECT)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Not Started')
+    attachments = models.ManyToManyField('Attachment', related_name='tasks', blank=True, null=True)
+
 
     def __str__(self):
         return self.name
-    
 
+    def save(self, *args, **kwargs):
+        super(Task, self).save(*args, **kwargs)
+        self.project.update_status_to_in_progress()
+    
+    
 class Comment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey(TeamMember, on_delete=models.CASCADE)
     content = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
+
 
     def __str__(self):
         return f"Comment by {self.user.username} on {self.timestamp}"

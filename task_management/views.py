@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from datetime import datetime
 
 from .forms import *
 from .decorators import unauthenticated_user
@@ -125,38 +127,13 @@ def team(request, team_id):
         'priorities': priorities
         })
 
-@login_required(login_url="login")
-def project(request, project_id):
-    project = get_object_or_404(Project, id=project_id)
-    tasks = Task.objects.filter(project=project)
-    activities = Activity.objects.filter(project=project) 
 
-
-    
-    return render(request, "task_management/project.html", {
-        'project': project,
-        'tasks': tasks,
-        'activities': activities
-    })
-    
-
-@login_required(login_url="login")
-def my_task(request):
-    current_user = request.user
-    team_member = TeamMember.objects.get(user=current_user)
-
-    assigned_tasks = Task.objects.filter(assigned_to=team_member)
-    return render(request, "task_management/my_task.html", {
-        'assigned_tasks': assigned_tasks
-        })
 
 def my_project(request):
     current_user = request.user
     team_member = TeamMember.objects.get(user=current_user)
     
     leader_projects = Project.objects.filter(leader=team_member)
-    tasks = Task.objects.filter(project__in=leader_projects)  # Filter tasks in leader projects
-    activities = Activity.objects.filter(project__in=leader_projects)  # Filter activities in leader projects
 
     projects_with_user_tasks = Project.objects.filter(
         team=team_member.team,  # Filter projects within the same team
@@ -166,8 +143,7 @@ def my_project(request):
     return render(request, "task_management/my_project.html", {
         'leader_projects': leader_projects,
         'projects_with_user_tasks': projects_with_user_tasks,
-        'tasks': tasks,
-        'activities': activities
+        
         })
 
 @login_required(login_url="login")
@@ -421,6 +397,33 @@ def create_project(request, team_id):
         'team': team
     })
 
+@login_required(login_url="login")
+def project(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+    tasks = Task.objects.filter(project=project)
+    activities = Activity.objects.filter(project=project) 
+    overall_progress = project.calculate_overall_progress()
+
+       # Get the current datetime
+    '''current_datetime = datetime.now()
+
+    # Calculate the time remaining
+    time_remaining = project.end - current_datetime
+
+    # Extract the number of days and hours
+    days_remaining = time_remaining.days
+    hours_remaining = time_remaining.seconds // 3600'''
+
+    
+    return render(request, "task_management/project.html", {
+        'project': project,
+        'tasks': tasks,
+        'activities': activities,
+        'overall_progress': overall_progress,
+       
+    })
+    
+
 def create_task(request, team_id, project_id):
  
     project = get_object_or_404(Project, id=project_id)
@@ -463,7 +466,8 @@ def create_task(request, team_id, project_id):
 def project_board(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     projects = Project.objects.filter(team=team)  
-       
+    project = projects.first()
+    overall_progress = project.calculate_overall_progress()
 
     
     is_owner = team.owner == request.user
@@ -483,6 +487,7 @@ def project_board(request, team_id):
         'num_complete_projects': num_complete_projects,
         'num_pending_project': num_pending_project,
         'can_create_project': can_create_project,
+        'overall_progress': overall_progress
     })
 
 def task_board(request, team_id):
@@ -498,9 +503,73 @@ def task_board(request, team_id):
 
 def task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
+    comments = Comment.objects.filter(task=task)
+    attachments = Attachment.objects.filter(task=task)
+    
+    team_member = TeamMember.objects.get(user=request.user)
+    project = task.project
+    
+    is_assigned_to = task.assigned_to == team_member
+    is_leader = project.leader == team_member
+    
+    can_manage_attachments = (is_assigned_to
+    or is_leader)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            current_user = request.user
+            team_member = TeamMember.objects.get(user=current_user)
+            
+            new_comment.task = task
+            new_comment.user = team_member
+            new_comment.save()
+            return redirect('task', task_id=task_id)
+
+    else:
+        form = CommentForm()
+
+    if request.method == 'POST':
+        attachments_form = AttachmentForm(request.POST, request.FILES)
+        if attachments_form.is_valid():
+            files = request.FILES.getlist('file') 
+            for file in files:
+                attachment = attachments_form.save(commit=False)
+                attachment.task = task
+                attachment.uploaded_by = TeamMember.objects.get(user=request.user)
+                attachment.file = file  
+                attachment.save()
+                
+                team_member = TeamMember.objects.get(user=request.user)
+
+                task.status = 'In Progress'
+                task.save()
+
+                project = task.project
+                
+                Activity.objects.create(
+                    project=project,
+                    task=task,
+                    team_member=team_member, 
+                    description=f'Attachment was upload in task: "{task.name}"'
+                )
+            return redirect('task', task_id=task_id)
+    else:
+        attachments_form = AttachmentForm()
 
     return render(request, 'task_management/task.html', {
-        'task': task
+        'task': task,
+        'comments': comments, 
+        'form': form,
+        'attachments_form': attachments_form,
+        'attachments': attachments,
+        "can_manage_attachments": can_manage_attachments
     })
 
 
+def my_task(request):
+    pass
+
+def my_project(request):
+    pass

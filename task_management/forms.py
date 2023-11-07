@@ -59,6 +59,7 @@ class ProjectForm(forms.ModelForm):
     
 
 class TaskForm(forms.ModelForm):
+    
     def __init__(self, *args, **kwargs):
         team = kwargs.pop('team', None)
         super(TaskForm, self).__init__(*args, **kwargs)
@@ -70,13 +71,15 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['name', 'description', 'assigned_to', 'deadline', 'priority', 'status']
         widgets = {
-                'deadline': forms.DateInput(attrs={'type': 'date', 'format': '%Y-%m-%d'})
+                'deadline': forms.DateInput(attrs={'type': 'date', 'format': '%Y-%m-%d'}),
                 }
 
 
 class CommentForm(forms.ModelForm):
-    model = Comment
-    fields = ['content']
+    
+    class Meta:
+        model = Comment
+        fields = ['content']
     
 class Notification(forms.ModelForm):
     model = Notification
@@ -96,3 +99,8 @@ class TeamMemberForm(forms.ModelForm):
     class Meta:
         model = TeamMember
         fields = ['role', 'responsibilities', 'is_manager']
+
+class AttachmentForm(forms.ModelForm):
+    class Meta:
+        model = Attachment
+        fields = ['description', 'file']

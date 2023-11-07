@@ -42,6 +42,13 @@ project
                         </li>
                     </ul>
                    
+                    <p class="mb-0">Progress<span class="float-right">{{ overall_progress }}%</span></p>
+
+                                        <div class="progress mt-2" style="height: 5px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ overall_progress }}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    
+
                     <div class="assign-team mt-4">
                         <a href="{% url "create_task" team_id=user.profile.current_team.id project_id=project.id %}">Create Task</a>
                         <h5 class="m-b-5">Team</h5>
@@ -50,10 +57,11 @@ project
                         <a href="{% url "task" task_id=task.id %}">
                             <div>
                             <img src="{{ task.assigned_to.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" style="width: 48px; height: 48px;" class="d-flex mr-3 rounded-circle">
+
                           
-                           
-                          
-                        </div></a>
+                        </div>
+                        <p>{{ task.name }}</p>
+                    </a>
                         {% endfor %}
                         <div class="project-section activity">
                             <h1>Activity List</h1>

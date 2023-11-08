@@ -171,19 +171,24 @@ class Project(models.Model):
             self.save()
 
     def calculate_overall_progress(self):
-        total_tasks = self.task_set.count()
-        total_progress = 0
+        try:
+            total_tasks = self.task_set.count()
+            total_progress = 0
 
-        for task in self.task_set.all():
-            if task.status == 'Completed':
-                total_progress += 100
-            elif task.status == 'In Progress':
-                total_progress += 50
+            for task in self.task_set.all():
+                if task.status == 'Completed':
+                    total_progress += 100
+                elif task.status == 'In Progress':
+                    total_progress += 50
 
-        if total_tasks == 0:
-            return 0
-        else:
-            return round((total_progress / (total_tasks * 100)) * 100)
+            if total_tasks == 0:
+                return 0
+            else:
+                return round((total_progress / (total_tasks * 100)) * 100)
+        except Project.DoesNotExist:
+            return None
+
+            
 
 class Task(models.Model):
     STATUS_CHOICES = [
@@ -221,7 +226,7 @@ class Comment(models.Model):
 
 
     def __str__(self):
-        return f"Comment by {self.user.username} on {self.timestamp}"
+        return f"Comment by {self.user.user.username} on {self.timestamp}"
 
 
 class Attachment(models.Model):

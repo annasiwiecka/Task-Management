@@ -467,7 +467,11 @@ def project_board(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     projects = Project.objects.filter(team=team)  
     project = projects.first()
-    overall_progress = project.calculate_overall_progress()
+    overall_progress = 0  
+
+    for project in projects:
+        overall_progress += project.calculate_overall_progress()
+
 
     
     is_owner = team.owner == request.user
@@ -511,9 +515,8 @@ def task(request, task_id):
     
     is_assigned_to = task.assigned_to == team_member
     is_leader = project.leader == team_member
-    
-    can_manage_attachments = (is_assigned_to
-    or is_leader)
+    can_manage_attachments = is_assigned_to or is_leader
+
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -541,12 +544,10 @@ def task(request, task_id):
                 attachment.file = file  
                 attachment.save()
                 
-                team_member = TeamMember.objects.get(user=request.user)
-
                 task.status = 'In Progress'
                 task.save()
 
-                project = task.project
+           
                 
                 Activity.objects.create(
                     project=project,

@@ -58,7 +58,7 @@
                             </li>
                           {% endfor %}
                           {% if can_manage_attachments %}
-                            <form method="post" enctype="multipart/form-data">
+                            <form method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{ attachments_form|crispy }}
                                 <button type="submit">Upload Attachments</button>

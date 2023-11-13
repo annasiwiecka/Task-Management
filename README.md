@@ -16,7 +16,7 @@ I created a web-based platform: a system that manages tasks in remote teams, fac
 
 ### Registration, Login, Logout
 
-![Registration](images/2023-11-12(11).png)
+![Registration](images/2023-11-12 (11).png)
 
 ## License
 

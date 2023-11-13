@@ -12,6 +12,11 @@ I created a web-based platform: a system that manages tasks in remote teams, fac
     On macOS or Linux:
     'python3 manage.py runserver'
 
+## PROJECT
+
+### Registration, Login, Logout
+
+![Registration](2023-11-12(11).png)
 
 ## License
 

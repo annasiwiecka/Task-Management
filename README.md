@@ -43,6 +43,17 @@ On the project page, there is a title, a description of the project. The leader 
 
 Search by project progression and alphabetically (asc and desc), improved image of the activity sector, and more features in the activity sector coming soon
 
+### Tasks
+
+![ProjectBoard](./images/2023-11-13(6).png)
+![ProjectBoard](./images/2023-11-13(9).png)
+On the task board it is possible to see who is assigned to a task, what the progress is, what the priority is and also which project the task belongs to.
+
+On the task page the user can add attachments, there is also a comments section where the leader can comment on the user's work
+
+Search by task progression and alphabetically (asc and desc),
+a better view of the tasks page, and a view of the number of completed and progressing tasks in the near future
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).

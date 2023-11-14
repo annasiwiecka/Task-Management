@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from datetime import datetime
 
+from django.views.generic.list import ListView
+
 from .forms import *
 from .decorators import unauthenticated_user
 from .models import *
@@ -463,36 +465,77 @@ def create_task(request, team_id, project_id):
         'team': team
     })
 
-def project_board(request, team_id):
-    team = get_object_or_404(Team, id=team_id)
-    projects = Project.objects.filter(team=team)  
-    project = projects.first()
-    overall_progress = 0  
-
-    for project in projects:
-        overall_progress += project.calculate_overall_progress()
-
-
+class ProjectBoardListView(ListView):
+    model = Project
+    template_name = 'task_management/project_board.html'
+    context_object_name = 'projects'
+    paginate_by = 10  
     
-    is_owner = team.owner == request.user
-    
-    can_create_project = (
-        is_owner
-        or request.user.has_perm('task_management.can_manage_team')  # Check the can_manage_team permission
-    )
-    num_pending_project = Project.objects.filter(status='In Progress').count()
-    num_complete_projects =  Project.objects.filter(status='Completed').count()
-    num_total_projects = Project.objects.filter(team=team).count()
-    return render(request, 'task_management/project_board.html', {
-        'projects': projects,
-        'team': team,
-  
-        'num_total_projects': num_total_projects,
-        'num_complete_projects': num_complete_projects,
-        'num_pending_project': num_pending_project,
-        'can_create_project': can_create_project,
-        'overall_progress': overall_progress
-    })
+
+    def get_queryset(self):
+        team_id = self.kwargs['team_id']
+        team = get_object_or_404(Team, id=team_id)
+        return Project.objects.filter(team=team)
+        
+
+    def get_context_data(self, *args, **kwargs):
+        print(self.request.GET)
+        team_id = self.kwargs['team_id']
+        team = get_object_or_404(Team, id=team_id)
+        projects = super().get_queryset()
+
+        form = ProjectBoardForm(self.request.GET)
+        if form.is_valid():
+            name = form.cleaned_data.get('name', '').strip()
+            print(f"Name Filter: {name}")
+            print(f"Sort By: {form.cleaned_data['sort_by']}")
+            print(f"Order By: {form.cleaned_data['order_by']}")
+            sort_by = form.cleaned_data['sort_by']
+            order_by = form.cleaned_data['order_by']
+            
+            if name:
+                projects = projects.filter(name__icontains=name)
+            
+            if sort_by == 'name':
+                if order_by == 'asc':
+                    projects = projects.order_by('name')
+                elif order_by == 'desc':
+                    projects = projects.order_by('-name')
+            
+            if sort_by == 'progress':
+                if order_by == 'asc':
+                    projects = sorted(projects, key=lambda project: project.calculate_overall_progress())
+                elif order_by == 'desc':
+                    projects = sorted(projects, key=lambda project: project.calculate_overall_progress(), reverse=True)
+
+            
+        num_pending_project = Project.objects.filter(status='In Progress').count()
+        num_complete_projects = Project.objects.filter(status='Completed').count()
+        num_total_projects = Project.objects.filter(team=team).count()
+
+        overall_progress = 0
+        for project in projects:
+            overall_progress += project.calculate_overall_progress()
+
+        is_owner = team.owner == self.request.user
+
+        can_create_project = (
+            is_owner
+            or self.request.user.has_perm('task_management.can_manage_team')
+        )
+
+        return super().get_context_data(
+            team=team,
+            num_total_projects=num_total_projects,
+            num_complete_projects=num_complete_projects,
+            num_pending_project=num_pending_project,
+            can_create_project=can_create_project,
+            overall_progress=overall_progress,
+            form=ProjectBoardForm(self.request.GET),
+            )
+            
+
+
 
 def task_board(request, team_id):
     team = get_object_or_404(Team, id=team_id)

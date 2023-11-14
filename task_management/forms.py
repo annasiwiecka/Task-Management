@@ -57,6 +57,23 @@ class ProjectForm(forms.ModelForm):
             'end': forms.DateInput(attrs={'type': 'date',  'format': '%Y-%m-%d'}),
         }
     
+class ProjectBoardForm(forms.Form):
+    SORT_CHOICES = [
+        ('name', 'Name'),
+        ('progress', 'Progress'),
+    ]
+
+    ORDER_CHOICES = [
+        ('asc', 'Ascending'),
+        ('desc', 'Descending'),
+    ]
+
+    sort_by = forms.ChoiceField(choices=SORT_CHOICES, initial='name')
+    order_by = forms.ChoiceField(choices=ORDER_CHOICES, initial='asc')
+    name = forms.CharField(required=False, label='Name', initial='')
+    class Meta:
+        model = Project  
+        fields = ['sort_by', 'order_by', 'name']
 
 class TaskForm(forms.ModelForm):
     

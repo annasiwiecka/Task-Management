@@ -30,7 +30,7 @@ We get a notification when we are invited to join a team, when we are assigned t
 ### Team Members
 
 ![TeamMembers](./images/LIST.png)
-![TeamMembersProfile](./imagesEditProfile.png)
+![TeamMembersProfile](./images/EditProfile.png)
 
 We can see our team, we can see if a team member is active and there is also the possibility to see the person's team profile, by sharing emails we can keep in touch. You can also see the responsibilities, the owner can edit team profiles and also give the manager to someone
 

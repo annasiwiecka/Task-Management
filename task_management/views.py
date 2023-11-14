@@ -314,6 +314,7 @@ def get_notification_count(request):
     data = {'count': num_notifications}
     return JsonResponse(data)
 
+
 def get_pending_project(request, team_id):
     team = get_object_or_404(Team, id=team_id)
 
@@ -338,6 +339,32 @@ def get_complete_projects(request, team_id):
     count = Project.objects.filter(team=team, status='Completed')
     data = {'count': count}
     return JsonResponse(data)
+
+
+def get_pending_tasks(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+
+    count_in_progress = Task.objects.filter(team=team, status='In Progress').count()
+    count_planning = Task.objects.filter(team=team, status='Not Started').count()
+    
+    total_pending = count_planning + count_in_progress
+
+    data = {'count': total_pending}
+    return JsonResponse(data)
+
+def get_total_tasks(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+
+    count = Task.objects.filter(team=team).count()
+    data = {'count': count}
+    return JsonResponse(data)
+
+def get_complete_tasks(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+    count = Task.objects.filter(team=team, status='Completed')
+    data = {'count': count}
+    return JsonResponse(data)
+
 
 @login_required(login_url="login")
 def accept_invitation(request, invitation_id):
@@ -487,20 +514,25 @@ class ProjectBoardListView(ListView):
         form = ProjectBoardForm(self.request.GET)
         if form.is_valid():
             name = form.cleaned_data.get('name', '').strip()
-            print(f"Name Filter: {name}")
-            print(f"Sort By: {form.cleaned_data['sort_by']}")
-            print(f"Order By: {form.cleaned_data['order_by']}")
-            sort_by = form.cleaned_data['sort_by']
-            order_by = form.cleaned_data['order_by']
+            priority = form.cleaned_data.get('priority')
+            sort_by = form.cleaned_data.get('sort_by')
+            order_by = form.cleaned_data.get('order_by')
+            
             
             if name:
                 projects = projects.filter(name__icontains=name)
             
+            if priority:
+                projects = projects.filter(priority=priority)
+
             if sort_by == 'name':
                 projects = projects.order_by('name' if order_by == 'asc' else '-name')
-            elif sort_by == 'progress':
+            
+            if sort_by == 'progress':
                 projects = sorted(projects, key=lambda project: project.calculate_overall_progress(), reverse=(order_by == 'desc'))
 
+            if sort_by == 'date':
+                projects = projects.order_by('end' if order_by == 'asc' else '-end')
             
         num_pending_project = Project.objects.filter(status='In Progress').count()
         num_complete_projects = Project.objects.filter(status='Completed').count()
@@ -553,28 +585,34 @@ class TaskBoardList(ListView):
         form = TaskBoardForm(self.request.GET)
         if form.is_valid():
             name = form.cleaned_data.get('name', '').strip()
-            print(f"Name Filter: {name}")
-            print(f"Sort By: {form.cleaned_data['sort_by']}")
-            print(f"Order By: {form.cleaned_data['order_by']}")
-            sort_by = form.cleaned_data['sort_by']
-            order_by = form.cleaned_data['order_by']
-            
+            sort_by = form.cleaned_data.get('sort_by')
+            order_by = form.cleaned_data.get('order_by')
+            priority = form.cleaned_data.get('priority')
+
             if name:
                 tasks = tasks.filter(name__icontains=name)
-            
-            if sort_by == 'name':
-                if order_by == 'asc':
-                    tasks = tasks.order_by('name')
-                elif order_by == 'desc':
-                    tasks = tasks.order_by('-name')
-            
-                
 
+            if priority:
+                tasks = tasks.filter(priority=priority)
+
+            if sort_by == 'name':
+                tasks = tasks.order_by('name' if order_by == 'asc' else '-name')
+
+            if sort_by == 'date':
+                tasks = tasks.order_by('deadline' if order_by == 'asc' else '-deadline')
+            
+        num_pending_tasks = Task.objects.filter(status='In Progress').count()
+        num_complete_tasks = Task.objects.filter(status='Completed').count()
+        num_total_tasks = Task.objects.filter(team=team).count()
 
         return super().get_context_data(
             team=team,
             form=TaskBoardForm(self.request.GET),
             tasks=tasks,
+            num_total_tasks=num_total_tasks,
+            num_complete_tasks=num_complete_tasks,
+            num_pending_tasks=num_pending_tasks,
+       
         )
           
 

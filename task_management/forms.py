@@ -61,19 +61,30 @@ class ProjectBoardForm(forms.Form):
     SORT_CHOICES = [
         ('name', 'Name'),
         ('progress', 'Progress'),
+        ('date', 'Date'),
     ]
 
     ORDER_CHOICES = [
         ('asc', 'Ascending'),
         ('desc', 'Descending'),
+        (None, 'None'),
     ]
 
-    sort_by = forms.ChoiceField(choices=SORT_CHOICES, initial='name')
-    order_by = forms.ChoiceField(choices=ORDER_CHOICES, initial='asc')
+    sort_by = forms.ChoiceField(choices=SORT_CHOICES)
+    order_by = forms.ChoiceField(choices=ORDER_CHOICES)
     name = forms.CharField(required=False, label='Name', initial='')
+    priority = forms.ModelChoiceField(
+        queryset=Priority.objects.all(),
+        required=False,
+        label='Priority',
+        initial='',
+        empty_label='Any'
+    )
+
+
     class Meta:
         model = Project  
-        fields = ['sort_by', 'order_by', 'name']
+        fields = ['sort_by', 'order_by', 'name', 'priority']
 
 class TaskForm(forms.ModelForm):
     
@@ -95,20 +106,32 @@ class TaskForm(forms.ModelForm):
 class TaskBoardForm(forms.Form):
     SORT_CHOICES = [
         ('name', 'Name'),
-        ('progress', 'Progress'),
+        ('progress', 'Progress'), 
+        ('date', 'Date'),
     ]
 
     ORDER_CHOICES = [
         ('asc', 'Ascending'),
         ('desc', 'Descending'),
+        (None, 'None'),
     ]
 
     sort_by = forms.ChoiceField(choices=SORT_CHOICES, initial='name')
     order_by = forms.ChoiceField(choices=ORDER_CHOICES, initial='asc')
     name = forms.CharField(required=False, label='Name', initial='')
+    priority = forms.ModelChoiceField(
+        queryset=Priority.objects.all(),
+        required=False,
+        label='Priority',
+        initial='',
+        empty_label='Any'
+    )
+
+
+    
     class Meta:
         model = Task  
-        fields = ['sort_by', 'order_by', 'name']
+        fields = ['sort_by', 'order_by', 'name', 'priority']
 
 class CommentForm(forms.ModelForm):
     

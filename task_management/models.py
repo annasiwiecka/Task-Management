@@ -142,8 +142,7 @@ class Priority(models.Model):
         verbose_name_plural = "Priorities"
 
 class Project(models.Model):
-    class Meta:
-        ordering = ('name', '-name', '-pk')
+
     STATUS_CHOICES = [
         ('Planning', 'Planning'),
         ('In Progress', 'In Progress'),

@@ -3,7 +3,7 @@
 
 {% csrf_token %}
 
-{% block title %}{% endblock title %}
+{% block title %}{{ task.name }}{% endblock title %}
 
 {% block extra_css_file %}
 <link rel="stylesheet" href="{% static "task_management/task.css" %}">

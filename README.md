@@ -16,26 +16,27 @@ I created a web-based platform: a system that manages tasks in remote teams, fac
 
 ### Registration, Login
 
-![Registration](./images/2023-11-13(11).png)
-![Login](./images/2023-11-13(2).png)
+![Registration](./images/Register.png)
+![Login](./images/login.png)
+
 
 ### Notification
 
-![Login](./images/2023-11-13(4).png)
+![Login](./images/Notification.png)
 We get a notification when we are invited to join a team, when we are assigned to a task
 
 -Task deadline reminder notifications coming soon
 
 ### Team Members
 
-![TeamMembers](./images/2023-11-13(10).png)
-![TeamMembersProfile](./images/2023-11-13(5).png)
+![TeamMembers](./images/LIST.png)
+![TeamMembersProfile](./imagesEditProfile.png)
 
 We can see our team, we can see if a team member is active and there is also the possibility to see the person's team profile, by sharing emails we can keep in touch. You can also see the responsibilities, the owner can edit team profiles and also give the manager to someone
 
 ### Projects
 
-![ProjectBoard](./images/2023-11-13(5).png)
+![ProjectBoard](./images/ProjectBoard.png)
 ![ProjectBoard](./images/2023-11-13(8).png)
 
 On the project board we can see all projects, the progress of the project leader as well as the project priority, at the top of the page we can see the number of all projects, completed projects as well as projects in progress. 
@@ -43,21 +44,25 @@ Owner can create projects and appoint leaders.
 
 On the project page, there is a title, a description of the project. The leader can create tasks and assign them to team members. There is also an Activity sector, where you can see the activity of team members.
 
--Search by project progression and alphabetically (asc and desc), improved image of the activity sector, and more features in the activity sector coming soon
+Sorting (asc desc) by date, name-alphabetical, progress, search by name and by priority is available.
+
+- improved image of the activity sector, and more features in the activity sector coming soon
 
 ### Tasks
 
-![ProjectBoard](./images/2023-11-13(6).png)
+![ProjectBoard](./images/TaskBoard.png)
 ![ProjectBoard](./images/2023-11-13(9).png)
 
 On the task board it is possible to see who is assigned to a task, what the progress is, what the priority is and also which project the task belongs to.
+At the top of the page we can see the number of all tasks, completed tasks as well as tasks in progress.
+Sorting (asc desc) by date, name-alphabetical, progress, search by name and by priority is available.
 
 On the task page the user can add attachments, there is also a comments section where the leader can comment on the user's work
 
--Search by task progression and alphabetically (asc and desc),
-a better view of the tasks page, and a view of the number of completed and progressing tasks in the near future
 
+-Better view of the tasks page, and a view of the number of completed and progressing tasks in the near future
 
+###
 -Setting page for team and user, home page with all shortcuts and reminders, my task and my project page with shortcuts, team home page coming soon.
 
 ## License

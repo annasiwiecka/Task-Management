@@ -39,7 +39,7 @@ urlpatterns = [
     path('get_complete_projects/<int:team_id>', views.get_complete_projects, name='get_complete_projects'),
     path('team/<int:team_id>/create_task/<int:project_id>/', views.create_task, name='create_task'),
     path('task/<int:task_id>/', views.task, name="task"),
-    path('team/<int:team_id>/task_board', views.task_board, name='task_board'),
+    path('team/<int:team_id>/task_board', views.TaskBoardList.as_view(), name='task_board'),
 
 
 ] 

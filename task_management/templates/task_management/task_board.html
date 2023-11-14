@@ -46,13 +46,17 @@
         <div class="col-xl-3 col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <form>
+                    <form method="GET">
+                        
                         <div class="form-group mb-0">
                             <label>Search</label>
+                            {{ form.as_p }}
+                            
+                            <button type="submit" class="btn btn-danger" type="button" id="project-search-addon">Apply Filters</button>
                             <div class="input-group mb-0">
-                                <input type="text" class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
+                                <input type="text" name="name" class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
                                 <div class="input-group-append">
-                                    <button class="btn btn-danger" type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -60,7 +64,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 
 

@@ -92,6 +92,24 @@ class TaskForm(forms.ModelForm):
                 }
 
 
+class TaskBoardForm(forms.Form):
+    SORT_CHOICES = [
+        ('name', 'Name'),
+        ('progress', 'Progress'),
+    ]
+
+    ORDER_CHOICES = [
+        ('asc', 'Ascending'),
+        ('desc', 'Descending'),
+    ]
+
+    sort_by = forms.ChoiceField(choices=SORT_CHOICES, initial='name')
+    order_by = forms.ChoiceField(choices=ORDER_CHOICES, initial='asc')
+    name = forms.CharField(required=False, label='Name', initial='')
+    class Meta:
+        model = Task  
+        fields = ['sort_by', 'order_by', 'name']
+
 class CommentForm(forms.ModelForm):
     
     class Meta:

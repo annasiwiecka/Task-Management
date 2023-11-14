@@ -497,16 +497,9 @@ class ProjectBoardListView(ListView):
                 projects = projects.filter(name__icontains=name)
             
             if sort_by == 'name':
-                if order_by == 'asc':
-                    projects = projects.order_by('name')
-                elif order_by == 'desc':
-                    projects = projects.order_by('-name')
-            
-            if sort_by == 'progress':
-                if order_by == 'asc':
-                    projects = sorted(projects, key=lambda project: project.calculate_overall_progress())
-                elif order_by == 'desc':
-                    projects = sorted(projects, key=lambda project: project.calculate_overall_progress(), reverse=True)
+                projects = projects.order_by('name' if order_by == 'asc' else '-name')
+            elif sort_by == 'progress':
+                projects = sorted(projects, key=lambda project: project.calculate_overall_progress(), reverse=(order_by == 'desc'))
 
             
         num_pending_project = Project.objects.filter(status='In Progress').count()
@@ -531,22 +524,59 @@ class ProjectBoardListView(ListView):
             num_pending_project=num_pending_project,
             can_create_project=can_create_project,
             overall_progress=overall_progress,
-            form=ProjectBoardForm(self.request.GET),
-            )
+            form=form,
+            projects=projects,
+        )
             
 
 
 
-def task_board(request, team_id):
-    team = get_object_or_404(Team, id=team_id)
+class TaskBoardList(ListView):
+    model = Task
+    template_name = 'task_management/task_board.html'
+    context_object_name = 'tasks'
+    paginate_by = 10  
     
-    tasks = Task.objects.filter(team=team)  
 
-    return render(request, 'task_management/task_board.html', {
-        'team': team,
-        'tasks': tasks
-    })
+    def get_queryset(self):
+        team_id = self.kwargs['team_id']
+        team = get_object_or_404(Team, id=team_id)
+        return Task.objects.filter(team=team)
+        
 
+    def get_context_data(self, *args, **kwargs):
+        print(self.request.GET)
+        team_id = self.kwargs['team_id']
+        team = get_object_or_404(Team, id=team_id)
+        tasks = super().get_queryset()
+
+        form = TaskBoardForm(self.request.GET)
+        if form.is_valid():
+            name = form.cleaned_data.get('name', '').strip()
+            print(f"Name Filter: {name}")
+            print(f"Sort By: {form.cleaned_data['sort_by']}")
+            print(f"Order By: {form.cleaned_data['order_by']}")
+            sort_by = form.cleaned_data['sort_by']
+            order_by = form.cleaned_data['order_by']
+            
+            if name:
+                tasks = tasks.filter(name__icontains=name)
+            
+            if sort_by == 'name':
+                if order_by == 'asc':
+                    tasks = tasks.order_by('name')
+                elif order_by == 'desc':
+                    tasks = tasks.order_by('-name')
+            
+                
+
+
+        return super().get_context_data(
+            team=team,
+            form=TaskBoardForm(self.request.GET),
+            tasks=tasks,
+        )
+          
 
 def task(request, task_id):
     task = get_object_or_404(Task, id=task_id)

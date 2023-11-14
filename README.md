@@ -25,7 +25,7 @@ I created a web-based platform: a system that manages tasks in remote teams, fac
 ![Login](./images/Notification.png)
 We get a notification when we are invited to join a team, when we are assigned to a task
 
--Task deadline reminder notifications coming soon
+- Task deadline reminder notifications coming soon
 
 ### Team Members
 
@@ -60,10 +60,10 @@ Sorting (asc desc) by date, name-alphabetical, progress, search by name and by p
 On the task page the user can add attachments, there is also a comments section where the leader can comment on the user's work
 
 
--Better view of the tasks page, and a view of the number of completed and progressing tasks in the near future
+- Better view of the tasks page, and a view of the number of completed and progressing tasks in the near future
 
 ###
--Setting page for team and user, home page with all shortcuts and reminders, my task and my project page with shortcuts, team home page coming soon.
+- Setting page for team and user, home page with all shortcuts and reminders, my task and my project page with shortcuts, team home page coming soon.
 
 ## License
 

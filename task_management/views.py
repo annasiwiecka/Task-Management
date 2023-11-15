@@ -538,9 +538,6 @@ class ProjectBoardListView(ListView):
         num_complete_projects = Project.objects.filter(status='Completed').count()
         num_total_projects = Project.objects.filter(team=team).count()
 
-        
- 
-
         is_owner = team.owner == self.request.user
 
         can_create_project = (
@@ -554,7 +551,6 @@ class ProjectBoardListView(ListView):
             num_complete_projects=num_complete_projects,
             num_pending_project=num_pending_project,
             can_create_project=can_create_project,
-
             form=form,
             projects=projects,
         )

@@ -108,14 +108,15 @@ Project Board
                                                 <img src="{{ project.leader.user_profile.profile_picture.url }}" class="rounded-circle avatar-xs">
                                             </div>
                                         </td>
-                                       
+                           
                                         <td>
-                                            <p class="mb-0">Progress<span class="float-right">{{ overall_progress }}%</span></p>
-
+                                            <p class="mb-0">Progress<span class="float-right">{{ project.calculate_overall_progress }}%</span></p>
+                       
                                             <div class="progress mt-2" style="height: 5px;">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ overall_progress }}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.calculate_overall_progress }}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </td>
+                                        
                                         <td>
                                             <div class="fas fa-flag fa-lg" style=" color: {{ project.priority.color }};"></div>
                                         </td>

@@ -430,7 +430,7 @@ def create_project(request, team_id):
 def project(request, project_id):
     project = get_object_or_404(Project, id=project_id)
     tasks = Task.objects.filter(project=project)
-    activities = Activity.objects.filter(project=project) 
+    activities = Activity.objects.filter(project=project).order_by('-timestamp')
     overall_progress = project.calculate_overall_progress()
 
        # Get the current datetime
@@ -482,7 +482,6 @@ def create_task(request, team_id, project_id):
             user = team_member.user
             
             assigned_user = task.assigned_to.user
-            
             Notification.objects.create(user=assigned_user, message=f'You have been assigned a task: {task.name}')
 
             return redirect('project', project_id)

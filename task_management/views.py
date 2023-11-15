@@ -432,17 +432,6 @@ def project(request, project_id):
     tasks = Task.objects.filter(project=project)
     activities = Activity.objects.filter(project=project).order_by('-timestamp')
     overall_progress = project.calculate_overall_progress()
-
-       # Get the current datetime
-    '''current_datetime = datetime.now()
-
-    # Calculate the time remaining
-    time_remaining = project.end - current_datetime
-
-    # Extract the number of days and hours
-    days_remaining = time_remaining.days
-    hours_remaining = time_remaining.seconds // 3600'''
-
     
     return render(request, "task_management/project.html", {
         'project': project,
@@ -454,11 +443,9 @@ def project(request, project_id):
     
 
 def create_task(request, team_id, project_id):
- 
     project = get_object_or_404(Project, id=project_id)
     team = get_object_or_404(Team, id=team_id)
     
-
     if request.method == 'POST':
         form = TaskForm(request.POST, team=team)
         if form.is_valid():
@@ -518,7 +505,6 @@ class ProjectBoardListView(ListView):
             priority = form.cleaned_data.get('priority')
             sort_by = form.cleaned_data.get('sort_by')
             order_by = form.cleaned_data.get('order_by')
-            
             
             if name:
                 projects = projects.filter(name__icontains=name)

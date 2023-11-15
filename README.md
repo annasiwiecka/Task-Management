@@ -39,7 +39,7 @@ We can see our team, we can see if a team member is active and there is also the
 ### Projects
 
 ![ProjectBoard](./images/ProjectBoard.png)
-![ProjectBoard](./images/2023-11-13(8).png)
+![ProjectBoard](./images/Project.png)
 
 On the project board we can see all projects, the progress of the project leader as well as the project priority, at the top of the page we can see the number of all projects, completed projects as well as projects in progress. 
 Owner can create projects and appoint leaders.

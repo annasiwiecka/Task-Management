@@ -14,6 +14,8 @@ I created a web-based platform: a system that manages tasks in remote teams, fac
 
 ## PROJECT
 
+- Images can be different, I took the photos on a bigger and smaller monitor to make the view as good as possible
+
 ### Registration, Login
 
 ![Registration](./images/Register.png)

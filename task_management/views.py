@@ -481,7 +481,7 @@ def create_task(request, team_id, project_id):
             team_member = TeamMember.objects.get(user=request.user)
             user = team_member.user
             
-            assigned_user = task.assigned_to.user  # Access the User instance through the relationship
+            assigned_user = task.assigned_to.user
             
             Notification.objects.create(user=assigned_user, message=f'You have been assigned a task: {task.name}')
 

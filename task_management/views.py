@@ -481,7 +481,9 @@ def create_task(request, team_id, project_id):
             team_member = TeamMember.objects.get(user=request.user)
             user = team_member.user
             
-            Notification.objects.create(user=user, message=f'You have been assigned a task: {task.name}')
+            assigned_user = task.assigned_to.user  # Access the User instance through the relationship
+            
+            Notification.objects.create(user=assigned_user, message=f'You have been assigned a task: {task.name}')
 
             return redirect('project', project_id)
     else:
@@ -653,8 +655,6 @@ def task(request, task_id):
                 task.status = 'In Progress'
                 task.save()
 
-           
-                
                 Activity.objects.create(
                     project=project,
                     task=task,

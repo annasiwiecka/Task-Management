@@ -57,6 +57,7 @@ Sorting (asc desc) by date, name-alphabetical, progress, search by name and by p
 ### My Projects
 
 ![MyProject](./images/my_project.png)
+
 On the my_project page, we have a shortcut to the project and a link that takes us to the project page,
 It is a visible project when the user is a leader or is assigned to a task in a specific project.
 

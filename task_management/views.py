@@ -658,9 +658,25 @@ def task(request, task_id):
         'form': form,
         'attachments_form': attachments_form,
         'attachments': attachments,
-        "can_manage_attachments": can_manage_attachments
+        "can_manage_attachments": can_manage_attachments,
+        "is_leader": is_leader
     })
 
+def complete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+
+    project = task.project
+    team_member = TeamMember.objects.get(user=request.user)
+    
+    task.status = 'Completed'
+    task.save()
+    Activity.objects.create(
+                    project=project,
+                    task=task,
+                    team_member=team_member, 
+                    description=f'"{task.name}" is completed'
+                )
+    return redirect('task', task_id=task_id)
 
 def my_task(request):
 

@@ -42,6 +42,7 @@ urlpatterns = [
     path('get_complete_tasks/<int:team_id>', views.get_complete_tasks, name='get_complete_tasks'),
     path('team/<int:team_id>/create_task/<int:project_id>/', views.create_task, name='create_task'),
     path('task/<int:task_id>/', views.task, name="task"),
+    path('task/<int:task_id>/complete/', views.complete_task, name='complete_task'),
     path('team/<int:team_id>/task_board', views.TaskBoardList.as_view(), name='task_board'),
 
 ] 

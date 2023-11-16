@@ -20,4 +20,10 @@ def create_team_member(sender, instance, created, **kwargs):
         TeamMember.objects.filter(user=instance.receiver, team=instance.team).update(is_active=False)
         TeamMember.objects.create(user=instance.receiver, team=instance.team, is_active=True)
 
-        
+@receiver(post_save, sender=Project)
+def update_project_status(sender, instance, **kwargs):
+    if instance.status == 'Completed':
+        project = instance.project
+        if project.calculate_overall_progress() == 100:
+            project.status = 'Completed'
+            project.save()

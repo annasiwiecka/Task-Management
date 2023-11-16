@@ -54,6 +54,8 @@ On the project page, there is a title, a description of the project. The leader 
 
 Sorting (asc desc) by date, name-alphabetical, progress, search by name and by priority is available.
 
+When every tasks are completed and progress = 100% status of project change to "Completed"
+
 - improved image of the activity sector, and more features in the activity sector coming soon
 
 ### My Projects

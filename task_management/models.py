@@ -185,11 +185,16 @@ class Project(models.Model):
             if total_tasks == 0:
                 return 0
             else:
-                return round((total_progress / (total_tasks * 100)) * 100)
+                overall_progress = round((total_progress / (total_tasks * 100)) * 100)
+
+                if overall_progress == 100 and self.status != "Completed":
+                    self.status = 'Completed'
+                    self.save()
+
+                return overall_progress
         except Project.DoesNotExist:
             return None
 
-            
 
 class Task(models.Model):
     STATUS_CHOICES = [

@@ -7,6 +7,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from datetime import datetime
+from django.db.models import Q
+from itertools import chain
 
 from django.views.generic.list import ListView
 
@@ -673,4 +675,16 @@ def my_task(request):
     })
 
 def my_project(request):
-    pass
+
+    user = request.user
+    team_member = TeamMember.objects.get(user=request.user)
+    
+    projects_as_leader = Project.objects.filter(leader=team_member)
+    projects_assigned_to_me = Project.objects.filter(task__assigned_to=team_member).distinct()
+
+    projects = list(chain(projects_as_leader, projects_assigned_to_me))
+    projects = list(set(projects))
+
+    return render(request, 'task_management/my_project.html', {
+        'projects': projects
+        })

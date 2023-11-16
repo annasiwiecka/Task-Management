@@ -25,12 +25,14 @@ I created a web-based platform: a system that manages tasks in remote teams, fac
 ### Notification
 
 ![Login](./images/Notification.png)
+
 We get a notification when we are invited to join a team, when we are assigned to a task
 
 - Task deadline reminder notifications coming soon
 
 ### Settings
 ![Settings](./images/settings.png)
+
 In setting we have a link to create team
 
 ### Team Members
@@ -72,13 +74,17 @@ Sorting (asc desc) by date, name-alphabetical, progress, search by name and by p
 
 On the task page the user can add attachments, there is also a comments section where the leader can comment on the user's work
 
+When everything is okay with attachments and solution in task, leader can change status of task to "Completed"
+
 - Better view of the tasks page coming soon 
 
 ### My Tasks
 ![My_Task](./images/my_task.png)
+
 On the my_tasks page, we have a shortcut to the task and a link that takes us to the task page.
 
 ### Other
+
 - Setting page for team, home page with all shortcuts and reminders, my_project page with shortcuts, team home page coming soon.
 
 ## License

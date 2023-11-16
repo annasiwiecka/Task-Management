@@ -30,7 +30,7 @@ We get a notification when we are invited to join a team, when we are assigned t
 - Task deadline reminder notifications coming soon
 
 ### Settings
-![Settings](./images.settings.png)
+![Settings](./images/settings.png)
 In setting we have a link to create team
 
 ### Team Members

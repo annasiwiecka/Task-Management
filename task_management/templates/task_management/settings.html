@@ -6,16 +6,18 @@ Settings
 {% endblock title %}
 
 {% block css_file %}
-    <link rel="stylesheet" href="{% static 'task_management/settings3.css' %}">
+    <link rel="stylesheet" href="{% static 'task_management/settings4.css' %}">
 {% endblock css_file %}
 
 
 {% block content %}
 
-<div>
+<div class="create_team">
     <form method="POST">
         {% csrf_token %}
-        <li><a class="button" href="{% url "create_team" %}">CREATE TEAM</a></li>
+        
+        <a href="{% url "create_team" %}">Create Team</a>
+       
         
     </form>
 </div>

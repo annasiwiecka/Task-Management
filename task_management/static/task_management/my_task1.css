@@ -1,0 +1,27 @@
+.container {
+    margin-left: 300px;
+}
+
+.task {
+    background-color: #ffffff;
+    text-align: center;
+    transition: 0.2s all;
+    text-decoration: none !important;
+    border: 1px solid rgb(214, 214, 214);
+}
+
+.task span {
+    word-wrap: break-word;
+}
+
+.button {
+    text-decoration: none !important;
+
+}
+
+.task:hover,
+.task:active {
+    transform: scale(1.05);
+    text-decoration: none !important;
+
+}

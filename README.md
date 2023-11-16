@@ -14,7 +14,7 @@ I created a web-based platform: a system that manages tasks in remote teams, fac
 
 ## PROJECT
 
-- Images can be different, I took the screenshots on a bigger and smaller monitor to make the view as good as possible
+- Images can be different, I took the screenshots on a bigger and smaller monitor to make the view as good as possible for each page.
 
 ### Registration, Login
 
@@ -28,6 +28,10 @@ I created a web-based platform: a system that manages tasks in remote teams, fac
 We get a notification when we are invited to join a team, when we are assigned to a task
 
 - Task deadline reminder notifications coming soon
+
+### Settings
+![Settings](./images.settings.png)
+In setting we have a link to create team
 
 ### Team Members
 
@@ -52,8 +56,8 @@ Sorting (asc desc) by date, name-alphabetical, progress, search by name and by p
 
 ### Tasks
 
-![ProjectBoard](./images/TaskBoard.png)
-![ProjectBoard](./images/2023-11-13(9).png)
+![TaskBoard](./images/TaskBoard.png)
+![TaskBoard](./images/2023-11-13(9).png)
 
 On the task board it is possible to see who is assigned to a task, what the progress is, what the priority is and also which project the task belongs to.
 At the top of the page we can see the number of all tasks, completed tasks as well as tasks in progress.
@@ -61,11 +65,14 @@ Sorting (asc desc) by date, name-alphabetical, progress, search by name and by p
 
 On the task page the user can add attachments, there is also a comments section where the leader can comment on the user's work
 
-
 - Better view of the tasks page coming soon 
 
-###
-- Setting page for team and user, home page with all shortcuts and reminders, my task and my project page with shortcuts, team home page coming soon.
+### My Tasks
+![My_Task](./images/my_task.png)
+On the my_tasks page, we have a shortcut to the task and a link that takes us to the task page.
+
+### Other
+- Setting page for team, home page with all shortcuts and reminders, my_project page with shortcuts, team home page coming soon.
 
 ## License
 

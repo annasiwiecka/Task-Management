@@ -661,7 +661,16 @@ def task(request, task_id):
 
 
 def my_task(request):
-    pass
+
+    user = request.user
+    team_member = TeamMember.objects.get(user=request.user)
+
+    
+    tasks = Task.objects.filter(assigned_to=team_member)
+
+    return render(request, 'task_management/my_task.html', {
+        'tasks':tasks
+    })
 
 def my_project(request):
     pass

@@ -7,18 +7,29 @@
 
 {% block css_file %}
 <link rel="stylesheet" href="{% static "task_management/my_project.css" %}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 {% endblock css_file %}
 
 
 {% block content %}
-{% for project in leader_projects %}
-{% for project in projects_with_user_tasks %}
 <a class ="button" href="{% url  %}">
     <div class="task">
         
+        <div class="task">
         
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <a class ="button" href="{% url 'team_member' team_member_id=team_member.id %}">
+                <div class="member">
+                        <h5 class="mb-0">{{team_member.user_profile.name|default:team_member.user.username}}</h5>
+                          <div class="{% if team_member.user_profile.is_online %}online-circle{% else %}offline-circle{% endif %}"></div>
+                        <span class="small text-uppercase text-muted">{{ team_member.role }}</span>
+                        <span class="small text-muted">{{ team_member.responsibilities }}</span>
+                    
+                    </div>
+                </div></a>
+            </div>
+            </div>
+        </div></a>
         </div>
     </div></a>
 {% endfor %}

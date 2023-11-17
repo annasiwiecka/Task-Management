@@ -72,7 +72,7 @@ It is a visible project when the user is a leader or is assigned to a task in a 
 
 On the task board it is possible to see who is assigned to a task, what the progress is, what the priority is and also which project the task belongs to.
 At the top of the page we can see the number of all tasks, completed tasks as well as tasks in progress.
-Sorting (asc desc) by date, name-alphabetical, progress, search by name and by priority is available.
+Sorting (asc desc) by date, name-alphabetical, search by name and by priority is available.
 
 On the task page the user can add attachments, there is also a comments section where the leader can comment on the user's work
 

@@ -67,11 +67,10 @@ class ProjectBoardForm(forms.Form):
     ORDER_CHOICES = [
         ('asc', 'Ascending'),
         ('desc', 'Descending'),
-        (None, 'None'),
     ]
 
-    sort_by = forms.ChoiceField(choices=SORT_CHOICES)
-    order_by = forms.ChoiceField(choices=ORDER_CHOICES)
+    sort_by = forms.ChoiceField(required=False, choices=SORT_CHOICES)
+    order_by = forms.ChoiceField(required=False, choices=ORDER_CHOICES)
     name = forms.CharField(required=False, label='Name', initial='')
     priority = forms.ModelChoiceField(
         queryset=Priority.objects.all(),
@@ -106,18 +105,16 @@ class TaskForm(forms.ModelForm):
 class TaskBoardForm(forms.Form):
     SORT_CHOICES = [
         ('name', 'Name'),
-        ('progress', 'Progress'), 
         ('date', 'Date'),
     ]
 
     ORDER_CHOICES = [
         ('asc', 'Ascending'),
         ('desc', 'Descending'),
-        (None, 'None'),
     ]
 
-    sort_by = forms.ChoiceField(choices=SORT_CHOICES, initial='name')
-    order_by = forms.ChoiceField(choices=ORDER_CHOICES, initial='asc')
+    sort_by = forms.ChoiceField(required=False, choices=SORT_CHOICES, initial='name')
+    order_by = forms.ChoiceField(required=False, choices=ORDER_CHOICES, initial='asc')
     name = forms.CharField(required=False, label='Name', initial='')
     priority = forms.ModelChoiceField(
         queryset=Priority.objects.all(),

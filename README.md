@@ -21,8 +21,8 @@ On macOS or Linux:
 
 ### Registration, Login
 
-<img src="./images/Register.png" alt="Registration" width="300"/>
-<img src="./images/login.png" alt="Login" width="300"/>
+![Registration](./images/Register.png){:width="300px"}
+![Login](./images/login.png){:width="300px"}
 
 ### Notification
 
@@ -65,9 +65,16 @@ The owner can edit the profiles of team members: duties, and can give or take aw
 
 ### Projects
 
-<img src="./images/ProjectBoard.png" alt="Registration" width="300"/>
+<div style="display: flex; flex-direction: row;">
+  <img src="./images/ProjectBoard.png" alt="Project Board" width="300"/>
 
-The project board shows all projects, there is a limit of 10 projects per page. The name, leader, status, progress and priority of the project are visible. There is Ascending and Descending sorting by date, progress and project name. You can search for a project by name, and also search for a project with a specific priority.
+  <div style="margin-left: 20px;">
+    <h2>Project Board</h2>
+    <p>
+      The project board shows all projects, there is a limit of 10 projects per page. The name, leader, status, progress, and priority of the project are visible. There is Ascending and Descending sorting by date, progress, and project name. You can search for a project by name, and also search for a project with a specific priority.
+    </p>
+  </div>
+</div>
 
 ![CreateProject](./images/create_project.png)
 

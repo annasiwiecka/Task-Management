@@ -1,93 +1,111 @@
 # Web Task Management: Collaborative Project Management for Remote Teams
-The project curently is coming to an end.
+
+The project curently is coming to an end and also the current code is being improved on an ongoing basis.
 
 I created a web-based platform: a system that manages tasks in remote teams, facilitating effective collaboration on projects. Real-time task assignment, priority tracking and role-based access control were implemented. The platform allows the Owner to oversee every element in the team, designates leaders to manage projects. Project leaders oversee the team's progress. There is also constant communication thanks to shared emails. The process of deploying team members is based on invitations.
 
-## SETUP
+## Installation
 
 1. First, clone the repository.
 2. Next, run 
-    On windows:
+
+```python
+On windows:
     'python manage.py runserver',
-    On macOS or Linux:
+
+On macOS or Linux:
     'python3 manage.py runserver'
+```
 
-## PROJECT
-
-- Images can be different, I took the screenshots on a bigger and smaller monitor to make the view as good as possible for each page.
+# Project
 
 ### Registration, Login
 
 ![Registration](./images/Register.png)
 ![Login](./images/login.png)
 
-
 ### Notification
 
-![Login](./images/Notification.png)
-
-We get a notification when we are invited to join a team, when we are assigned to a task
-
-- Task deadline reminder notifications coming soon
+![Notification](./images/Notification.png)
+You can get a notification when: 
+ - You get an invitation to join the team,
+- You have been assigned to a task
 
 ### Settings
+
 ![Settings](./images/settings.png)
 
-In setting we have a link to create team
+On setting page we have a link to create team
+
+### Create Team 
+
+![CreateTeam](./images/Create_team.png)
+
+To create a team, enter the name and description of the team
 
 ### Team Members
 
 ![TeamMembers](./images/LIST.png)
+
+In the list of team members, we can see whether a member is an owner manager or a regular member, and we can also see who is currently active. 
+
+![SendInvitation](./images/send_invitation.png)
+
+The owner can send an invitation to the team, you need to find an existing user and send an invitation. There is a broadcast message from the top, but it can be modified. 
+
+![Invitation](./images/invitation.png)
+
+To accept the invitation, simply click accept, and then you will be redirected to the team's page
+
+
 ![TeamMembersProfile](./images/EditProfile.png)
 
-We can see our team, we can see if a team member is active and there is also the possibility to see the person's team profile, by sharing emails we can keep in touch. You can also see the responsibilities, the owner can edit team profiles and also give the manager to someone
+On the team member's profile page, you can see what responsibilities a person has, and the member's email is visible, so you can keep in touch.
+The owner can edit the profiles of team members: duties, and can give or take away manager functions.
 
 ### Projects
 
 ![ProjectBoard](./images/ProjectBoard.png)
-![ProjectBoard](./images/Project.png)
 
-On the project board we can see all projects, the progress of the project leader as well as the project priority, at the top of the page we can see the number of all projects, completed projects as well as projects in progress. 
-Owner can create projects and appoint leaders.
+The project board shows all projects, there is a limit of 10 projects per page. The name, leader, status, progress and priority of the project are visible. There is Ascending and Descending sorting by date, progress and project name. You can search for a project by name, and also search for a project with a specific priority.
 
-On the project page, there is a title, a description of the project. The leader can create tasks and assign them to team members. There is also an Activity sector, where you can see the activity of team members.
+![CreateProject](./images/create_project.png)
 
-Sorting (asc desc) by date, name-alphabetical, progress, search by name and by priority is available.
+The owner can create a project. Enter the name, description, start date and end date, select the project leader and priority. The default project status is "In planning"
 
-When every tasks are completed and progress = 100% status of project change to "Completed"
+![Project](./images/Project.png)
 
-- improved image of the activity sector, and more features in the activity sector coming soon
+On the project page is the name, description, name of the leader, tasks and profile picture of the person who is assigned to a specific task. Leader can assign tasks to team members. 
+There is an activity list, documented activity is by assigning a task, attaching attachments and the task and finishing the task. 
+After finishing all tasks, tasks whose status is "completed" project progress is 100% automatically project status is changed to "completed"
 
-### My Projects
+![MyProjects](./images/my_project.png)
 
-![MyProject](./images/my_project.png)
-
-On the my_project page, we have a shortcut to the project and a link that takes us to the project page,
-It is a visible project when the user is a leader or is assigned to a task in a specific project.
+On the "My Projects" page there are shortcuts and links to the projects to which we belong, The project in which we are a leader or are assigned to a task in a particular project, it will be on the My Project page
 
 ### Tasks
 
 ![TaskBoard](./images/TaskBoard.png)
-![TaskBoard](./images/2023-11-13(9).png)
 
-On the task board it is possible to see who is assigned to a task, what the progress is, what the priority is and also which project the task belongs to.
-At the top of the page we can see the number of all tasks, completed tasks as well as tasks in progress.
-Sorting (asc desc) by date, name-alphabetical, search by name and by priority is available.
+The task board shows the name of the task, the name of the project to which the task is assigned, the end date of the task, the status, the team member to which the task is assigned, and the priority.
+It is possible to sort tasks Ascending and Descending by date and name. You can also search for a task by name and also by task priority. At the top of the page you can see the number of all tasks, finished tasks and tasks that are in progress. 
+ 
+![CrateTask](./images/create_task.png)
 
-On the task page the user can add attachments, there is also a comments section where the leader can comment on the user's work
+To create a task, you need to enter a name, task description. Assign a person to the task, set the end date of the task (the initial one defaults to the start date of the project) and the priority of the task. The default status of the task is "Not Started".
+With the first task created, the project status changes to "In Progress"
 
-When everything is okay with attachments and solution in task, leader can change status of task to "Completed"
+![Task](./images/task.png)
 
-- Better view of the tasks page coming soon 
+On the task page you can see what project the task is assigned to, you can see the user who is assigned to the task, the name , description, status, end date of the task. There is an attachments sector, where the leader or team member assigned to the task can attach attachments. An attachment can also be attached with description. There is a comments sector, comments can be written by the leader and the team member assigned to the team. After the first uploaded attachment, the status of the task changes to "In Progress" Comments and attachments already uploaded are visible to all team members. The project leader, after reviewing all sent attachments and accepting them, can change the status of the task to "Completed"
 
-### My Tasks
-![My_Task](./images/my_task.png)
+![MyTasks](./images/my_task.png)
 
-On the my_tasks page, we have a shortcut to the task and a link that takes us to the task page.
+On the "My Tasks" page there are shortcuts and links to the tasks we are assign to. 
 
 ### Other
 
-- Setting page for team, home page with all shortcuts and reminders, my_project page with shortcuts, team home page coming soon.
+Team settings page, project and task end date notifications, user home page with shortcuts, better sorting view and team home page coming soon
 
 ## License
 

@@ -21,8 +21,8 @@ On macOS or Linux:
 
 ### Registration, Login
 
-![Registration](./images/Register.png)
-![Login](./images/login.png)
+![Registration](./images/Register.png){:width="300px"}
+![Login](./images/login.png){:width="300px"}
 
 ### Notification
 

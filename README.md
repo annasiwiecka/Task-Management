@@ -11,13 +11,60 @@ I created a web-based platform: a system that manages tasks in remote teams, fac
 
 ```python
 On windows:
-    'python manage.py runserver',
+    'python manage.py runserver'
 
 On macOS or Linux:
     'python3 manage.py runserver'
 ```
 
+## Technologies
+
+- **Python**: Main programming language.
+    -  Version 3.12
+
+- **Django**: A web framework for Python applications.
+    - Version: 4.2.6
+
+- **PostgreSQL**: Relational database management system.
+    - Version: 16
+
+- **psycopg**: PostgreSQL database adapter for Python.
+    - Version: 3.1.12
+
+- **SQLparse**: Library for parsing and manipulating SQL queries in Python.
+  - Wersja: 0.4.4
+
+- **asgiref**: Library that supports handling asynchronous code in Django.
+  - Version: 3.7.2
+
+- **HTML5**: Markup language for structuring content.
+
+- **CSS**: Style sheets for styling the user interface.
+
+- **JavaScript**: Used for dynamic page functions.
+
+- **jQuery**: A JavaScript library for facilitating HTML document manipulation.
+  - Version: 3.6.0
+
+- **crispy-bootstrap4**: Bootstrap 4 integration with Django Crispy Forms.
+    - Version: 2023.1
+
+- **Pillow**: Python image handling library.
+    - Version: 10.1.0
+
+
+
 # Project
+
+## Content
+1. [Registration, Login](###Registration,-Login)
+2. [Notification](###Notification)
+3. [Settings](###Settings)
+4. [Create Team](###Create-Team)
+5. [Team Members](###Team-Members)
+6. [Projects](###Projects)
+7. [Tasks](###Tasks)
+8. [Other](###Other)
 
 ### Registration, Login
 

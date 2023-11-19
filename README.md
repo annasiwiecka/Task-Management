@@ -57,7 +57,7 @@ On macOS or Linux:
 # Project
 
 ## Content
-1. [Registration, Login](#Registration,-Login)
+1. [Registration, Login](#registration-Login)
 2. [Notification](#Notification)
 3. [Settings](#Settings)
 4. [Create Team](#Create-Team)
@@ -68,8 +68,8 @@ On macOS or Linux:
 
 ### Registration, Login
 
-![Registration](./images/Register.png){:width="300px"}
-![Login](./images/login.png){:width="300px"}
+![Registration](./images/Register.png)
+![Login](./images/login.png)
 
 ### Notification
 

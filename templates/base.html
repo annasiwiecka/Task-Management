@@ -19,23 +19,11 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'register'  %}">Register</a></li>
         </ul>
     </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-       
-        var currentPath = window.location.pathname;
-    
-      
-        $(".nav-link").each(function() {
-            var linkPath = $(this).attr("href");
-            
-            if (currentPath === linkPath) {
-                $(this).closest(".nav-link").addClass("active");
-            }
-        });
-    });
-</script>
 
-    {% block content %}{% endblock content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'scripts/base.js' %}"></script>
+    
+{% block content %}{% endblock content %}
+
 </body>
 </html>

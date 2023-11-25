@@ -1,9 +1,7 @@
 {% extends 'base_home.html' %}
 {% load static %}
 
-{% block title %}
-Settings
-{% endblock title %}
+{% block title %}Settings{% endblock title %}
 
 {% block css_file %}
     <link rel="stylesheet" href="{% static 'task_management/settings4.css' %}">
@@ -15,12 +13,8 @@ Settings
 <div class="create_team">
     <form method="POST">
         {% csrf_token %}
-        
         <a href="{% url "create_team" %}">Create Team</a>
-       
-        
     </form>
 </div>
-    
 
 {% endblock content %}

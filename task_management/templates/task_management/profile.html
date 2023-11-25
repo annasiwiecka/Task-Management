@@ -1,45 +1,31 @@
 {% extends 'base_home.html' %}
 {% load static %}
 
-{% block title %}
-Profile
-{% endblock title %}
+{% block title %}Profile{% endblock title %}
 
 {% block css_file %}
 <link rel="stylesheet" href="{% static 'task_management/profile3.css' %}">
-
-
 {% endblock css_file %}
 
 {% block content %}
 
 {% load crispy_forms_tags %}
-<div class="id">
 
+<div class="id1">
+    <div class="id2">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}    
     </div>
-    
-    <div class="id1">
-        <div class="id2">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}    
-        </div>
-        <div class="im"><img src="{{ user.profile.profile_picture.url }}" alt="img"></div>
-
-
-        
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-
-                {{user_form|crispy}}
-                {{ profile_form|crispy }}
-                
-                <div>  
-                    <button class="button" type="submit">Update</button>
-                  
-                <div> 
-            </form>
-    </div>
-    
+    <div class="im"><img src="{{ user.profile.profile_picture.url }}" alt="img"></div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{user_form|crispy}}
+            {{ profile_form|crispy }}
+            <div>  
+                <button class="button" type="submit">Update</button>
+            <div> 
+        </form>
+</div>
 
 {% endblock content %}

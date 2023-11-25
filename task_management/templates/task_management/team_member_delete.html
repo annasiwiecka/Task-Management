@@ -8,10 +8,11 @@
 {% block css_file %}
 <link rel="stylesheet" href="{% static "task_management/team_member_delete.css" %}">
 {% endblock css_file %}
-{% load crispy_forms_tags %}
+
 
 {% block content %}
 
+{% load crispy_forms_tags %}
 <div class='delete'>
     <h1>Delete Team Member</h1>
     <p>Are you sure you want to delete the team member {{ team_member.user.username }}?</p>

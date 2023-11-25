@@ -8,29 +8,29 @@
 {% block css_file %}
 <link rel="stylesheet" href="{% static "task_management/my_project.css" %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 {% endblock css_file %}
 
-
 {% block content %}
+
 <div class="container py-5">
     <div class="row text-center">
-    {% for project in projects %}
-        <div class="col-xl-3 col-sm-6 mb-5">
-            <a class ="button" href="{% url "project" project.id %}">
-                <div class="project">
+        {% for project in projects %}
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <a class ="button" href="{% url "project" project.id %}">
+                    <div class="project">
                         <h5 class="mb-0">{{ project.name }}</h5>
                         <span class="small text-uppercase text-muted">{{ project.description }}</span>
                         <p>{{ project.end }}</p>
                         <div class="fas fa-flag fa-lg" style=" color: {{ project.priority.color }};"></div>
                         <p class="mb-0">Progress<span class="float-right">{{ project.calculate_overall_progress }}%</span></p>
                         <div class="progress mt-2" style="height: 5px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.calculate_overall_progress }}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.calculate_overall_progress }}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                </div>
-            </a>
-        </div>
+                    </div>
+                </a>
+            </div>
         {% endfor %}
     </div>
 </div>
+
 {% endblock content %}

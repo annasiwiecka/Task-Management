@@ -10,16 +10,18 @@
 {% endblock css_file %}
 
 {% block content %}
+
 <div class="invit">
-<h1>Invitation Details</h1>
+    <h1>Invitation Details</h1>
     <p><strong>Sender:</strong> {{ invitation.sender.username }}</p>
     <p><strong>Message:</strong> {{ invitation.message }}</p>
     <p>{{ invitation.team }}</p>
-
+    
     <form method="POST" action="{% url 'accept_invitation' invitation_id=invitation.id %}">
         {% csrf_token %}
         <button type="submit">Accept</button>
     </form>
 
 </div>
+
 {% endblock content %}

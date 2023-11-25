@@ -1,9 +1,7 @@
 {% extends 'base_team.html' %}
 {% load static %}
 
-{% block title %}
-
-{% endblock title %}
+{% block title %}My_Tasks{% endblock title %}
 
 {% block css_file %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -11,20 +9,21 @@
 {% endblock css_file %}
 
 {% block content %}
+
 <div class="container py-5">
     <div class="row text-center">
-    {% for task in tasks %}
-        <div class="col-xl-3 col-sm-6 mb-5">
-            <a class ="button" href="{% url "task" task.id %}">
-            <div class="task">
-                    <h5 class="mb-0">{{ task.name }}</h5>
-                    <span class="small text-uppercase text-muted">{{ task.description }}</span>
-                    <p>{{ task.deadline }}</p>
-                    <div class="fas fa-flag fa-lg" style=" color: {{ task.priority.color }};"></div>
+        {% for task in tasks %}
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <a class ="button" href="{% url "task" task.id %}">
+                    <div class="task">
+                        <h5 class="mb-0">{{ task.name }}</h5>
+                        <span class="small text-uppercase text-muted">{{ task.description }}</span>
+                        <p>{{ task.deadline }}</p>
+                        <div class="fas fa-flag fa-lg" style=" color: {{ task.priority.color }};"></div>
+                    </div>
+                </a>
             </div>
-            </a>
-        </div>
-        {% endfor %}
+            {% endfor %}
     </div>
 </div>
         

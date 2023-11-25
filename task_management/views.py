@@ -41,6 +41,7 @@ def register(request):
                 "register_form": form
                 })
 
+
 @unauthenticated_user
 def loginPage(request):
     if request.method == "POST":
@@ -79,9 +80,11 @@ def logoutPage(request):
     messages.info(request, "You have successfully logged out.") 
     return redirect("login")
 
+
 @login_required(login_url="login")
 def home(request):
     return render(request, "task_management/home.html")
+
 
 @login_required(login_url="login")
 def profile(request):
@@ -107,8 +110,8 @@ def profile(request):
   
 @login_required(login_url="login")
 def notification(request):
-    
     return render(request, "task_management/notifications.html")
+
 
 @login_required(login_url="login")
 def team(request, team_id):
@@ -132,7 +135,7 @@ def team(request, team_id):
         })
 
 
-
+@login_required(login_url="login")
 def my_project(request):
     current_user = request.user
     team_member = TeamMember.objects.get(user=current_user)
@@ -150,9 +153,11 @@ def my_project(request):
         
         })
 
+
 @login_required(login_url="login")
 def settingsPage(request):
     return render(request, "task_management/settings.html")
+
 
 @login_required(login_url="login")
 def create_team(request):
@@ -187,23 +192,23 @@ def list_members(request, team_id):
         'can_send_invitation': can_send_invitation
         })
 
+
 @login_required(login_url="login")
 def team_member(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
     is_owner = Team.objects.filter(owner=request.user, id=team_member.team.id).exists()
     
-
     can_edit_profile = (
         is_owner
         or request.user.has_perm('task_management.can_manage_team')  
     )
-    
-    
+
     return render(request, 'task_management/team_member.html', {
         'team_member': team_member,
         'can_edit_profile': can_edit_profile
         })
     
+
 @login_required(login_url="login")
 def team_member_edit(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
@@ -237,6 +242,8 @@ def team_member_edit(request, team_member_id):
         'can_edit_profile': can_edit_profile
     })
 
+
+@login_required(login_url="login")
 def team_member_delete(request, team_member_id):
     team_member = get_object_or_404(TeamMember, id=team_member_id)
 
@@ -258,6 +265,7 @@ def team_member_delete(request, team_member_id):
         'team_member': team_member,
         'can_delete': can_delete
     })
+
 
 @login_required(login_url="login")
 def send_invitation(request):
@@ -291,12 +299,14 @@ def send_invitation(request):
         'form': form
         })
 
+
 @login_required(login_url="login")
 def invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
     return render(request, 'task_management/invitation.html', {
         'invitation': invitation
         })
+
 
 @login_required(login_url="login")
 def notification(request):
@@ -307,6 +317,7 @@ def notification(request):
         'notifications': notifications,
         'num_notifications': num_notifications
         })
+
 
 def get_notification_count(request):
     if request.user.is_authenticated:
@@ -328,12 +339,14 @@ def get_pending_project(request, team_id):
     data = {'count': total_pending}
     return JsonResponse(data)
 
+
 def get_total_projects(request, team_id):
     team = get_object_or_404(Team, id=team_id)
 
     count = Project.objects.filter(team=team).count()
     data = {'count': count}
     return JsonResponse(data)
+
 
 def get_complete_projects(request, team_id):
     team = get_object_or_404(Team, id=team_id)
@@ -354,12 +367,14 @@ def get_pending_tasks(request, team_id):
     data = {'count': total_pending}
     return JsonResponse(data)
 
+
 def get_total_tasks(request, team_id):
     team = get_object_or_404(Team, id=team_id)
 
     count = Task.objects.filter(team=team).count()
     data = {'count': count}
     return JsonResponse(data)
+
 
 def get_complete_tasks(request, team_id):
     team = get_object_or_404(Team, id=team_id)
@@ -397,7 +412,6 @@ def accept_invitation(request, invitation_id):
 def decline_invitation(request, invitation_id):
     invitation = get_object_or_404(TeamInvitation, pk=invitation_id)
 
-
     if request.method == 'POST':
         invitation.delete()
 
@@ -408,6 +422,7 @@ def decline_invitation(request, invitation_id):
     return redirect('notification')
 
 
+@login_required(login_url="login")
 def create_project(request, team_id): 
     team = get_object_or_404(Team, id=team_id)
     
@@ -428,6 +443,7 @@ def create_project(request, team_id):
         'team': team
     })
 
+
 @login_required(login_url="login")
 def project(request, project_id):
     project = get_object_or_404(Project, id=project_id)
@@ -444,6 +460,7 @@ def project(request, project_id):
     })
     
 
+@login_required(login_url="login")
 def create_task(request, team_id, project_id):
     project = get_object_or_404(Project, id=project_id)
     team = get_object_or_404(Team, id=team_id)
@@ -482,19 +499,18 @@ def create_task(request, team_id, project_id):
         'team': team
     })
 
+
 class ProjectBoardListView(ListView):
     model = Project
     template_name = 'task_management/project_board.html'
     context_object_name = 'projects'
     paginate_by = 10  
     
-
     def get_queryset(self):
         team_id = self.kwargs['team_id']
         team = get_object_or_404(Team, id=team_id)
         return Project.objects.filter(team=team)
         
-
     def get_context_data(self, *args, **kwargs):
         print(self.request.GET)
         team_id = self.kwargs['team_id']
@@ -545,20 +561,16 @@ class ProjectBoardListView(ListView):
         )
             
 
-
-
 class TaskBoardList(ListView):
     model = Task
     template_name = 'task_management/task_board.html'
     context_object_name = 'tasks'
     paginate_by = 10  
-    
 
     def get_queryset(self):
         team_id = self.kwargs['team_id']
         team = get_object_or_404(Team, id=team_id)
         return Task.objects.filter(team=team)
-        
 
     def get_context_data(self, *args, **kwargs):
         print(self.request.GET)
@@ -600,6 +612,7 @@ class TaskBoardList(ListView):
         )
           
 
+@login_required(login_url="login")
 def task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     comments = Comment.objects.filter(task=task)
@@ -611,7 +624,6 @@ def task(request, task_id):
     is_assigned_to = task.assigned_to == team_member
     is_leader = project.leader == team_member
     can_manage_attachments = is_assigned_to or is_leader
-
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -662,6 +674,8 @@ def task(request, task_id):
         "is_leader": is_leader
     })
 
+
+@login_required(login_url="login")
 def complete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
 
@@ -678,18 +692,20 @@ def complete_task(request, task_id):
                 )
     return redirect('task', task_id=task_id)
 
-def my_task(request):
 
+@login_required(login_url="login")
+def my_task(request):
     user = request.user
     team_member = TeamMember.objects.get(user=request.user)
 
-    
     tasks = Task.objects.filter(assigned_to=team_member)
 
     return render(request, 'task_management/my_task.html', {
         'tasks':tasks
     })
 
+
+@login_required(login_url="login")
 def my_project(request):
 
     user = request.user

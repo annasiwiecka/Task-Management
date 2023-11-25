@@ -10,71 +10,71 @@
 {% endblock extra_css_file %}
 
 {% block extra_content %}
+
 <div class='team'>
-  
-<div class="row gutters-sm">
-    <div class="col-md-4 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex flex-column align-items-center text-center">
-              <img class="img" src="{{ team_member.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-              <div class="mt-3">
-                <h4>{{team_member.user_profile.name|default:team_member.user.username}}</h4>
-                <p class="text-secondary mb-1 ">{{ team_member.role }}</p>
+  <div class="row gutters-sm">
+      <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-column align-items-center text-center">
+                <img class="img" src="{{ team_member.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <div class="mt-3">
+                  <h4>{{team_member.user_profile.name|default:team_member.user.username}}</h4>
+                  <p class="text-secondary mb-1 ">{{ team_member.role }}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-    </div>
-
-<div class="col-md-8">
-    <div class="card mb-3">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-sm-3">
-            <h6 class="mb-0">Full Name</h6>
-          </div>
-          <div class="col-sm-9 text-secondary">
-            {{team_member.user_profile.name|default:team_member.user.username}}
-          </div>
-        </div>
-        <hr>
-        <div class="row">
+      </div>
+  <div class="col-md-8">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
             <div class="col-sm-3">
-              <h6 class="mb-0">Username</h6>
+              <h6 class="mb-0">Full Name</h6>
             </div>
             <div class="col-sm-9 text-secondary">
-              {{ team_member.user.username }}
+              {{team_member.user_profile.name|default:team_member.user.username}}
             </div>
           </div>
           <hr>
-        <div class="row">
-          <div class="col-sm-3">
-            <h6 class="mb-0">Email</h6>
+          <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Username</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{ team_member.user.username }}
+              </div>
+            </div>
+            <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{ team_member.user.email }}
+            </div>
           </div>
-          <div class="col-sm-9 text-secondary">
-            {{ team_member.user.email }}
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Responsibility</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{ team_member.responsibilities }}
+            </div>
           </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-sm-3">
-            <h6 class="mb-0">Responsibility</h6>
+        
+          <hr>
+          <div class="row">
+            <div class="col-sm-12">
+              {% if can_edit_profile %}
+              <a class='button' href="{% url 'team_member_edit' team_member.id %}">Edit Profile</a>
+          {% endif %}         
           </div>
-          <div class="col-sm-9 text-secondary">
-            {{ team_member.responsibilities }}
-          </div>
-        </div>
-       
-        <hr>
-        <div class="row">
-          <div class="col-sm-12">
-            {% if can_edit_profile %}
-            <a class='button' href="{% url 'team_member_edit' team_member.id %}">Edit Profile</a>
-        {% endif %}         
         </div>
       </div>
-    </div>
+  </div>
 </div>
-</div>
+
 {% endblock extra_content %}

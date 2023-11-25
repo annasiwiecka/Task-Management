@@ -13,18 +13,12 @@
 
 {% block extra_content %}
    
-    <div class='team'>
-
-     
-                         
+<div class='team'>                
     {% for priority in priorities %}
-    <ul>
-        
-            <div class="fas fa-flag fa-lg" style="color: {{ priority.color }};"></div>
-        
+        <ul>
+        <div class="fas fa-flag fa-lg" style="color: {{ priority.color }};"></div>
         {{ priority.name }}
-        
-    </ul>
+        </ul>
     {% endfor %}
     <h5>Contact email</h5>
 </div>

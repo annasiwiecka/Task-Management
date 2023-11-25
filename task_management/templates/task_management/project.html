@@ -1,29 +1,24 @@
 {% extends 'base_team.html' %}
 {% load static %}
 
-{% block title %}
-{{ project.name }}
-{% endblock title %}
+{% block title %}{{ project.name }}{% endblock title %}
 
 {% block extra_css_file %}
  <link rel="stylesheet" href="{% static "task_management/project1.css" %}">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 {% endblock extra_css_file %}
 
 {% block extra_content %}
+
 <div class="content">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <div class="card-box task-detail">
-                    
                     <div class="project-details">
-                        
                         <h4 class="m-b-20">{{ project.name }}<div class="fas fa-flag fa-lg" style="margin-left: 10px; color: {{ project.priority.color }};"></div></h4>
-                                  </div>
-                      <p class='text-muted'>{{ project.description }}</p>
-                      
+                    </div>
+                    <p class='text-muted'>{{ project.description }}</p>
                     <h5>Leader</h5>
                     <div class="media mt-0 m-b-30"><img class="d-flex mr-3 rounded-circle" alt="64x64" src="{{ project.leader.user_profile.profile_picture.url }}" style="width: 48px; height: 48px;">
                         <div class="media-body">
@@ -41,32 +36,24 @@
                             <p>{{ project.end }}</p>
                         </li>
                     </ul>
-                   
                     <p class="mb-0">Progress<span class="float-right">{{ overall_progress }}%</span></p>
-
-                                        <div class="progress mt-2" style="height: 5px;">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ overall_progress }}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    
-
+                        <div class="progress mt-2" style="height: 5px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ overall_progress }}%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
                     <div class="assign-team mt-4">
                         <a href="{% url "create_task" team_id=user.profile.current_team.id project_id=project.id %}">Create Task</a>
                         <h5 class="m-b-5">Team</h5>
                         
                         {% for task in tasks %}
-                        <a href="{% url "task" task_id=task.id %}">
-                            <div>
-                            <img src="{{ task.assigned_to.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" style="width: 48px; height: 48px;" class="d-flex mr-3 rounded-circle">
-
-                          
-                        </div>
-                        <p>{{ task.name }}</p>
-                    </a>
+                            <a href="{% url "task" task_id=task.id %}">
+                                <div><img src="{{ task.assigned_to.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" style="width: 48px; height: 48px;" class="d-flex mr-3 rounded-circle"></div>
+                                <p>{{ task.name }}</p>
+                            </a>
                         {% endfor %}
                         <div class="project-section activity">
                             <h1>Activity List</h1>
                             <ul>
-                                {% for activity in activities %}
+                                {% for activity in activities %}  
                                     <li>
                                         <div class="fas fa-flag fa-lg" style="margin-left: 10px; color: {{ activity.project.priority.color }};"></div> {{ activity.timestamp }} - {{ activity.team_member }} : {{ activity.description }}
                                     </li>
@@ -74,11 +61,8 @@
                                     <li>No activities found.</li>
                                 {% endfor %}
                             </ul>
-                        </body>
                         </div>
-                        <div>
-                    </div>
-                    
+                    <div>
                 </div>
             </div>
         </div>

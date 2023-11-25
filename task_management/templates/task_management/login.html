@@ -9,11 +9,8 @@
 {% endblock css_file %}
 
 {% block content %}
-{% load crispy_forms_tags %}
-    <div>
-         
-    </div>
 
+{% load crispy_forms_tags %}
     <div class="log">
         {% for message in messages %}
             <p>{{ message }}</p>
@@ -24,12 +21,8 @@
             {{ login_form|crispy }}
             <button class="button" type="submit">Log in</button>
             <p>Dont have an account? <a href="/register">Create an account</a>.</p>
-
         </form>
-
     </div>
 
-
-    
 {% endblock content %}
 

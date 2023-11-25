@@ -1,9 +1,7 @@
 {% extends "base_team.html" %}
 {% load static %}
 
-{% block title %}
-List of Team Members
-{% endblock title %}
+{% block title %}List of Team Members{% endblock title %}
 
 {% block extra_css_file %}
 <link rel="stylesheet" href="{% static "task_management/list_team_members8.css" %}">
@@ -13,30 +11,28 @@ List of Team Members
 
 {% block extra_content %}
 
-
 <div class="container py-5">
      {% if can_send_invitation %} 
         <a href="{% url "send_invitation" %}">Sent invitation</a>
     {% endif %} 
         
-
-<div class="row text-center">
-    {% for team_member in team_members %}
-    <div class="col-xl-3 col-sm-6 mb-5">
-        <a class ="button" href="{% url 'team_member' team_member_id=team_member.id %}">
-        <div class="member">
-            <div class="bg rounded shadow-sm py-5 px-4"><img src="{{ team_member.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-                <h5 class="mb-0">{{team_member.user_profile.name|default:team_member.user.username}}</h5>
-                  <div class="{% if team_member.user_profile.is_online %}online-circle{% else %}offline-circle{% endif %}"></div>
-                <span class="small text-uppercase text-muted">{{ team_member.role }}</span>
-                <span class="small text-muted">{{ team_member.responsibilities }}</span>
-            
-            </div>
-        </div></a>
+    <div class="row text-center">
+        {% for team_member in team_members %}
+        <div class="col-xl-3 col-sm-6 mb-5">
+            <a class ="button" href="{% url 'team_member' team_member_id=team_member.id %}">
+                <div class="member">
+                    <div class="bg rounded shadow-sm py-5 px-4"><img src="{{ team_member.user_profile.profile_picture.url|default:'media/default.jpg' }}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                        <h5 class="mb-0">{{team_member.user_profile.name|default:team_member.user.username}}</h5>
+                        <div class="{% if team_member.user_profile.is_online %}online-circle{% else %}offline-circle{% endif %}"></div>
+                        <span class="small text-uppercase text-muted">{{ team_member.role }}</span>
+                        <span class="small text-muted">{{ team_member.responsibilities }}</span>
+                    
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
-</div>
-
 
 {% endblock extra_content %}

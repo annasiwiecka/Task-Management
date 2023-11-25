@@ -32,7 +32,6 @@
                     <p class="text-muted">{{ task.description }}</p>
                     <h5>{{ task.status }}</h5>
                     <ul class="list-inline task-dates m-b-0 mt-5">
-                        
                         <li>
                             <h5 class="m-b-5">Due Date</h5>
                             <p>{{ task.deadline }}</p>
@@ -40,11 +39,7 @@
                     </ul>
                     <div class="clearfix"></div>
                     <div class="task-tags mt-4">
-                        
-                        <div class="bootstrap-tagsinput">
-                            
-                        </div>
-
+                        <div class="bootstrap-tagsinput"></div>
                     </div>
                           {% if is_leader %}
                             <form method="post" action="{% url 'complete_task' task.id %}">
@@ -56,25 +51,23 @@
                         <h5 class="">Attached Files</h5>
                         <div class="files-list">
                             {% for attachment in attachments %}
-                            <li>
-                                <p>{{ attachment.description }}</p>
-                              <a href="{{ attachment.file.url }}" target="_blank">{{ attachment.file.name }}</a>
-                              (Uploaded by: {{ attachment.uploaded_by }}, {{ attachment.upload }})
-                            </li>
-                          {% endfor %}
-                          {% if can_manage_attachments %}
-                            <form method="POST" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                {{ attachments_form|crispy }}
-                                <button type="submit">Upload Attachments</button>
-                            </form>
+                                <li>
+                                    <p>{{ attachment.description }}</p>
+                                <a href="{{ attachment.file.url }}" target="_blank">{{ attachment.file.name }}</a>
+                                (Uploaded by: {{ attachment.uploaded_by }}, {{ attachment.upload }})
+                                </li>
+                            {% endfor %}
+                            {% if can_manage_attachments %}
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ attachments_form|crispy }}
+                                    <button type="submit">Upload Attachments</button>
+                                </form>
                             {% endif %}
                         </div>
-                        
                     </div>
                 </div>
             </div>
-        
             <div class="col-lg-4">
                 <div class="card-box">
                     <h4 class="header-title m-b-30">Comments</h4>
@@ -87,25 +80,18 @@
                                 <h5 class="mt-0">{{ comment.user.user_profile.name }}</h5>
                                 <p class="font-13 mb-0">{{ comment.content }}</div>
                         </div>
-                        {% endfor %}
-                            <div class="media-body">
-                                
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        {{ form.content }}
-                                        <button type="submit" class="btn btn-sm btn-custom waves-effect waves-light">Send</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                    {% endfor %}
+                    <div class="media-body">
+                        <form method="post">
+                            {% csrf_token %}
+                                {{ form.content }}
+                            <button type="submit" class="btn btn-sm btn-custom waves-effect waves-light">Send</button>
+                        </form>                                              
                     </div>
                 </div>
             </div>
-            <!-- end col -->
         </div>
-        <!-- end row -->
     </div>
-    <!-- container -->
 </div>
 
 {% endblock extra_content %}

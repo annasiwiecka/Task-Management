@@ -8,5 +8,6 @@ __pycache__/
 # Local development settings
 .env
 
-# Database file
 db.sqlite3
+
+requirements.txt

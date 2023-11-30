@@ -102,6 +102,7 @@ The team's head page shows the name, description and owner of the team
 
 ![Team](./images/Delete_team.png)
 ![Team](./images/leave_team.png)
+
 On the team settings page for the owner there is an option to delete the team, and for a regular member there is an option to leave the team
 
 ### Team Members

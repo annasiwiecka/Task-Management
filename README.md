@@ -61,10 +61,12 @@ On macOS or Linux:
 2. [Notification](#Notification)
 3. [Settings](#Settings)
 4. [Create Team](#Create-Team)
-5. [Team Members](#Team-Members)
-6. [Projects](#Projects)
-7. [Tasks](#Tasks)
-8. [Other](#Other)
+5. [Team](#Team)
+6. [Team-Settings](#Team-Settings)
+7. [Team Members](#Team-Members)
+8. [Projects](#Projects)
+9. [Tasks](#Tasks)
+10. [Other](#Other)
 
 ### Registration, Login
 

@@ -9,6 +9,8 @@ from django.shortcuts import render
 from datetime import datetime
 from django.db.models import Q
 from itertools import chain
+from django.db import IntegrityError
+
 
 from django.views.generic.list import ListView
 
@@ -83,6 +85,15 @@ def logoutPage(request):
 
 @login_required(login_url="login")
 def home(request):
+    user = request.user
+    team_member = TeamMember.objects.get(user=request.user)
+
+    tasks = Task.objects.filter(assigned_to=team_member)
+    projects_as_leader = Project.objects.filter(leader=team_member)
+    projects_assigned_to_me = Project.objects.filter(task__assigned_to=team_member).distinct()
+
+    projects = list(chain(projects_as_leader, projects_assigned_to_me))
+    projects = list(set(projects))
     return render(request, "task_management/home.html")
 
 
@@ -143,8 +154,8 @@ def my_project(request):
     leader_projects = Project.objects.filter(leader=team_member)
 
     projects_with_user_tasks = Project.objects.filter(
-        team=team_member.team,  # Filter projects within the same team
-        task__assigned_to=team_member  # Filter projects with tasks assigned to the user
+        team=team_member.team,  
+        task__assigned_to=team_member 
     ).distinct()
     
     return render(request, "task_management/my_project.html", {
@@ -512,7 +523,6 @@ class ProjectBoardListView(ListView):
         return Project.objects.filter(team=team)
         
     def get_context_data(self, *args, **kwargs):
-        print(self.request.GET)
         team_id = self.kwargs['team_id']
         team = get_object_or_404(Team, id=team_id)
         projects = super().get_queryset()
@@ -720,3 +730,43 @@ def my_project(request):
     return render(request, 'task_management/my_project.html', {
         'projects': projects
         })
+
+
+@login_required(login_url="login")
+def settings_team(request, team_id):
+    
+    team = get_object_or_404(Team, id=team_id)
+    team_member = get_object_or_404(TeamMember, team=team, user=request.user)
+    
+    is_owner = team.owner == request.user
+
+
+    can_delete_team = (
+        is_owner
+        or request.user.has_perm('task_management.can_manage_team')
+    )
+
+    if request.method == 'POST':
+        form_delete = TeamDeleteForm(request.POST)
+        if form_delete.is_valid() and form.cleaned_data['confirmation']:
+            team.delete()
+            return redirect('home')
+    else:
+        form_delete = TeamDeleteForm()
+
+    if request.method == 'POST':
+        form_leave = LeaveTeamForm(request.POST)
+        if form_leave.is_valid() and form.cleaned_data['confirmation']:
+            team_member.delete()  
+            return redirect('home') 
+    else:
+        form_leave = LeaveTeamForm()
+
+    
+    return render(request, 'task_management/settings_team.html', {
+        'can_delete_team': can_delete_team,
+        'form_delete': form_delete,
+        'form_leave': form_leave,
+        'team': team
+    })
+

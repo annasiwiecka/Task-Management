@@ -6,7 +6,7 @@
 {% block title %}Invitation{% endblock title %}
 
 {% block css_file %}
-<link rel="stylesheet" href="{% static "task_management/invitation.css" %}">
+<link rel="stylesheet" href="{% static "task_management/invitation1.css" %}">
 {% endblock css_file %}
 
 {% block content %}
@@ -15,11 +15,11 @@
     <h1>Invitation Details</h1>
     <p><strong>Sender:</strong> {{ invitation.sender.username }}</p>
     <p><strong>Message:</strong> {{ invitation.message }}</p>
-    <p>{{ invitation.team }}</p>
+    <p><strong>Team:</strong> {{ invitation.team }}</p>
     
     <form method="POST" action="{% url 'accept_invitation' invitation_id=invitation.id %}">
         {% csrf_token %}
-        <button type="submit">Accept</button>
+        <button type="submit" class="btn btn-danger" id="project-search-addon">Accept</button>
     </form>
 
 </div>

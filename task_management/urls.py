@@ -141,6 +141,19 @@ urlpatterns = [
         views.TaskBoardList.as_view(),
         name="task_board",
     ),
+    path(
+        'team/<int:team_id>/settings_team', 
+        views.settings_team, 
+        name="settings_team"),
+    path(
+        'team/<int:team_id>/delete/', 
+        views.settings_team, 
+        name='delete_team'),
+    path(
+        'team/<int:team_id>/leave/', 
+        views.settings_team, 
+        name='leave_team'),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

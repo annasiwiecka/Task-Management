@@ -10,6 +10,7 @@ class NewUserForm(UserCreationForm):
         model = User
         fields = ("username", "email", "password1", "password2")
 
+
 class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(max_length=100, required=True)
     email = forms.EmailField(required=True)
@@ -17,6 +18,7 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email']
+
 
 class UpdateProfileForm(forms.ModelForm):
     name = forms.CharField()
@@ -26,15 +28,20 @@ class UpdateProfileForm(forms.ModelForm):
         model = UserCreate
         fields = ['name', 'profile_picture']
 
+
 class TeamForm(forms.ModelForm):
+    
     class Meta:
         model = Team
         fields = ['name', 'description']
 
+
 class PriorityForm(forms.ModelForm):
+    
     class Meta:
         model = Priority
         fields = ['name', 'color']
+
 
 class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -46,7 +53,6 @@ class ProjectForm(forms.ModelForm):
 
     priority = forms.ModelChoiceField(
         queryset=Priority.objects.all(),
-        
     )
     
     class Meta:
@@ -57,6 +63,7 @@ class ProjectForm(forms.ModelForm):
             'end': forms.DateInput(attrs={'type': 'date',  'format': '%Y-%m-%d'}),
         }
     
+
 class ProjectBoardForm(forms.Form):
     SORT_CHOICES = [
         ('name', 'Name'),
@@ -79,14 +86,12 @@ class ProjectBoardForm(forms.Form):
         initial='',
         empty_label='Any'
     )
-
-
+    
     class Meta:
         model = Project  
         fields = ['sort_by', 'order_by', 'name', 'priority']
 
 class TaskForm(forms.ModelForm):
-    
     def __init__(self, *args, **kwargs):
         team = kwargs.pop('team', None)
         super(TaskForm, self).__init__(*args, **kwargs)
@@ -123,22 +128,23 @@ class TaskBoardForm(forms.Form):
         initial='',
         empty_label='Any'
     )
-
-
     
     class Meta:
         model = Task  
         fields = ['sort_by', 'order_by', 'name', 'priority']
 
+
 class CommentForm(forms.ModelForm):
-    
     class Meta:
         model = Comment
         fields = ['content']
     
+
 class Notification(forms.ModelForm):
-    model = Notification
-    fields = ['message', 'is_read']
+    class Meta:
+        model = Notification
+        fields = ['message', 'is_read']
+
 
 class TeamInvitationForm(forms.ModelForm):
     class Meta:
@@ -150,12 +156,34 @@ class TeamInvitationForm(forms.ModelForm):
         initial="Hello, I invite you to join my team!"
     )
 
+
 class TeamMemberForm(forms.ModelForm):
     class Meta:
         model = TeamMember
         fields = ['role', 'responsibilities', 'is_manager']
 
+
 class AttachmentForm(forms.ModelForm):
     class Meta:
         model = Attachment
         fields = ['description', 'file']
+
+
+class TeamDeleteForm(forms.Form):
+    confirmation = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+    )
+
+
+class LeaveTeamForm(forms.Form):
+    confirmation = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+    )
+
+
+class TeamUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Team
+        fields = ['name', 'description']

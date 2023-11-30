@@ -1,0 +1,35 @@
+{% extends "base_team.html" %}
+{% load static %}
+
+{% block title %}
+Team Settings
+{% endblock title %}
+
+{% block extra_css_file %}
+<link rel="stylesheet" href="{% static "task_management/settings_team.css" %}">
+{% endblock extra_css_file %}
+
+{% block extra_content %}
+{% load crispy_forms_tags %}
+
+<div class="container">
+    <div class="text-center">
+        {% if can_delete_team %}
+        <h2>Delete Team</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form_delete|crispy }}
+            <button type="submit" class="btn btn-danger" id="project-search-addon">Delete</button>
+        </form>
+        {% else %}
+        <h2>Leave Team</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form_leave|crispy }}
+            <button type="submit" class="btn btn-danger" id="project-search-addon">Leave</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock extra_content %}

@@ -3,7 +3,7 @@
 
 {% csrf_token %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}My Projects{% endblock title %}
 
 {% block css_file %}
 <link rel="stylesheet" href="{% static "task_management/my_project.css" %}">
@@ -29,6 +29,7 @@
                     </div>
                 </a>
             </div>
+
         {% empty %}
         <h2>You have not projects</h2>
         {% endfor %}

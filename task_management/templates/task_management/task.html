@@ -44,7 +44,7 @@
                           {% if is_leader %}
                             <form method="post" action="{% url 'complete_task' task.id %}">
                             {% csrf_token %}
-                            <button type="submit">Mark as Completed</button>
+                            <button type="submit" class="btn btn-danger" id="project-search-addon">Mark as Completed</button>
                             </form>
                         {% endif %}
                     <div class="attached-files mt-4">
@@ -53,7 +53,7 @@
                             {% for attachment in attachments %}
                                 <li>
                                     <p>{{ attachment.description }}</p>
-                                <a href="{{ attachment.file.url }}" target="_blank">{{ attachment.file.name }}</a>
+                                <a href="{{ attachment.file.url }}" download target="_blank">{{ attachment.file.name }}</a>
                                 (Uploaded by: {{ attachment.uploaded_by }}, {{ attachment.upload }})
                                 </li>
                             {% endfor %}
@@ -61,7 +61,7 @@
                                 <form method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     {{ attachments_form|crispy }}
-                                    <button type="submit">Upload Attachments</button>
+                                    <button type="submit" class="btn btn-danger" id="project-search-addon">Upload Attachments</button>
                                 </form>
                             {% endif %}
                         </div>

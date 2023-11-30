@@ -6,6 +6,7 @@
 {% block title %}Create Task{% endblock title %}
 
 {% block extra_css_file %}
+<link rel="stylesheet" href="{% static "task_management/create_task.css" %}">
 {% endblock extra_css_file %}
 
 {% block extra_content %}
@@ -13,11 +14,12 @@
 {% load crispy_forms_tags %}
 
 <div class="table">
+    <h2>Create Task</h2>
     <form method="POST">
         {% csrf_token %}
         {{ form|crispy }}
         <div>  
-            <button class="button" type="submit">Create</button>
+            <button type="submit" class="btn btn-danger" id="project-search-addon">Create</button>
         <div> 
     </form>
 </div>

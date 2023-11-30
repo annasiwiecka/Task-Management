@@ -31,6 +31,9 @@
                 </div>
             </a>
         </div>
+            {% if forloop.counter|divisibleby:4 and not forloop.last %}
+                </div><div class="row text-center">
+            {% endif %}
         {% endfor %}
     </div>
 </div>

@@ -9,5 +9,19 @@
 
 {% block content %}
 
-    
+<div class="container py-5">
+    <div class="row text-center">
+            <div class="col-xl-3 col-sm-6 mb-5">
+                <a class="button" href="#">
+                    <div class="task">
+                        <h5 class="mb-0">{{ task.name }}</h5>
+                        <span class="small text-uppercase text-muted">{{ task.description }}</span>
+                        <p>{{ task.deadline }}</p>
+                        <div class="fas fa-flag fa-lg" style=" color: {{ task.priority.color }};"></div>
+                    </div>
+                </a>
+            </div>
+    </div>
+</div>
+
 {% endblock content %}

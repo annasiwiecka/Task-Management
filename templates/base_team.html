@@ -13,7 +13,7 @@
   <li class="nav-item"><a class="nav-link" href="{% url "list_of_members" team_id=user.profile.current_team.id %}">Team Members</a></li>
   <li class="nav-item"><a class="nav-link" href="{% url 'project_board' team_id=user.profile.current_team.id %}">Project Board</a></li>
   <li class="nav-item"><a class="nav-link" href="{% url "task_board" team_id=user.profile.current_team.id %}">Task Board</a></li>
-  <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+  <li class="nav-item"><a class="nav-link" href="{% url "settings_team" team_id=user.profile.current_team.id %}">Settings</a></li>
 </ul>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

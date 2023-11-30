@@ -12,10 +12,11 @@
 
 {% load crispy_forms_tags %}
 <div class="id_in">
+    <h2>Sent Invitation</h2>
     <form method="POST">
         {% csrf_token %}
         {{ form|crispy }}
-        <button class="button" type='submit'>Sent</button>
+        <button type="submit" class="btn btn-danger" id="project-search-addon">Sent</button>
     </form>
     {% for message in messages %}
         <p>{{ message }}</p>

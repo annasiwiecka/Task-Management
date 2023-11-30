@@ -153,6 +153,10 @@ urlpatterns = [
         'team/<int:team_id>/leave/', 
         views.settings_team, 
         name='leave_team'),
+    path(
+        'get_events/', 
+        views.get_events, 
+        name='get_events'),
 
 ]
 

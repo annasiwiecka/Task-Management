@@ -5,23 +5,103 @@
 
 {% block title %}Home{% endblock title %}
 
-{% block css_file %}{% endblock css_file %}
+{% block css_file %}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+<link rel="stylesheet" href="{% static "task_management/home.css" %}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet'>
+<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
+{% endblock css_file %}
 
 {% block content %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
 
-<div class="container py-5">
-    <div class="row text-center">
-            <div class="col-xl-3 col-sm-6 mb-5">
-                <a class="button" href="#">
-                    <div class="task">
-                        <h5 class="mb-0">{{ task.name }}</h5>
-                        <span class="small text-uppercase text-muted">{{ task.description }}</span>
-                        <p>{{ task.deadline }}</p>
-                        <div class="fas fa-flag fa-lg" style=" color: {{ task.priority.color }};"></div>
-                    </div>
-                </a>
-            </div>
-    </div>
-</div>
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            themeSystem: 'bootstrap',
+            initialView: 'dayGridMonth',
+            events: function (fetchInfo, successCallback, failureCallback) {
+                $.ajax({
+                    url: '/get_events/',
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log('Response data:', response.data);
+                        var events = response.data.map(function (event) {
+                            
+                            return {
+                                id: event.id,
+                                title: event.name,
+                                start: event.end || event.deadline,
+                                extendedProps: {
+                                    project: event.end !== undefined,
+                                    task: event.deadline !== undefined,
+                                    priority: event.priority 
+                                }
+                                
+                            };
+                        });
+                        console.log('Events:', events);
+                        successCallback(events);
+                    },
+                    error: function () {
+                        failureCallback();
+                    }
+                });
+            },
+            eventClick: function(info) {
+                var eventId = info.event.id;
+                var eventType = info.event.extendedProps.project ? 'project' : 'task';
+
+                window.location.href = `/${eventType}/${eventId}/`;
+            },
+            eventMouseEnter: function(info) {
+                const tooltipContent = getTooltipContent(info.event);
+                showTooltip(info.jsEvent.pageX, info.jsEvent.pageY, tooltipContent);
+            },
+            eventMouseLeave: function(info) {
+                hideTooltip();
+            },
+
+            eventContent: function(arg) {
+                var prefix = '';
+                if (arg.event.extendedProps && arg.event.extendedProps.project) {
+                    prefix = 'Project: ';
+                } else if (arg.event.extendedProps && arg.event.extendedProps.task) {
+                    prefix = 'Task: ';
+                }
+                
+                return { html: prefix + arg.event.title };
+            }
+        });
+
+        calendar.render();
+        function getTooltipContent(event) {
+            const deadlineOrEnd = event.extendedProps.project ? 'End Date' : 'Deadline';
+            return `<div style="background-color: white; padding: 10px;">`
+                 + `<strong>${event.title}</strong><br>`
+                 + `${deadlineOrEnd}: ${event.start.toLocaleString()}<br>`
+                 + `</div>`;
+        }
+        
+        function showTooltip(x, y, content) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.innerHTML = content;
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
+            tooltip.style.display = 'block';
+        }
+    
+        function hideTooltip() {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'none';
+        }
+    });
+</script>
+
+<h2>Calendar</h2>
+<div id="tooltip" style="position: absolute; display: none; background-color: white; border: 1px solid #ccc; padding: 5px;"></div>
+<div id="calendar"></div>
+
 
 {% endblock content %}

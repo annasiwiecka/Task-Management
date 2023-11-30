@@ -770,3 +770,26 @@ def settings_team(request, team_id):
         'team': team
     })
 
+def get_events(request):
+    user = request.user
+    team_member = TeamMember.objects.get(user=user)
+
+    projects_as_leader = Project.objects.filter(leader=team_member)
+    projects_assigned_to_me = Project.objects.filter(task__assigned_to=team_member).distinct()
+
+    projects = list(set(chain(projects_as_leader, projects_assigned_to_me)))
+
+    tasks = Task.objects.filter(assigned_to=team_member)
+
+    project_events = Project.objects.filter(id__in=[project.id for project in projects]).values('id', 'name', 'end', 'priority')
+    task_events = Task.objects.filter(id__in=[task.id for task in tasks]).values('id', 'name', 'deadline', 'priority')
+
+    for event in project_events:
+        event['end'] = event['end'].isoformat() if event['end'] else None
+
+    for event in task_events:
+        event['deadline'] = event['deadline'].isoformat() if event['deadline'] else None
+
+    all_events = list(project_events) + list(task_events)
+
+    return JsonResponse({'data': all_events})

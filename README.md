@@ -1,6 +1,5 @@
 # Web Task Management: Collaborative Project Management for Remote Teams
 
-The project curently is coming to an end and also the current code is being improved on an ongoing basis.
 
 I created a web-based platform: a system that manages tasks in remote teams, facilitating effective collaboration on projects. Real-time task assignment, priority tracking and role-based access control were implemented. The platform allows the Owner to oversee every element in the team, designates leaders to manage projects. Project leaders oversee the team's progress. There is also constant communication thanks to shared emails. The process of deploying team members is based on invitations.
 
@@ -52,26 +51,36 @@ On macOS or Linux:
 - **Pillow**: Python image handling library.
     - Version: 10.1.0
 
+- **FullCalendar**: An interactive JavaScript calendar library that provides a customizable solution for displaying and managing events.
+    - Version : 6.1.10
+
 
 
 # Project
 
 ## Content
 1. [Registration, Login](#registration-Login)
-2. [Notification](#Notification)
-3. [Settings](#Settings)
-4. [Create Team](#Create-Team)
-5. [Team](#Team)
-6. [Team-Settings](#Team-Settings)
-7. [Team Members](#Team-Members)
-8. [Projects](#Projects)
-9. [Tasks](#Tasks)
-10. [Other](#Other)
+2. [Home](#Home)
+3. [Notification](#Notification)
+4. [Settings](#Settings)
+5. [Create Team](#Create-Team)
+6. [Team](#Team)
+7. [Team-Settings](#Team-Settings)
+8. [Team Members](#Team-Members)
+9. [Projects](#Projects)
+10. [Tasks](#Tasks)
+11. [Other](#Other)
 
 ### Registration, Login
 
 ![Registration](./images/Register.png)
 ![Login](./images/login.png)
+
+### Home
+
+![Home](./images/home.png)
+
+On the home page we have a calendar, the cloze deadlines are automatically added when creating a project/task. There is a tooltip where you can see the name and end date of the project/task. When you click on a project/task it redirects you to the project/task page.
 
 ### Notification
 
@@ -168,7 +177,7 @@ On the "My Tasks" page there are shortcuts and links to the tasks we are assign 
 
 ### Other
 
-Project and task end date notifications, user home page with shortcuts, better sorting view coming soon
+Project and task deadline notifications, better sorting view coming soon
 
 ## License
 

@@ -32,7 +32,7 @@ On macOS or Linux:
     - Version: 3.1.12
 
 - **SQLparse**: Library for parsing and manipulating SQL queries in Python.
-  - Wersja: 0.4.4
+  - Version: 0.4.4
 
 - **asgiref**: Library that supports handling asynchronous code in Django.
   - Version: 3.7.2
@@ -90,6 +90,18 @@ On setting page we have a link to create team
 
 To create a team, enter the name and description of the team
 
+### Team
+
+![Team](./images/team.png)
+
+The team's head page shows the name, description and owner of the team
+
+### Team Settings
+
+![Team](./images/Delete_team.png)
+![Team](./images/leave_team.png)
+On the team settings page for the owner there is an option to delete the team, and for a regular member there is an option to leave the team
+
 ### Team Members
 
 ![TeamMembers](./images/LIST.png)
@@ -143,6 +155,7 @@ To create a task, you need to enter a name, task description. Assign a person to
 With the first task created, the project status changes to "In Progress"
 
 ![Task](./images/task.png)
+![Task](./images/taskatt.png)
 
 On the task page you can see what project the task is assigned to, you can see the user who is assigned to the task, the name , description, status, end date of the task. There is an attachments sector, where the leader or team member assigned to the task can attach attachments. An attachment can also be attached with description. There is a comments sector, comments can be written by the leader and the team member assigned to the team. After the first uploaded attachment, the status of the task changes to "In Progress" Comments and attachments already uploaded are visible to all team members. The project leader, after reviewing all sent attachments and accepting them, can change the status of the task to "Completed"
 
@@ -152,7 +165,7 @@ On the "My Tasks" page there are shortcuts and links to the tasks we are assign 
 
 ### Other
 
-Team settings page, project and task end date notifications, user home page with shortcuts, better sorting view and team home page coming soon
+Project and task end date notifications, user home page with shortcuts, better sorting view coming soon
 
 ## License
 
